@@ -17,9 +17,21 @@
 
 	<properties>
 		<java.version>13</java.version>
+		<mysql.version>8.0.18</mysql.version>
+		<mybatis.version>2.1.0</mybatis.version>
 	</properties>
 
 	<dependencies>
+	 <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -51,5 +63,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
+ 
 
 </project>

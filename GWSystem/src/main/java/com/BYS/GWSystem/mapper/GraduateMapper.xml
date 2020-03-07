@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BYS.GWSystem.mapper.GraduateMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.BYS.GWSystem.model.Graduate">
+        <id column="student_id" property="studentId" />
+        <result column="studentName" property="studentName" />
+        <result column="sex" property="sex" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="homeAddress" property="homeAddress" />
+        <result column="avatarPath" property="avatarPath" />
+        <result column="whereabouts" property="whereabouts" />
+        <result column="cause" property="cause" />
+        <result column="post" property="post" />
+        <result column="company" property="company" />
+        <result column="password" property="password" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        student_id, studentName, sex, phonenumber, homeAddress, avatarPath, whereabouts, cause, post, company, password
+    </sql>
+
+</mapper>

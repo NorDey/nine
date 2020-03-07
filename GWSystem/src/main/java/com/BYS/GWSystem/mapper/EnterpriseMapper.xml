@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.BYS.GWSystem.mapper.EnterpriseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.BYS.GWSystem.model.Enterprise">
+        <id column="registration_id" property="registrationId" />
+        <result column="enterpriseName" property="enterpriseName" />
+        <result column="telephone" property="telephone" />
+        <result column="password" property="password" />
+        <result column="number" property="number" />
+        <result column="avatarPath" property="avatarPath" />
+        <result column="synopsis" property="synopsis" />
+        <result column="address" property="address" />
+        <result column="registeredCapital" property="registeredCapital" />
+        <result column="beListed" property="beListed" />
+        <result column="examination" property="examination" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        registration_id, enterpriseName, telephone, password, number, avatarPath, synopsis, address, registeredCapital, beListed, examination
+    </sql>
+
+</mapper>
