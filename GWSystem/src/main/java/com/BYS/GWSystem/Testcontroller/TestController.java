@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 	@RequestMapping("caonima")
 		public String show() {
-			return "wo cao ni ma de bi";
+			return "wo cao ni ma de bi ";
 		}
 
 }
