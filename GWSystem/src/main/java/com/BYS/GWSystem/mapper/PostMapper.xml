@@ -3,14 +3,13 @@
 <mapper namespace="com.BYS.GWSystem.mapper.PostMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.BYS.GWSystem.model.Post">
+    <resultMap id="Post" type="com.BYS.GWSystem.model.Post">
         <id column="post_id" property="postId" />
         <result column="registration_id" property="registrationId" />
         <result column="responsible" property="responsible" />
         <result column="type_id" property="typeId" />
         <result column="postName" property="postName" />
         <result column="number" property="number" />
-        <result column="arrived" property="arrived" />
         <result column="salary" property="salary" />
         <result column="demand" property="demand" />
         <result column="creationTime" property="creationTime" />
@@ -18,8 +17,74 @@
     </resultMap>
 
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        post_id, registration_id, responsible, type_id, postName, number, arrived, salary, demand, creationTime, popular
+    <sql id="selectPostVo">
+        select p.post_id, p.registration_id, p.responsible, p.type_id, p.postName, p.number, p.salary, p.demand, p.creationTime, p.popular
+   	 	from post p
     </sql>
+    
+    <select id="selectPostList" parameterType="Post" resultMap="Post">
+        <include refid="selectPostVo"/>
+        where 
+        <if test="postId != null and postId != ''">
+           p.post_id = #{postId}
+        </if>
+        <if test="registrationId != null and registrationId != 0">
+            AND p.registration_id = #{registrationId}
+        </if>
+        <if test="typeId != null and typeId != 0">
+            AND p.type_id = #{typeId}
+        </if>
+        <if test="demand != null and demand != ''">
+            AND p.demand like concat('%', #{demand}, '%')
+        </if>
+        <if test="popular != null and popular != ''">
+            AND p.popular = #{popular}
+        </if>   
+    </select>
+    
+    <insert id="insertPost" parameterType="Post">
+        insert into Post(
+        <if test="postId != null and postId != ''">post_id,</if>
+        <if test="registrationId != null and registrationId != 0">registration_id,</if>
+        <if test="responsible != null and responsible != ''">responsible,</if>
+        <if test="typeId != null and typeId != 0">type_id,</if>
+        <if test="postName != null and postName != ''">postName,</if>
+        <if test="number != null and number != 0">number,</if>
+        <if test="salary != null and salary != ''">salary,</if>
+        <if test="demand != null and demand != ''">demand,</if>
+        creationTime,
+        <if test="popular != null and popular != ''">popular</if>
+        )values(
+        <if test="postId != null and postId != ''">#{postId},</if>
+        <if test="registrationId != null and registrationId != 0">#{registrationId},</if>
+        <if test="responsible != null and responsible != ''">#{responsible},</if>
+        <if test="typeId != null and typeId != 0">#{typeId},</if>
+        <if test="postName != null and postName != ''">#{postName},</if>
+        <if test="number != null and number != 0">#{number},</if>
+        <if test="salary != null and salary != ''">#{salary},</if>
+        <if test="demand != null and demand != ''">#{demand},</if>
+		sysdate(), 
+		<if test="popular != null and popular != ''">#{popular}</if>
+        )
+    </insert>
+    
+    <update id="updatePost" parameterType="Post">
+        update Post
+        <set>
+        	<if test="registrationId != null and registrationId != 0">registration_id=#{registrationId},</if>
+        	<if test="responsible != null and responsible != ''">responsible=#{responsible},</if>
+        	<if test="typeId != null and typeId != 0">type_id=#{typeId},</if>
+        	<if test="postName != null and postName != ''">postName=#{postName},</if>
+        	<if test="number != null and number != 0">number=#{number},</if>
+        	<if test="salary != null and salary != ''">salary=#{salary},</if>
+        	<if test="demand != null and demand != ''">demand=#{demand},</if>
+        	<if test="popular != null and popular != ''">popular=#{popular}</if>
+        </set>
+        where post_id = #{postId}
+    </update>
+    
+    <delete id="deletePost" parameterType="Post" >
+    delete from Post where post_id = #{postId}
+    </delete>
 
 </mapper>
