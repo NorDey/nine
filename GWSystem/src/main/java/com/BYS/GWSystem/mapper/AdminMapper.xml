@@ -15,5 +15,5 @@
     <select id="selectAdminList" resultMap="BaseResultMap">
     SELECT number, password FROM `admin`
     </select>
-
+	
 </mapper>
