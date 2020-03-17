@@ -12,27 +12,38 @@ import java.io.Serializable;
 public class Enterprise implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    
+    //工商注册号
     private Long registrationId;
 
+    //企业全名
     private String enterpriseName;
 
+    //企业联系方式
     private String telephone;
 
+    //密码
     private String password;
 
+    //企业人数
     private String number;
 
+    //头像路径
     private String avatarPath;
 
+    //公司简介
     private String synopsis;
 
+    //企业地址
     private String address;
 
+    //企业注册资本
     private String registeredCapital;
 
+    //企业是否上市(1已上市0未上市)
     private Integer beListed;
 
+    //是否通过审查(1通过0未通过)
     private Integer examination;
 
 

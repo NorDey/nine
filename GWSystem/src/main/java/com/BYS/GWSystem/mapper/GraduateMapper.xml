@@ -3,7 +3,7 @@
 <mapper namespace="com.BYS.GWSystem.mapper.GraduateMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.BYS.GWSystem.model.Graduate">
+    <resultMap id="Graduate" type="com.BYS.GWSystem.model.Graduate">
         <id column="student_id" property="studentId" />
         <result column="studentName" property="studentName" />
         <result column="sex" property="sex" />
@@ -18,8 +18,80 @@
     </resultMap>
 
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        student_id, studentName, sex, phonenumber, homeAddress, avatarPath, whereabouts, cause, post, company, password
+    <sql id="selectEnterpriseVo">
+        select g.student_id, g.studentName, g.sex, g.phonenumber, g.homeAddress, g.avatarPath, g.whereabouts, g.cause, g.post, g.company, g.password
+        from graduate g
     </sql>
+    
+    <select id="selectGraduateList" parameterType="Graduate" resultMap="Graduate">
+        <include refid="selectEnterpriseVo"/>
+        where 
+        <if test="studentId != null and studentId != 0">
+            g.student_id = #{studentId}
+        </if>
+        <if test="studentName != null and studentName != ''">
+            AND g.studentName like concat('%', #{studentName}, '%')
+        </if>
+        <if test="sex != null and sex != ''">
+            AND g.sex =#{sex}
+        </if>
+        <if test="whereabouts != null and whereabouts != ''">
+            AND g.whereabouts = #{whereabouts}
+        </if>
+        <if test="cause != null and cause != ''">
+            AND g.cause = #{cause}
+        </if>   
+    </select>
+    
+    <insert id="insertGraduate" parameterType="Graduate">
+        insert into Graduate(
+        <if test="studentId != null and studentId != 0">student_id,</if>
+        <if test="studentName != null and studentName != ''">studentName,</if>
+        <if test="sex != null and sex != ''">sex,</if>
+        <if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+        <if test="homeAddress != null and homeAddress != ''">homeAddress,</if>
+        <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
+        <if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
+        <if test="cause != null and cause != ''">cause,</if>
+        <if test="post != null and post != ''">post,</if>
+        <if test="company != null and company != ''">company,</if>
+        <if test="password != null and password != ''">password</if>
+        )values(
+        <if test="studentId != null and studentId != 0">#{student_id},</if>
+        <if test="studentName != null and studentName != ''">#{studentName},</if>
+        <if test="sex != null and sex != ''">#{sex},</if>
+        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+        <if test="homeAddress != null and homeAddress != ''">#{homeAddress},</if>
+        <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
+        <if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
+        <if test="cause != null and cause != ''">cause,</if>
+        <if test="post != null and post != ''">post,</if>
+        <if test="company != null and company != ''">company,</if>
+        <if test="password != null and password != ''">password</if>
+        )
+    </insert>
+
+
+<update id="updateGraduate" parameterType="Graduate">
+        update Graduate
+        <set>
+        <if test="studentName != null and studentName != ''">#{studentName},</if>
+        <if test="sex != null and sex != ''">#{sex},</if>
+        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+        <if test="homeAddress != null and homeAddress != ''">#{homeAddress},</if>
+        <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
+        <if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
+        <if test="cause != null and cause != ''">cause,</if>
+        <if test="post != null and post != ''">post,</if>
+        <if test="company != null and company != ''">company,</if>
+        <if test="password != null and password != ''">password</if>
+        </set>
+        where student_id = #{studentId}
+    </update>
+    
+    <delete id="deleteGraduate" parameterType="Graduate" >
+    delete from Graduate where student_id = #{studentId}
+    </delete>
+
 
 </mapper>

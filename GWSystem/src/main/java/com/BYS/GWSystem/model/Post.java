@@ -43,11 +43,6 @@ public class Post implements Serializable {
     private String number;
 
     /**
-     * 已招人数
-     */
-    private String arrived;
-
-    /**
      * 薪资待遇(*k)
      */
     private String salary;
@@ -76,7 +71,7 @@ public class Post implements Serializable {
 	}
 
 	public Post(String postId, Long registrationId, String responsible, String typeId, String postName, String number,
-			String arrived, String salary, String demand, LocalDateTime creationTime, Integer popular) {
+			 String salary, String demand, LocalDateTime creationTime, Integer popular) {
 		super();
 		this.postId = postId;
 		this.registrationId = registrationId;
@@ -84,7 +79,6 @@ public class Post implements Serializable {
 		this.typeId = typeId;
 		this.postName = postName;
 		this.number = number;
-		this.arrived = arrived;
 		this.salary = salary;
 		this.demand = demand;
 		this.creationTime = creationTime;
@@ -139,14 +133,6 @@ public class Post implements Serializable {
         this.number = number;
     }
 
-    public String getArrived() {
-        return arrived;
-    }
-
-    public void setArrived(String arrived) {
-        this.arrived = arrived;
-    }
-
     public String getSalary() {
         return salary;
     }
@@ -188,7 +174,6 @@ public class Post implements Serializable {
         ", typeId=" + typeId +
         ", postName=" + postName +
         ", number=" + number +
-        ", arrived=" + arrived +
         ", salary=" + salary +
         ", demand=" + demand +
         ", creationTime=" + creationTime +

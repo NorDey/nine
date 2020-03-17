@@ -1,8 +1,23 @@
 package com.BYS.GWSystem.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+import com.BYS.GWSystem.model.Graduate;
 
 @Mapper
 public interface GraduateMapper {
+	
+		//查询学生
+		public List<Graduate> selectGraduateList();
+		
+		//更改
+		public int updateGraduate(Graduate graduate);
+		
+		//添加
+		public int insertGraduate(Graduate graduate);
+		
+		//删除
+		public int deleteGraduate(Graduate graduate);
 
 }
