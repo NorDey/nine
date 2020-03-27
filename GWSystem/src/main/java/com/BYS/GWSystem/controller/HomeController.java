@@ -40,7 +40,7 @@ public class HomeController {
 		homeDto.setT2(iResumeService.BeConcernedAbout(5, 2));
 		homeDto.setT3(iResumeService.BeConcernedAbout(2, 0));
 		homeDto.setT5(iResumeService.NotInPlace());
-		homeDto.setT4(100-homeDto.getT1()-homeDto.getT2()-homeDto.getT3()-homeDto.getT5());//没得法子了
+		homeDto.setT4(100-homeDto.getT1()-homeDto.getT2()-homeDto.getT3()-homeDto.getT5());//没得法子了啊
 		model.addAttribute("HomeDto", homeDto);
 		return "admin/Home";
 	}
