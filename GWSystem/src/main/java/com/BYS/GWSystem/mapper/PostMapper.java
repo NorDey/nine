@@ -21,4 +21,13 @@ public interface PostMapper  {
 			//删除
 			public int deletePost(Post post);
 
+			
+			//查询发布招聘的公司数
+			public int selectRecruitmentCompaniesNumber();
+
+			//岗位数
+			public int selectPostNumber();
+			//被关注岗位数
+			public int selectFollowNumber();
+
 }

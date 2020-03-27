@@ -3,6 +3,8 @@ package com.BYS.GWSystem.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.BYS.GWSystem.model.Resume;
 
 @Mapper
@@ -18,5 +20,16 @@ public interface ResumeMapper  {
 	
 	//删除
 	public int deleteResume(Resume resume);
+
+	//查询已编辑简历学生数量
+	public Integer selectEditedResumeNumber();
+	
+	//简历数量
+	public Integer selectResumeNumber();
+	//被关注简历数量
+	public Integer selectFollowNumber();
+	//被关注数>a的数目
+	public Integer ConcernedAbout(@Param("large")Integer large,@Param("Small")Integer Small);
+
 
 }

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/raphael-min.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+<meta charset="UTF-8">
+<title>学校管理员管理主页</title>
+
+</head>
+<body>
+	<div class="col-md-12">
+		<div th:insert="~{admin/navigation::nav}"></div>
+	</div>
+
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+		<h4>
+			<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+			学生简历编辑率
+		</h4>
+		<div class="progress">
+			<div class="progress-bar progress-bar-info" role="progressbar"
+				aria-valuemin="0" aria-valuemax="100"
+				th:style="'width:'+*{HomeDto.resumeRate}+'%'"
+				th:text="${HomeDto.resumeRate}+'%'"></div>
+		</div>
+		<div>
+			<h5>
+				<a href="/admin/SeeStudent.html"><button type="button"
+						class="btn btn-info">查看未填写简历学生</button></a>
+			</h5>
+		</div>
+		<HR style="border: 3 double #987cb9" width="90%" color=#987cb9 SIZE=3>
+		<h4>
+			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+			企业招聘发布率
+		</h4>
+		<div class="progress">
+			<div class="progress-bar progress-bar-success" role="progressbar"
+				aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+				th:style="'width:'+*{HomeDto.postReleaseRate}+'%'"
+				th:text="${HomeDto.postReleaseRate}+'%'"></div>
+		</div>
+		<div>
+			<h5>
+				<button type="button" class="btn btn-success">查看已发布招聘公告公司</button>
+			</h5>
+		</div>
+		<HR style="border: 3 double #987cb9" width="90%" color=#987cb9 SIZE=3>
+		<h4>
+			<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+			招聘信息关注率
+		</h4>
+		<div class="progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow="60"
+				aria-valuemin="0" aria-valuemax="100"
+				th:style="'width:'+*{HomeDto.postAttentionRate}+'%'"
+				th:text="${HomeDto.postAttentionRate}+'%'"></div>
+		</div>
+		<div>
+			<h5>
+				<button type="button" class="btn">查看最热门岗位</button>
+			</h5>
+		</div>
+		<HR style="border: 3 double #987cb9" width="90%" color=#987cb9 SIZE=3>
+		<h4>
+			<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+			学生简历关注率
+		</h4>
+		<div class="progress">
+			<div class="progress-bar progress-bar-warning" role="progressbar"
+				aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
+				th:style="'width:'+*{HomeDto.resumeAttentionRate}+'%'"
+				th:text="${HomeDto.resumeAttentionRate}+'%'"></div>
+		</div>
+		<div>
+			<h5>
+				<button type="button" class="btn btn-warning">查看最受欢迎简历</button>
+			</h5>
+		</div>
+
+	</div>
+
+	<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+		<h3>
+			<span class="glyphicon glyphicon-object-align-left"
+				aria-hidden="true"></span> 毕业生就业情况
+		</h3>
+		<table>
+			<tbody>
+				 <tr>
+					<th scope="row">火热择业中(被关注＞5)</th>
+					<td th:text="${HomeDto.T1}+'%'"></td>
+				</tr>
+				<tr>
+					<th scope="row">有就业机会(被关注＞2)</th>
+					<td th:text="${HomeDto.T2}+'%'"></td>
+				</tr>
+				<tr>
+					<th scope="row">需要努力(被关注＞0)</th>
+					<td th:text="${HomeDto.T3}+'%'"></td>
+				</tr>
+				<tr>
+					<th scope="row">抓紧准备(被关注＝0)</th>
+					<td th:text="${HomeDto.T4}+'%'"></td>
+				</tr>
+				<tr>
+					<th scope="row">未到位(简历未编辑)</th>
+					<td th:text="${HomeDto.T5}+'%'"></td>
+				</tr> 
+			
+			</tbody>
+		</table>
+	</div>
+	<div id="holder"></div>
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+
+</body>
+</html>

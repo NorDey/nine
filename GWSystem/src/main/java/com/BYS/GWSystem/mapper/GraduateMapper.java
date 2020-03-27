@@ -20,4 +20,9 @@ public interface GraduateMapper {
 		//删除
 		public int deleteGraduate(Graduate graduate);
 
+		//查询学生数量
+		public int selectGraduateNumber();
+		
+		
+
 }

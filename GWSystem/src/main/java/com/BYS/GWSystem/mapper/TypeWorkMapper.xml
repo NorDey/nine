@@ -3,7 +3,7 @@
 <mapper namespace="com.BYS.GWSystem.mapper.TypeWorkMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.BYS.GWSystem.model.TypeWork">
+    <resultMap id="TypeWork" type="com.BYS.GWSystem.model.TypeWork">
         <id column="post_id" property="postId" />
         <result column="fatherTypeId" property="fatherTypeId" />
         <result column="postName" property="postName" />

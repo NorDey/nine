@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<title>查看企业</title>
+</head>
+<body>
+	<div class="col-md-12">
+		<div th:insert="~{admin/navigation::nav}"></div>
+	</div>
+	<!--head引用-->
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+			<form class="navbar-form navbar-left" role="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search">
+				</div>
+				<button type="submit" class="btn btn-default">查看</button>
+			</form>	
+		<table class="table table-striped">
+			<caption>企业名单</caption>
+			<thead>
+				<tr>
+					<th>企业名</th>
+					<th>企业工商注册号</th>
+					<th>电话</th>
+					<th>住址</th>
+					<th>查看</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>啊</td>
+					<td>滴滴滴</td>
+					<td>联系方式</td>
+					<td>哎哎哎</td>
+					<td><a href="/admin/EnterpriseDetails.html">查看</a></td>
+				</tr>
+				<tr>
+					<td>啊</td>
+					<td>滴滴滴</td>
+					<td>联系方式</td>
+					<td>哎哎哎</td>
+					<td><a href="#">查看</a></td>
+				</tr>
+				<tr>
+					<td>啊</td>
+					<td>滴滴滴</td>
+					<td>联系方式</td>
+					<td>哎哎哎</td>
+					<td><a href="#">查看</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+		<h3>
+			<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+			了解
+		</h3>
+		<hr>
+		<div>
+			<dl class="dl-horizontal">
+				<dt>企业</dt>
+				<dd>公司注册审批后及时提醒该公司审批已通过,防止企业方长时间等待</dd>
+				<dt>岗位</dt>
+				<dd>尽量确保能及时联系上企业负责人,在得到审批后及时提醒公司发布招聘信息,并及时和企业方沟通推荐优秀代表</dd>
+			</dl>
+		</div>
+	</div>
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+
+
+
+</body>
+</html>

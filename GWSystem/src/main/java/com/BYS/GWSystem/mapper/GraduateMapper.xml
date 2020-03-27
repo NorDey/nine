@@ -3,7 +3,7 @@
 <mapper namespace="com.BYS.GWSystem.mapper.GraduateMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="Graduate" type="com.BYS.GWSystem.model.Graduate">
+    <resultMap id="GraduateResult" type="com.BYS.GWSystem.model.Graduate">
         <id column="student_id" property="studentId" />
         <result column="studentName" property="studentName" />
         <result column="sex" property="sex" />
@@ -23,7 +23,7 @@
         from graduate g
     </sql>
     
-    <select id="selectGraduateList" parameterType="Graduate" resultMap="Graduate">
+    <select id="selectGraduateList" parameterType="com.BYS.GWSystem.model.Graduate" resultMap="GraduateResult">
         <include refid="selectEnterpriseVo"/>
         where 
         <if test="studentId != null and studentId != 0">
@@ -43,7 +43,14 @@
         </if>   
     </select>
     
-    <insert id="insertGraduate" parameterType="Graduate">
+    <select id="selectGraduateNumber" resultType="int" >
+          SELECT COUNT(*) FROM graduate
+    </select>
+    
+    
+    
+    
+    <insert id="insertGraduate" parameterType="com.BYS.GWSystem.model.Graduate">
         insert into Graduate(
         <if test="studentId != null and studentId != 0">student_id,</if>
         <if test="studentName != null and studentName != ''">studentName,</if>
@@ -72,7 +79,7 @@
     </insert>
 
 
-<update id="updateGraduate" parameterType="Graduate">
+<update id="updateGraduate" parameterType="com.BYS.GWSystem.model.Graduate">
         update Graduate
         <set>
         <if test="studentName != null and studentName != ''">#{studentName},</if>
@@ -89,7 +96,7 @@
         where student_id = #{studentId}
     </update>
     
-    <delete id="deleteGraduate" parameterType="Graduate" >
+    <delete id="deleteGraduate" parameterType="com.BYS.GWSystem.model.Graduate" >
     delete from Graduate where student_id = #{studentId}
     </delete>
 

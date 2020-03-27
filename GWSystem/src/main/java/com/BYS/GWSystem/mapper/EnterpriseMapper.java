@@ -20,5 +20,8 @@ public interface EnterpriseMapper {
 	
 	//删除
 	public int deleteEnterprise(Enterprise enterprise);
+
+	//查询企业总数
+	public int selectEnterpriseNumber();
 	
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.BYS.GWSystem.mapper.EnterpriseMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="Enterprise" type="com.BYS.GWSystem.model.Enterprise">
+    <resultMap id="EnterpriseResult" type="com.BYS.GWSystem.model.Enterprise">
         <id column="registration_id" property="registrationId" />
         <result column="enterpriseName" property="enterpriseName" />
         <result column="telephone" property="telephone" />
@@ -23,7 +23,7 @@
        form enterprise e
     </sql>
     
-    <select id="selectEnterpriseList" parameterType="Enterprise" resultMap="Enterprise">
+    <select id="selectEnterpriseList" parameterType="com.BYS.GWSystem.model.Enterprise" resultMap="EnterpriseResult">
         <include refid="selectEnterpriseVo"/>
         where 
         <if test="registrationId != null and registrationId != 0">
@@ -43,8 +43,11 @@
         </if>   
     </select>
 
+	<select id="selectEnterpriseNumber" resultType="int">
+		SELECT COUNT(*) FROM enterprise
+	</select>
 
-	<insert id="insertEnterprise" parameterType="Enterprise">
+	<insert id="insertEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise">
         insert into enterprise(
         <if test="registrationId != null and registrationId != 0">registration_id,</if>
         <if test="enterpriseName != null and enterpriseName != ''">enterpriseName,</if>
@@ -73,7 +76,7 @@
     </insert>
     
     
-    <update id="updateEnterprise" parameterType="Enterprise">
+    <update id="updateEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise">
         update enterprise
         <set>
             <if test="enterpriseName != null and enterpriseName != ''">enterpriseName = #{enterpriseName},</if>
@@ -90,7 +93,7 @@
         where registration_id = #{registrationId}
     </update>
     
-    <delete id="deleteEnterprise" parameterType="Enterprise" >
+    <delete id="deleteEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise" >
     delete from enterprise where registration_id = #{registrationId}
     </delete>
     
