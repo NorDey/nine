@@ -1,12 +1,15 @@
 package com.BYS.GWSystem.service.impl;
 
+import java.awt.List;
 import java.text.DecimalFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.BYS.GWSystem.dto.ResumeDto;
 import com.BYS.GWSystem.mapper.GraduateMapper;
 import com.BYS.GWSystem.mapper.ResumeMapper;
+import com.BYS.GWSystem.model.Resume;
 import com.BYS.GWSystem.service.IResumeService;
 
 @Service
@@ -63,6 +66,11 @@ public class ResumeServiceImpl implements IResumeService {
 				+ resumeMapper.selectResumeNumber();
 	 float totalPrice = ((float) notEdited / M * 100);
 	 return (double) Math.round(totalPrice);
+	}
+
+	//简历查询
+	public ResumeDto selectResumeById(Long id) {
+		return resumeMapper.selectResumeById(id);
 	}
 
 }

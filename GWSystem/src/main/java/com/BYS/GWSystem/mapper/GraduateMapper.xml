@@ -47,6 +47,16 @@
           SELECT COUNT(*) FROM graduate
     </select>
     
+    <select id="selectCheckingStudents" resultType="com.BYS.GWSystem.dto.GraduateDto">
+     select g.student_id, g.studentName, g.sex, g.phonenumber, g.homeAddress, g.avatarPath, g.whereabouts, g.cause, g.post, g.company, r.resume_id
+        from graduate g LEFT  JOIN resume r on g.student_id=r.student_id
+    </select>
+    
+    
+    <select id="selectNotFilledStudent" resultMap="GraduateResult">
+    <include refid="selectEnterpriseVo"/>
+    where  g.student_id not IN(SELECT distinct student_id FROM resume )
+    </select>
     
     
     

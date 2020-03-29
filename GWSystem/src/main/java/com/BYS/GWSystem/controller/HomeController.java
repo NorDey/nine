@@ -1,18 +1,25 @@
 package com.BYS.GWSystem.controller;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.dto.HomeDto;
+import com.BYS.GWSystem.dto.ResumeDto;
+import com.BYS.GWSystem.model.Graduate;
+import com.BYS.GWSystem.model.Resume;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IGraduateService;
 import com.BYS.GWSystem.service.IPostService;
 import com.BYS.GWSystem.service.IResumeService;
+import com.BYS.GWSystem.utils.GetPetAgeUtils;
 
 @Controller
 public class HomeController {
@@ -29,6 +36,7 @@ public class HomeController {
 	private IResumeService iResumeService;
 
 	
+	//主页加载页
 	@GetMapping("/home")
 	public String showHome(Model model) {
 		HomeDto homeDto = new HomeDto();
@@ -44,5 +52,28 @@ public class HomeController {
 		model.addAttribute("HomeDto", homeDto);
 		return "admin/Home";
 	}
-
+	
+	@GetMapping("/notFilled")
+	public String showNotFilled(Model model) {
+		List<GraduateDto> listGraduateDto= iGraduateService.selectNotFilled();
+		model.addAttribute("listGraduate", listGraduateDto);
+		return "admin/SeeStudent";
+	}
+	
+	@GetMapping("/CheckingStudents")
+	public String showCheckingStudents(Model model) {
+		List<GraduateDto> listGraduateDto= iGraduateService.selectCheckingStudents();
+		model.addAttribute("listGraduate", listGraduateDto);
+		return "admin/SeeStudent";
+	}
+	
+	@GetMapping("/viewResume/{id}")
+	public String viewResume(@PathVariable(name = "id") Long id,Model model) {
+		ResumeDto resumeDto=iResumeService.selectResumeById(id);
+		if (resumeDto.getBirthday()!=null) {
+			resumeDto.setAge(GetPetAgeUtils.getAgeByBirth(resumeDto.getBirthday()));//生日转生日
+		}
+		model.addAttribute("resumeDto", resumeDto);
+		return "admin/StudentDetails";
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.BYS.GWSystem.dto.ResumeDto;
 import com.BYS.GWSystem.model.Resume;
 
 @Mapper
@@ -31,5 +32,9 @@ public interface ResumeMapper  {
 	//被关注数>a的数目
 	public Integer ConcernedAbout(@Param("large")Integer large,@Param("Small")Integer Small);
 
+	//根据id查询简历详情
+	public ResumeDto selectResumeById(Long id);
+
+	
 
 }

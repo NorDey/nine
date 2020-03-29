@@ -1,6 +1,7 @@
 package com.BYS.GWSystem.service;
 
-
+import com.BYS.GWSystem.dto.ResumeDto;
+import com.BYS.GWSystem.model.Resume;
 
 public interface IResumeService {
 	//简历关注率
@@ -12,5 +13,8 @@ public interface IResumeService {
 	public Double  AttentionEquals();
 	//未编辑简历占比
 	public Double  NotInPlace();
+
+	//简历查询
+	public ResumeDto selectResumeById(Long id);
 
 }
