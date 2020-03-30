@@ -1,9 +1,12 @@
 package com.BYS.GWSystem.service.impl;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BYS.GWSystem.mapper.EnterpriseMapper;
 import com.BYS.GWSystem.mapper.PostMapper;
+import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.service.IEnterpriseService;
 
 
@@ -23,6 +26,16 @@ public class EnterpriseServiceImpl  implements IEnterpriseService {
 		 float totalPrice= ((float)b/a*100);
 			
 		return (double)(float)(Math.round(totalPrice*100)/100);
+	}
+	
+	//查看企业列表
+	public List<Enterprise> selectEnterpriseList( Enterprise enterprise) {
+		return enterpriseMapper.selectEnterpriseList(enterprise);
+	}
+
+	//查看公司详情
+	public Enterprise selectEnterprise(Long id) {
+		return enterpriseMapper.selectEnterprise(id);
 	}
 
 }

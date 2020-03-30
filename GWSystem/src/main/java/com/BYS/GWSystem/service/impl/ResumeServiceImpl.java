@@ -73,4 +73,5 @@ public class ResumeServiceImpl implements IResumeService {
 		return resumeMapper.selectResumeById(id);
 	}
 
+
 }

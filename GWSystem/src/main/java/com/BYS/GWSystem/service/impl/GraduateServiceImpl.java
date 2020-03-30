@@ -61,4 +61,10 @@ public class GraduateServiceImpl implements IGraduateService {
 		return graduateMapper.selectCheckingStudents();
 	}
 
+	
+	//最受欢迎学生列表
+	public List<GraduateDto> selectBestResumeStudents() {
+		return graduateMapper.selectBestResumeStudents();
+	}
+
 }

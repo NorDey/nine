@@ -30,6 +30,9 @@ public interface GraduateMapper {
 
 		//学生列表
 		public List<GraduateDto> selectCheckingStudents();
+
+		//最受欢迎学生列表
+		public List<GraduateDto> selectBestResumeStudents();
 		
 		
 

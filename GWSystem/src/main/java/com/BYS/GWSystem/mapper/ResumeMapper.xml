@@ -31,7 +31,7 @@
 		r.intention, r.speciality, r.experience,
 		r.selfEvaluation,
 		r.creationTime, r.student_id
-		form resume r
+		from resume r
 	</sql>
 
 	<select id="selectResumeList"

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.dto.HomeDto;
 import com.BYS.GWSystem.dto.ResumeDto;
+import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.model.Resume;
 import com.BYS.GWSystem.service.IEnterpriseService;
@@ -67,13 +68,40 @@ public class HomeController {
 		return "admin/SeeStudent";
 	}
 	
+	//根据id查询简历
 	@GetMapping("/viewResume/{id}")
 	public String viewResume(@PathVariable(name = "id") Long id,Model model) {
 		ResumeDto resumeDto=iResumeService.selectResumeById(id);
 		if (resumeDto.getBirthday()!=null) {
-			resumeDto.setAge(GetPetAgeUtils.getAgeByBirth(resumeDto.getBirthday()));//生日转生日
+			resumeDto.setAge(GetPetAgeUtils.getAgeByBirth(resumeDto.getBirthday()));//生日转年龄
 		}
 		model.addAttribute("resumeDto", resumeDto);
 		return "admin/StudentDetails";
 	}
+	
+	//最受欢迎简历
+	@GetMapping("/bestResume")
+	public String showBestResume(Model model) {
+		List<GraduateDto> listGraduateDto= iGraduateService.selectBestResumeStudents();
+		model.addAttribute("listGraduate", listGraduateDto);
+		return "admin/SeeStudent";
+	}
+	
+	//企业列表
+	@GetMapping("/enterpriseList")
+	public String showEnterpriseList(Model model) {
+		Enterprise enterprise=new Enterprise();
+		enterprise.setExamination(1);
+		List<Enterprise> enterprises=iEnterpriseService.selectEnterpriseList(enterprise);
+		model.addAttribute("enterprises", enterprises);
+		return "admin/SeeEnterprise";
+	}
+	
+	//企业详情
+		@GetMapping("/companyDetails/{id}")
+		public String showCompanyDetails(@PathVariable(name = "id") Long id,Model model) {
+			Enterprise enterprise=iEnterpriseService.selectEnterprise(id);
+			model.addAttribute("enterprise", enterprise);
+			return "admin/EnterpriseDetails";
+		}
 }

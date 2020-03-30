@@ -47,20 +47,20 @@
 			</thead>
 			<tbody>
 				<tr th:each="graduate :${listGraduate}">
-					<td th:text="${graduate.studentId}"></td>
-					<td th:text="${graduate.studentName}">周元帅</td>
-					<td><span th:if="${graduate.sex}eq'1'">男</span> <span
-						th:if="${graduate.sex}eq'0'">女</span></td>
-					<td th:text="${graduate.phonenumber}">13545698832</td>
-					<td th:text="${graduate.homeAddress}">武汉</td>
-					<td th:text="${graduate.whereabouts}">工作</td>
-					<td><span th:if="${graduate.cause}eq'1'">已就业</span> <span
-						th:if="${graduate.cause}eq'0'">未就业</span></td>
-					<td th:text="${graduate.post}">暂无</td>
-					<td th:text="${graduate.company}">暂无</td>
-					<td><span th:if="${graduate.resumeId}!= null"><a  th:href="@{'/viewResume/'+${graduate.studentId}}"
+					<th th:text="${graduate.studentId}"></th>
+					<th th:text="${graduate.studentName}">周元帅</th>
+					<th><span th:if="${graduate.sex}eq'1'">男</span> <span
+						th:if="${graduate.sex}eq'0'">女</span></th>
+					<th th:text="${graduate.phonenumber}">13545698832</th>
+					<th th:text="${graduate.homeAddress}">武汉</th>
+					<th th:text="${graduate.whereabouts}">工作</th>
+					<th><span th:if="${graduate.cause}eq'1'">已就业</span> <span
+						th:if="${graduate.cause}eq'0'">未就业</span></th>
+					<th th:text="${graduate.post}">暂无</th>
+					<th th:text="${graduate.company}">暂无</th>
+					<th><span th:if="${graduate.resumeId}!= null"><a  th:href="@{'/viewResume/'+${graduate.studentId}}"
 					>查看</a></span> 
-					<span th:if="${graduate.resumeId}== null">暂无</span></td>
+					<span th:if="${graduate.resumeId}== null">暂无</span></th>
 				</tr>
 			</tbody> 
 		</table>

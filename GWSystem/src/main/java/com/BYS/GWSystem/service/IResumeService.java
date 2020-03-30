@@ -17,4 +17,5 @@ public interface IResumeService {
 	//简历查询
 	public ResumeDto selectResumeById(Long id);
 
+
 }

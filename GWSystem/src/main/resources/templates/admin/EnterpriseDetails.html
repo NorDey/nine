@@ -25,26 +25,31 @@
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
 		<h1>
-			<span class="label label-default">公司介绍</span>
+			<span class="label label-default"><img th:src="${enterprise.avatarPath}">公司介绍</span>
 		</h1>
 		<table class="table table-striped">
 			<caption>公司信息</caption>
 			<thead>
 				<tr>
 					<th>工商注册号</th>
-					<th>所在地</th>
+					<th>企业全名</th>
 					<th>联系方式</th>
+					<th>企业人数</th>
+					<th>所在地</th>
 					<th>注册资本</th>
-					<th>公司员工</th>
+					<th>是否上市</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td>工商注册号</td>
-					<td>所在地</td>
-					<td>联系方式</td>
-					<td>注册资本</td>
-					<td>公司员工（人数）</td>
+			<tbody >
+				<tr th:each="enterprise :${enterprise}">
+					<td th:text="${enterprise.registrationId}"></td>
+					<td th:text="${enterprise.enterpriseName}"></td>
+					<td th:text="${enterprise.telephone}"></td>
+					<td th:text="${enterprise.number}"></td>
+					<td th:text="${enterprise.address}"></td>
+					<td th:text="${enterprise.registeredCapital}"></td>
+					<td><span th:if="${enterprise.beListed}eq'1'">已上市</span> <span
+						th:if="${enterprise.beListed}eq'0'">暂未上市</span></td>
 				</tr>
 			</tbody>
 		</table>
@@ -52,22 +57,7 @@
 			<span class="label label-default">公司简介</span>
 		</h3>
 		<textarea class="introduce center-block text-danger"
-			readonly="readonly" rows="15" cols="180">
-				华为技术有限公司成立于1987年，总部位于广东省深圳市龙岗区。
-				[1]  华为是全球领先的信息与通信技术（ICT）解决方案供应商，
-				专注于ICT领域，坚持稳健经营、持续创新、开放合作，在电信运营商、企业、终端和云计算等领域构筑了端到端的解决方案优势，为运营商客户、
-				企业客户和消费者提供有竞争力的ICT解决方案、产品和服务，并致力于实现未来信息社会、构建更美好的全联接世界。
-				2013年，华为首超全球第一大电信设备商爱立信，排名《财富》世界500强第315位。
-				截至2016年底，华为有17多万名员工，华为的产品和解决方案已经应用于全球170多个国家，服务全球运营商50强中的45家及全球1/3的人口。
-				2016年8月，全国工商联发布“2016中国民营企业500强”榜单，华为以3950.09亿元的年营业收入成为500强榜首。8月，华为在"2016中国企业500强"中排名第27位。 
-				[2]  2017年6月6日，《2017年BrandZ最具价值全球品牌100强》公布，华为名列第49位。
-				2019年7月22日美国《财富》杂志发布了最新一期的世界500强名单 ，华为排名第61位。
-				[3-4]  2018年《中国500最具价值品牌》华为居第六位。
-				[5] 12月18日，世界品牌实验室编制的《2018世界品牌500强》揭晓，华为排名第58位。 
-				[6] 2018年2月，沃达丰和华为完成首次5G通话测试
-				[7] 2019年8月9日，华为正式发布鸿蒙系统。
-				[8]  2019年8月22日，2019中国民营企业500强发布，华为投资控股有限公司以7212亿营收排名第一。
-				[9]  2019年12月15日，华为获得了首批2019中国品牌强国盛典年度荣耀品牌的殊荣。
+			readonly="readonly" rows="15" cols="180" th:text="${enterprise.synopsis}">	
 			</textarea>
 	</div>
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>

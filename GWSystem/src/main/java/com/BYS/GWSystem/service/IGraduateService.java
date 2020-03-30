@@ -15,6 +15,9 @@ public interface IGraduateService  {
 	
 	//学生列表
 	public List<GraduateDto> selectCheckingStudents();
+
+	//简历最受欢迎学生列表
+	public List<GraduateDto> selectBestResumeStudents();
 	
 	
 

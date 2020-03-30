@@ -35,6 +35,7 @@ public interface ResumeMapper  {
 	//根据id查询简历详情
 	public ResumeDto selectResumeById(Long id);
 
+
 	
 
 }

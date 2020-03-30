@@ -36,31 +36,17 @@
 					<th>企业名</th>
 					<th>企业工商注册号</th>
 					<th>电话</th>
-					<th>住址</th>
+					<th>地址</th>
 					<th>查看</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>啊</td>
-					<td>滴滴滴</td>
-					<td>联系方式</td>
-					<td>哎哎哎</td>
-					<td><a href="/admin/EnterpriseDetails.html">查看</a></td>
-				</tr>
-				<tr>
-					<td>啊</td>
-					<td>滴滴滴</td>
-					<td>联系方式</td>
-					<td>哎哎哎</td>
-					<td><a href="#">查看</a></td>
-				</tr>
-				<tr>
-					<td>啊</td>
-					<td>滴滴滴</td>
-					<td>联系方式</td>
-					<td>哎哎哎</td>
-					<td><a href="#">查看</a></td>
+				<tr th:each="enterprise :${enterprises}">
+					<th th:text="${enterprise.enterpriseName}">企业名</th>
+					<th th:text="${enterprise.registrationId}">企业工商注册号</th>
+					<th th:text="${enterprise.telephone}">电话</th>
+					<th th:text="${enterprise.address}">地址</th>
+					<th><a th:href="@{'/companyDetails/'+${enterprise.registrationId}}">查看详情</a></th>
 				</tr>
 			</tbody>
 		</table>
