@@ -41,7 +41,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="enterprise :${enterprises}">
+				<tr th:each="enterprise :${enterprises.list}">
 					<th th:text="${enterprise.enterpriseName}">企业名</th>
 					<th th:text="${enterprise.registrationId}">企业工商注册号</th>
 					<th th:text="${enterprise.telephone}">电话</th>
@@ -50,7 +50,41 @@
 				</tr>
 			</tbody>
 		</table>
-	</div>
+		
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				<li th:if="${enterprises.pageNum} gt '4'"><a
+					th:href="@{'/'+${address}+'/1'}" aria-label="Previous"> <span
+						aria-hidden="true">&lt;&lt;</span>
+				</a></li>
+				<li th:if="${enterprises.hasPreviousPage}"><a
+					th:href="@{'/'+${address}+'/'+${enterprises.prePage} }"
+					aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+				</a></li>
+
+				<li th:each="page:${listPages}"
+					th:class="${enterprises.pageNum==page}?'active':'' "><a
+					th:href="@{'/'+${address}+'/'+${page}}" th:text="${page}"> </a></li>
+				<li th:if="${enterprises.hasNextPage}"><a
+					th:href="@{'/'+${address}+'/'+${enterprises.nextPage}}"
+					aria-label="Previous"> <span aria-hidden="true">&gt;</span>
+				</a></li>
+				<li th:if="${enterprises.pageNum} lt ${enterprises.pages-3}">
+					<a th:href="@{'/'+${address}+'/'+${enterprises.pages}}"
+					aria-label="Previous"> <span aria-hidden="true">&gt;&gt;</span>
+				</a>
+				</li>
+				<li><a aria-label="Previous"> 共<span aria-hidden="true"
+						th:text="${enterprises.pages}"></span>页
+				</a></li>
+				<!-- <li ><span aria-label="Previous" style="height:33px" >
+				<input name="Page" type="text" size="4" th:placeholder="${enterprises.pageNum}" > 
+				<input type="submit" name="Submit" value="&gt;&gt;">	
+				</span>
+				</li> -->
+			</ul>
+		</nav>
+		</div>
 	<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
 		<h3>
 			<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>

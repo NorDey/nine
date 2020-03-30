@@ -2,7 +2,9 @@ package com.BYS.GWSystem.service;
 
 import java.util.List;
 
+import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.model.Enterprise;
+import com.github.pagehelper.Page;
 
 public interface IEnterpriseService  {
 
@@ -11,6 +13,7 @@ public interface IEnterpriseService  {
 
 	//查看企业列表
 	public List<Enterprise> selectEnterpriseList(Enterprise enterprise);
+	public Page<Enterprise> PageEnterpriseList(Enterprise enterprise);
 
 	//查看公司详情
 	public Enterprise selectEnterprise(Long id);

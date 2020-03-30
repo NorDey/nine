@@ -26,7 +26,7 @@ public interface GraduateMapper {
 		public int selectGraduateNumber();
 
 		//未编辑简历学生
-		public List<Graduate> selectNotFilledStudent();
+		public List<GraduateDto> selectNotFilledStudent();
 
 		//学生列表
 		public List<GraduateDto> selectCheckingStudents();

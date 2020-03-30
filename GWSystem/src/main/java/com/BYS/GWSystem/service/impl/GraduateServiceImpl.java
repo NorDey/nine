@@ -13,6 +13,7 @@ import com.BYS.GWSystem.mapper.GraduateMapper;
 import com.BYS.GWSystem.mapper.ResumeMapper;
 import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.service.IGraduateService;
+import com.github.pagehelper.Page;
 
 
 @Service
@@ -37,23 +38,12 @@ public class GraduateServiceImpl implements IGraduateService {
 	
 	//未编辑简历学生
 	public List<GraduateDto> selectNotFilled() {
-		List<Graduate> graduates= graduateMapper.selectNotFilledStudent();
-		List<GraduateDto> graduateDtos = new ArrayList<GraduateDto>() ;
-		for (Graduate graduate : graduates) {
-			GraduateDto graduateDto  =new GraduateDto();
-				graduateDto.setStudentId(graduate.getStudentId());
-				graduateDto.setStudentName(graduate.getStudentName());
-				graduateDto.setSex(graduate.getSex());
-				graduateDto.setPhonenumber(graduate.getPhonenumber());
-				graduateDto.setHomeAddress(graduate.getHomeAddress());
-				graduateDto.setAvatarPath(graduate.getAvatarPath());
-				graduateDto.setWhereabouts(graduate.getWhereabouts());
-				graduateDto.setCause(graduate.getCause());
-				graduateDto.setPost(graduate.getPost());
-				graduateDto.setCompany(graduate.getCompany());
-				graduateDtos.add(graduateDto);
-		}
-		return graduateDtos;
+		return graduateMapper.selectNotFilledStudent(); 
+	}
+	//未编辑简历学生分页
+	public Page<GraduateDto> PageNotFilled() {
+		
+		return (Page<GraduateDto>) graduateMapper.selectNotFilledStudent(); 
 	}
 
 	//学生列表
@@ -61,10 +51,20 @@ public class GraduateServiceImpl implements IGraduateService {
 		return graduateMapper.selectCheckingStudents();
 	}
 
+	public Page<GraduateDto> PageCheckingStudents() {
+		return (Page<GraduateDto>) graduateMapper.selectBestResumeStudents();
+	}
 	
 	//最受欢迎学生列表
 	public List<GraduateDto> selectBestResumeStudents() {
 		return graduateMapper.selectBestResumeStudents();
 	}
+
+
+	public Page<GraduateDto> PageBestResumeStudents() {
+		return (Page<GraduateDto>) graduateMapper.selectBestResumeStudents();
+	}
+
+	
 
 }
