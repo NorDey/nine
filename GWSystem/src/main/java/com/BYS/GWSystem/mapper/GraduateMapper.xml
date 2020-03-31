@@ -2,96 +2,148 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.BYS.GWSystem.mapper.GraduateMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="Graduate" type="com.BYS.GWSystem.model.Graduate">
-        <id column="student_id" property="studentId" />
-        <result column="studentName" property="studentName" />
-        <result column="sex" property="sex" />
-        <result column="phonenumber" property="phonenumber" />
-        <result column="homeAddress" property="homeAddress" />
-        <result column="avatarPath" property="avatarPath" />
-        <result column="whereabouts" property="whereabouts" />
-        <result column="cause" property="cause" />
-        <result column="post" property="post" />
-        <result column="company" property="company" />
-        <result column="password" property="password" />
-    </resultMap>
+	<!-- 通用查询映射结果 -->
+	<resultMap id="GraduateResult"
+		type="com.BYS.GWSystem.model.Graduate">
+		<id column="student_id" property="studentId" />
+		<result column="studentName" property="studentName" />
+		<result column="sex" property="sex" />
+		<result column="phonenumber" property="phonenumber" />
+		<result column="homeAddress" property="homeAddress" />
+		<result column="avatarPath" property="avatarPath" />
+		<result column="whereabouts" property="whereabouts" />
+		<result column="cause" property="cause" />
+		<result column="post" property="post" />
+		<result column="company" property="company" />
+		<result column="password" property="password" />
+	</resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="selectEnterpriseVo">
-        select g.student_id, g.studentName, g.sex, g.phonenumber, g.homeAddress, g.avatarPath, g.whereabouts, g.cause, g.post, g.company, g.password
-        from graduate g
-    </sql>
-    
-    <select id="selectGraduateList" parameterType="Graduate" resultMap="Graduate">
-        <include refid="selectEnterpriseVo"/>
-        where 
-        <if test="studentId != null and studentId != 0">
-            g.student_id = #{studentId}
-        </if>
-        <if test="studentName != null and studentName != ''">
-            AND g.studentName like concat('%', #{studentName}, '%')
-        </if>
-        <if test="sex != null and sex != ''">
-            AND g.sex =#{sex}
-        </if>
-        <if test="whereabouts != null and whereabouts != ''">
-            AND g.whereabouts = #{whereabouts}
-        </if>
-        <if test="cause != null and cause != ''">
-            AND g.cause = #{cause}
-        </if>   
-    </select>
-    
-    <insert id="insertGraduate" parameterType="Graduate">
-        insert into Graduate(
-        <if test="studentId != null and studentId != 0">student_id,</if>
-        <if test="studentName != null and studentName != ''">studentName,</if>
-        <if test="sex != null and sex != ''">sex,</if>
-        <if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
-        <if test="homeAddress != null and homeAddress != ''">homeAddress,</if>
-        <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
-        <if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
-        <if test="cause != null and cause != ''">cause,</if>
-        <if test="post != null and post != ''">post,</if>
-        <if test="company != null and company != ''">company,</if>
-        <if test="password != null and password != ''">password</if>
-        )values(
-        <if test="studentId != null and studentId != 0">#{student_id},</if>
-        <if test="studentName != null and studentName != ''">#{studentName},</if>
-        <if test="sex != null and sex != ''">#{sex},</if>
-        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
-        <if test="homeAddress != null and homeAddress != ''">#{homeAddress},</if>
-        <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
-        <if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
-        <if test="cause != null and cause != ''">cause,</if>
-        <if test="post != null and post != ''">post,</if>
-        <if test="company != null and company != ''">company,</if>
-        <if test="password != null and password != ''">password</if>
-        )
-    </insert>
+	<!-- 通用查询结果列 -->
+	<sql id="selectEnterpriseVo">
+		select g.student_id, g.studentName, g.sex, g.phonenumber,
+		g.homeAddress,
+		g.avatarPath, g.whereabouts, g.cause, g.post, g.company,
+		g.password
+		from graduate g
+	</sql>
+
+	<select id="selectGraduateList"
+		parameterType="com.BYS.GWSystem.model.Graduate"
+		resultMap="GraduateResult">
+		<include refid="selectEnterpriseVo" />
+		where
+		<if test="studentId != null and studentId != 0">
+			g.student_id = #{studentId}
+		</if>
+		<if test="studentName != null and studentName != ''">
+			AND g.studentName like concat('%', #{studentName}, '%')
+		</if>
+		<if test="sex != null and sex != ''">
+			AND g.sex =#{sex}
+		</if>
+		<if test="whereabouts != null and whereabouts != ''">
+			AND g.whereabouts = #{whereabouts}
+		</if>
+		<if test="cause != null and cause != ''">
+			AND g.cause = #{cause}
+		</if>
+	</select>
+
+	<select id="selectGraduateNumber" resultType="int">
+		SELECT COUNT(*)
+		FROM graduate
+	</select>
+
+	<select id="selectBestResumeStudents"
+		resultType="com.BYS.GWSystem.dto.GraduateDto">
+		select g.student_id, g.studentName, g.sex, g.phonenumber,
+		g.homeAddress,
+		g.avatarPath, g.whereabouts, g.cause, g.post, g.company,
+		r.resume_id
+		from graduate g LEFT JOIN resume r on
+		g.student_id=r.student_id INNER
+		JOIN (SELECT COUNT(e.registration_id)as
+		count, e.resume_id from
+		enterprise_history e WHERE e.collection=1 GROUP
+		BY e.resume_id order
+		by count desc limit 5)as st on r.resume_id =
+		st.resume_id
+	</select>
+
+	<select id="selectCheckingStudents"
+		resultType="com.BYS.GWSystem.dto.GraduateDto">
+		select g.student_id, g.studentName, g.sex, g.phonenumber,
+		g.homeAddress,
+		g.avatarPath, g.whereabouts, g.cause, g.post, g.company,
+		r.resume_id
+		from graduate g LEFT JOIN resume r on
+		g.student_id=r.student_id
+	</select>
 
 
-<update id="updateGraduate" parameterType="Graduate">
-        update Graduate
-        <set>
-        <if test="studentName != null and studentName != ''">#{studentName},</if>
-        <if test="sex != null and sex != ''">#{sex},</if>
-        <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
-        <if test="homeAddress != null and homeAddress != ''">#{homeAddress},</if>
-        <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
-        <if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
-        <if test="cause != null and cause != ''">cause,</if>
-        <if test="post != null and post != ''">post,</if>
-        <if test="company != null and company != ''">company,</if>
-        <if test="password != null and password != ''">password</if>
-        </set>
-        where student_id = #{studentId}
-    </update>
-    
-    <delete id="deleteGraduate" parameterType="Graduate" >
-    delete from Graduate where student_id = #{studentId}
-    </delete>
+	<select id="selectNotFilledStudent" resultType="com.BYS.GWSystem.dto.GraduateDto">
+		SELECT e.student_id, e.studentName,e.sex, e.phonenumber, e.homeAddress, e.avatarPath, e.whereabouts, e.cause, e.post, e.company,r.resume_id
+		FROM (select g.student_id, g.studentName, g.sex, g.phonenumber,g.homeAddress,g.avatarPath, g.whereabouts, g.cause, g.post, g.company
+		from graduate g where g.student_id not IN(SELECT distinct student_id
+		FROM resume ))as e Left JOIN resume r on r.student_id=e.student_id
+	</select>
+
+
+
+
+
+	<insert id="insertGraduate"
+		parameterType="com.BYS.GWSystem.model.Graduate">
+		insert into Graduate(
+		<if test="studentId != null and studentId != 0">student_id,</if>
+		<if test="studentName != null and studentName != ''">studentName,</if>
+		<if test="sex != null and sex != ''">sex,</if>
+		<if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+		<if test="homeAddress != null and homeAddress != ''">homeAddress,</if>
+		<if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
+		<if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
+		<if test="cause != null and cause != ''">cause,</if>
+		<if test="post != null and post != ''">post,</if>
+		<if test="company != null and company != ''">company,</if>
+		<if test="password != null and password != ''">password</if>
+		)values(
+		<if test="studentId != null and studentId != 0">#{student_id},</if>
+		<if test="studentName != null and studentName != ''">#{studentName},</if>
+		<if test="sex != null and sex != ''">#{sex},</if>
+		<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+		<if test="homeAddress != null and homeAddress != ''">#{homeAddress},</if>
+		<if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
+		<if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
+		<if test="cause != null and cause != ''">cause,</if>
+		<if test="post != null and post != ''">post,</if>
+		<if test="company != null and company != ''">company,</if>
+		<if test="password != null and password != ''">password</if>
+		)
+	</insert>
+
+
+	<update id="updateGraduate"
+		parameterType="com.BYS.GWSystem.model.Graduate">
+		update Graduate
+		<set>
+			<if test="studentName != null and studentName != ''">#{studentName},</if>
+			<if test="sex != null and sex != ''">#{sex},</if>
+			<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+			<if test="homeAddress != null and homeAddress != ''">#{homeAddress},</if>
+			<if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
+			<if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
+			<if test="cause != null and cause != ''">cause,</if>
+			<if test="post != null and post != ''">post,</if>
+			<if test="company != null and company != ''">company,</if>
+			<if test="password != null and password != ''">password</if>
+		</set>
+		where student_id = #{studentId}
+	</update>
+
+	<delete id="deleteGraduate"
+		parameterType="com.BYS.GWSystem.model.Graduate">
+		delete from Graduate where student_id = #{studentId}
+	</delete>
 
 
 </mapper>

@@ -10,7 +10,7 @@ import com.BYS.GWSystem.model.Enterprise;
 public interface EnterpriseMapper {
 	
 	//查询企业
-	public List<Enterprise> selectEnterpriseList();
+	public List<Enterprise> selectEnterpriseList(Enterprise enterprise);
 	
 	//更改
 	public int updateEnterprise(Enterprise enterprise);
@@ -20,5 +20,11 @@ public interface EnterpriseMapper {
 	
 	//删除
 	public int deleteEnterprise(Enterprise enterprise);
+
+	//查询企业总数
+	public int selectEnterpriseNumber();
+
+	//查看公司详情
+	public Enterprise selectEnterprise(Long id);
 	
 }

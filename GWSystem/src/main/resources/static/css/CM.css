@@ -1,0 +1,75 @@
+/*CM发布管理部分*/
+.media input{
+	margin-top: 40px;
+	width: 50%;
+}
+
+/*CI公司介绍部分*/
+
+.introduce{
+	border: none;
+	overflow: hidden;
+}
+.Infochanges{
+	margin-top: 20px;
+	width: 100%;
+}
+
+/*CC收藏部分*/
+.cancel{
+	float: right;
+	margin-top: -25px;
+	margin-bottom: 18px;
+}
+
+.CollectTab tr th{
+	font-size: 20px;
+}
+.CollectTab tr {
+	white-space: nowrap;
+}
+
+/*NH新建招聘*/
+.newHired{
+	width: 50%;
+	margin: 0 auto;
+}
+.txt-HirdMSG{
+	box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	width: 79%;
+	height: 36px;
+	line-height: 36px;
+	vertical-align: middle;
+	color: #1b1b1b;
+	background: 0;
+	background-color: #fff;
+	overflow: hidden;
+	float: left;
+	text-indent: 30px;
+	border: 3px solid #994444;
+	margin-bottom: 20px;
+}
+.alertB{
+	margin-top: auto;
+	width: 20%;
+}
+.longText{
+	height: 50px;
+	width: 98.5%;
+}
+
+.btn{ 
+	background-color:#337AB7;
+	}
+
+.wide{
+	width:50px;
+}
+.wide1{
+	width:200px;
+}
+.wide3{
+	width:400px;
+}

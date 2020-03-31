@@ -1,0 +1,319 @@
+body {
+	font: 14px / 1.5 "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, arial, Tahoma, SimSun, sans-serif, "PingFang SC Regular";
+}
+
+a {
+	text-decoration: none;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+#header {
+	background-color: #fff;
+	width: 100%;
+	height: 33px;
+	border-bottom: 1px solid #f5f5f5;
+	position: relative;
+	z-index: 151;
+	zoom: 1;
+}
+
+.header {
+	margin: 0 auto;
+	width: 1190px;
+	height: 33px;
+	line-height: 33px;
+	color: #666;
+	font-size: 12px;
+	position: relative;
+	background-color: #fff;
+}
+
+.header a.fc_city {
+	color: hotpink;
+	font-weight: bold;
+}
+
+.header a {
+	color: darkgray;
+}
+
+.header .city {
+	float: left;
+}
+
+.header .weather {
+	margin-left: 10px;
+	padding: 0 20px 0 10px;
+	position: relative;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #fff;
+	float: left;
+}
+
+.header_right {
+	float: right;
+}
+
+.header_right .userInfo,
+.userInfo .reg_login {
+	float: right;
+	padding: 0 10px;
+}
+
+.navtable{
+	width: 100px;
+	background-color: #FFFFFF;
+	z-index: 999;
+}
+.navtable dl dt a{
+	font: "黑体";
+	color: #994444;
+}
+/*header的部分结束*/
+
+.clearfix:after {
+	content: "\0020";
+	display: block;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+
+.navbar,
+.navbar .container-fluid,
+.nav {
+	float: right;
+	height: 33PX;
+	position: relative;
+	margin-top: -5px;
+}
+
+.search {
+	height: 109px
+}
+
+.searchWrap {
+	padding: 24px 0 7px;
+	width: 1190px;
+	margin: 0 auto;
+}
+
+.GWLogo {
+	width: 200px;
+	height: 45px;
+	background-position: -24px -76px;
+	margin: 0 8px 0 40px;
+	position: relative;
+	top: -2px;
+	display: block;
+	float: left;
+	text-indent: -9999px;
+	cursor: pointer;
+}
+
+.txt-search {
+	box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	width: 493px;
+	height: 36px;
+	line-height: 36px;
+	vertical-align: middle;
+	color: #1b1b1b;
+	background: 0;
+	background-color: #fff;
+	overflow: hidden;
+	float: left;
+	text-indent: 30px;
+	border: 3px solid #994444;
+	border-right: 0;
+}
+
+.btn-s {
+	width: 121px;
+	height: 44px;
+	font-size: 16px;
+	color: #fff;
+	letter-spacing: 0;
+	background: #994444;
+	cursor: pointer;
+	border: 3px solid #994444;
+	position: relative;
+	margin-top: -8px;
+	float: left;
+}
+
+.edit-eara {
+	position: relative;
+	margin-top: -43px;
+}
+
+.btn-post {
+	width: 150px;
+	height: 42px;
+	line-height: 42px;
+	background: #994444;
+	font-size: 16px;
+	color: #fff;
+	display: block;
+	text-align: center;
+	letter-spacing: 0;
+	margin: 0 40px 0 0;
+}
+
+.btn-change {
+	line-height: 26px;
+	font-size: 12px;
+	color: #666;
+	display: block;
+	text-align: center;
+	letter-spacing: 0;
+	margin: 0 40px 0 0;
+}
+
+
+/*图标和搜索发帖按钮end*/
+
+.content {
+	width: 1190px;
+	margin: 0 auto;
+}
+
+.tab-nav {
+	border-bottom: 10px solid #ffffff;
+	position: relative;
+	background-color: #fff;
+}
+
+.tab-nav-l {
+	padding: 2px 5px;
+}
+
+.tab-category {
+	float: left;
+	width: 120px;
+	height: 128px;
+	text-align: center;
+	position: relative;
+}
+
+dl {
+	display: block;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+}
+
+dt {
+	display: block;
+}
+
+.tab-category .dt {
+	height: 86px;
+	line-height: 38px;
+	font-weight: bold;
+}
+
+.tab-category .dt a {
+	font-size: 16px;
+	color: #333;
+}
+
+.tab-category .tabIcon {
+	display: block;
+	margin: 0 auto;
+	width: 100px;
+	height: 48px;
+	background-image: url(//sta.ganjistatic1.com/src/image/v6/homepage/tabIcon.png);
+	background-repeat: no-repeat;
+}
+.tab-category .tabIcon.tabIcon-1 {
+	background-position: -35px -44px;
+}
+
+.tab-category .tabIcon.tabIcon-2 {
+	background-position: -235px -44px;
+}
+
+.tab-category .tabIcon.tabIcon-3 {
+	background-position: -435px -44px;
+}
+
+.tab-category .tabIcon.tabIcon-4 {
+	background-position: -635px -44px;
+}
+
+/*.tab-category .tabIcon.tabIcon-5 {
+	background-position: -835px -44px;
+}*/
+
+.tab-category .tabIcon.tabIcon-6 {
+	background-position: -1035px -44px;
+}
+
+.tab-category .tabIcon.tabIcon-7 {
+	background-position: -1235px -44px;
+}
+.job-list{
+	width: 450px;
+	height: 120px;
+}
+/*Switchlogin*/
+.marg400{
+	width: 380px;
+}
+.hidelog{
+	padding-top: 10px;
+	margin:0px;
+	width: 1400px;
+	
+}
+.hidelog nav form input{
+	padding: 20px;
+	margin: 20px;
+	width: 1190px;
+}
+.carouselDiy{
+	width: 1190px;
+	height: 400px;
+	margin-top: 200px;
+}
+.log-Manager{
+	width: 34%;
+	margin-top: 6px;
+}
+.log-Company{
+	width: 34%;
+	margin:0 auto;
+}
+.log-Student{
+	margin-top: -44px;
+	width: 34%;
+}
+/*加s是hide部分的调整*/
+
+.log-Managers {
+	margin-top: 6px;
+	background-image: url(../img/final.gif);
+	back
+}
+.log-Companys{
+	width: 34%;
+	margin:0 auto;
+}
+.log-Students{
+	margin-top: 0px;
+	width: 34%;
+}
+.alpha{
+	background-color: rgba(0,0,0,0);
+	filter:Alpha(opacity=100)
+}

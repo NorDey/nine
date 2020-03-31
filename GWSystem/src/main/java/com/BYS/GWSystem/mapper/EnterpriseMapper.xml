@@ -3,7 +3,7 @@
 <mapper namespace="com.BYS.GWSystem.mapper.EnterpriseMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="Enterprise" type="com.BYS.GWSystem.model.Enterprise">
+    <resultMap id="EnterpriseResult" type="com.BYS.GWSystem.model.Enterprise">
         <id column="registration_id" property="registrationId" />
         <result column="enterpriseName" property="enterpriseName" />
         <result column="telephone" property="telephone" />
@@ -20,31 +20,39 @@
     <!-- 通用查询结果列 -->
     <sql id="selectEnterpriseVo">
        select e.registration_id, e.enterpriseName, e.telephone, e.password, e.number, e.avatarPath, e.synopsis, e.address, e.registeredCapital, e.beListed, e.examination
-       form enterprise e
+       from enterprise e
     </sql>
     
-    <select id="selectEnterpriseList" parameterType="Enterprise" resultMap="Enterprise">
+    <select id="selectEnterpriseList" parameterType="com.BYS.GWSystem.model.Enterprise" resultMap="EnterpriseResult">
         <include refid="selectEnterpriseVo"/>
         where 
-        <if test="registrationId != null and registrationId != 0">
-            e.registration_id = #{registrationId}
-        </if>
+        <if test="examination != null and examination != ''">
+            e.examination = #{examination}
+        </if> 
         <if test="enterpriseName != null and enterpriseName != ''">
-            AND e.enterpriseName like concat('%', #{enterpriseName}, '%')
+             AND e.enterpriseName like concat('%', #{enterpriseName}, '%')
         </if>
         <if test="address != null and address != ''">
             AND e.address like concat('%', #{address}, '%')
         </if>
         <if test="beListed != null and beListed != ''">
             AND e.beListed = #{enterpriseName}
-        </if>
-        <if test="examination != null and examination != ''">
-            AND e.examination = #{examination}
-        </if>   
+        </if>  
     </select>
 
+	<select id="selectEnterpriseNumber" resultType="int">
+		SELECT COUNT(*) FROM enterprise
+	</select>
 
-	<insert id="insertEnterprise" parameterType="Enterprise">
+
+<select id="selectEnterprise" resultMap="EnterpriseResult" parameterType="Long">
+		<include refid="selectEnterpriseVo"/>
+		where e.registration_id=#{id}
+	</select>
+
+
+
+	<insert id="insertEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise">
         insert into enterprise(
         <if test="registrationId != null and registrationId != 0">registration_id,</if>
         <if test="enterpriseName != null and enterpriseName != ''">enterpriseName,</if>
@@ -63,17 +71,17 @@
         <if test="telephone != null and telephone != 0">#{telephone},</if>
         <if test="password != null and password != ''">#{password},</if>
         <if test="number != null and number != ''">#{number},</if>
-        <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
-        <if test="synopsis != null and synopsis != ''">synopsis,</if>
-        <if test="address != null and address != ''">address,</if>
-        <if test="registeredCapital != null and registeredCapital != ''">registeredCapital,</if>
-        <if test="beListed != null and beListed != ''">beListed,</if>
-        <if test="examination != null and examination != ''">examination</if>
+        <if test="avatarPath != null and avatarPath != ''">#{avatarPath},</if>
+        <if test="synopsis != null and synopsis != ''">#{synopsis},</if>
+        <if test="address != null and address != ''">#{address},</if>
+        <if test="registeredCapital != null and registeredCapital != ''">#{registeredCapital},</if>
+        <if test="beListed != null and beListed != ''">#{beListed},</if>
+        <if test="examination != null and examination != ''">#{examination}</if>
         )
     </insert>
     
     
-    <update id="updateEnterprise" parameterType="Enterprise">
+    <update id="updateEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise">
         update enterprise
         <set>
             <if test="enterpriseName != null and enterpriseName != ''">enterpriseName = #{enterpriseName},</if>
@@ -90,7 +98,7 @@
         where registration_id = #{registrationId}
     </update>
     
-    <delete id="deleteEnterprise" parameterType="Enterprise" >
+    <delete id="deleteEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise" >
     delete from enterprise where registration_id = #{registrationId}
     </delete>
     

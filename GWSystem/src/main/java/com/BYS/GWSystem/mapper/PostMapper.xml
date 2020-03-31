@@ -3,7 +3,7 @@
 <mapper namespace="com.BYS.GWSystem.mapper.PostMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="Post" type="com.BYS.GWSystem.model.Post">
+    <resultMap id="PostResult" type="com.BYS.GWSystem.model.Post">
         <id column="post_id" property="postId" />
         <result column="registration_id" property="registrationId" />
         <result column="responsible" property="responsible" />
@@ -22,7 +22,7 @@
    	 	from post p
     </sql>
     
-    <select id="selectPostList" parameterType="Post" resultMap="Post">
+    <select id="selectPostList" parameterType="com.BYS.GWSystem.model.Post" resultMap="PostResult">
         <include refid="selectPostVo"/>
         where 
         <if test="postId != null and postId != ''">
@@ -42,7 +42,21 @@
         </if>   
     </select>
     
-    <insert id="insertPost" parameterType="Post">
+    <select id="selectRecruitmentCompaniesNumber" resultType="int">
+    		SELECT COUNT(distinct registration_id) FROM post
+    </select>
+    
+    
+    <select id="selectPostNumber" resultType="int">
+    		SELECT COUNT(*) FROM post
+    </select>
+    
+    <select id="selectFollowNumber" resultType="int">
+    		SELECT COUNT(distinct post_id) FROM student_history where collection=1
+    </select>
+    
+    
+    <insert id="insertPost" parameterType="com.BYS.GWSystem.model.Post">
         insert into Post(
         <if test="postId != null and postId != ''">post_id,</if>
         <if test="registrationId != null and registrationId != 0">registration_id,</if>
@@ -68,7 +82,7 @@
         )
     </insert>
     
-    <update id="updatePost" parameterType="Post">
+    <update id="updatePost" parameterType="com.BYS.GWSystem.model.Post">
         update Post
         <set>
         	<if test="registrationId != null and registrationId != 0">registration_id=#{registrationId},</if>
@@ -83,7 +97,7 @@
         where post_id = #{postId}
     </update>
     
-    <delete id="deletePost" parameterType="Post" >
+    <delete id="deletePost" parameterType="com.BYS.GWSystem.model.Post" >
     delete from Post where post_id = #{postId}
     </delete>
 

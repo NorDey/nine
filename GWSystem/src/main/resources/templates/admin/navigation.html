@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="nav">
+		<div class="header">
+			<div class="city">
+				<a href="#" class="fc_city">武汉</a> <a href="#">[切换城市]</a>
+			</div>
+			<div class="weather">
+				<div class="weather_head">
+					<img class="w_ico"
+						src="//sta.ganjistatic1.com/src/image/v6/homepage/weather/m/阵雨.png"
+						alt=""> <span>天气&nbsp;</span> <span>&nbsp;温度&nbsp;</span> <span>&nbsp;污染指数&nbsp;</span>
+				</div>
+			</div>
+			<div class="header_right">
+				<nav class="navbar" role="navigation">
+					<div class="container-fluid">
+						<div>
+							<ul class="nav navbar-nav">
+								<li class="dropdown"><a href="#" class="dropdown-toggle in"
+									data-toggle="dropdown"> 个人账号 <b class="caret"></b>
+								</a>
+									<ul class="dropdown-menu in">
+										<li><a href="#">更改密码</a></li>
+										<li><a href="#">退出登录</a></li>
+									</ul></li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle in"
+									data-toggle="dropdown"> 查看详情 <b class="caret"></b>
+								</a>
+									<ul class="dropdown-menu in">
+										<li><a href="/admin/EnApproval.html">新上线公司<span
+												class="badge alert-danger">50</span> <!--数字徽章-->
+										</a></li>
+										<li><a href="#">最新岗位<span class="badge alert-danger">20</span></a>
+										</li>
+										<li class="divider"></li>
+										<li><a href="/CheckingStudents/1">学生</a></li>
+										<li><a href="/enterpriseList/1">企业</a></li>
+									</ul></li>
+								<li class="active"><a href="/home">主页</a></li>
+								<li><a href="#" data-toggle="collapse" data-target="#guide">毕业生操作</a>
+									<nav id="guide"
+										class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
+										<dl>
+											<dt>
+												<a href="#">导入毕业生</a>
+											</dt>
+										</dl>
+										<dl>
+											<dt>
+												<a href="#">导出毕业生</a>
+											</dt>
+										</dl>
+									</nav></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<!--head引用-->
+		<!--search引用-->
+		<div class="search">
+			<div class="clearfix searchWrap">
+				<img class="GWLogo" src="img/文字logo.JPG">
+				<div class="search-div">
+					<form class="clearfix" name="search" method="post" action
+						onsubmit="return false">
+						<i class="search-ico"></i> <input name="search_keyword"
+							type="text" class="txt-search" id="search_keyword" value
+							autocomplete="off" x-webkit-speech
+							x-webkit-grammar="builtin:translate" placeholder="搜索企业/岗位" />
+						<!--x-webkit-speech x-webkit-grammar语音输入支持-->
+						<input data-role="btn" name="search" id="search_button"
+							type="submit" value="搜 索" class="btn-s" />
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--head引用-->
+	</div>
+</body>
+</html>

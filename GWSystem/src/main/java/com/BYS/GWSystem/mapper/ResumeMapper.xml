@@ -2,110 +2,155 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.BYS.GWSystem.mapper.ResumeMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="Resume" type="com.BYS.GWSystem.model.Resume">
-        <id column="resume_id" property="resumeId" />
-        <result column="birthday" property="birthday" />
-        <result column="nativePlace" property="nativePlace" />
-        <result column="name" property="name" />
-        <result column="phonenumber" property="phonenumber" />
-        <result column="mailbox" property="mailbox" />
-        <result column="currentResidence" property="currentResidence" />
-        <result column="education" property="education" />
-        <result column="graduateSchool" property="graduateSchool" />
-        <result column="intention" property="intention" />
-        <result column="speciality" property="speciality" />
-        <result column="experience" property="experience" />
-        <result column="selfEvaluation" property="selfEvaluation" />
-        <result column="creationTime" property="creationTime" />
-        <result column="student_id" property="studentId" />
-    </resultMap>
+	<!-- 通用查询映射结果 -->
+	<resultMap id="ResumeResult"
+		type="com.BYS.GWSystem.model.Resume">
+		<id column="resume_id" property="resumeId" />
+		<result column="birthday" property="birthday" />
+		<result column="nativePlace" property="nativePlace" />
+		<result column="name" property="name" />
+		<result column="phonenumber" property="phonenumber" />
+		<result column="mailbox" property="mailbox" />
+		<result column="currentResidence" property="currentResidence" />
+		<result column="education" property="education" />
+		<result column="graduateSchool" property="graduateSchool" />
+		<result column="intention" property="intention" />
+		<result column="speciality" property="speciality" />
+		<result column="experience" property="experience" />
+		<result column="selfEvaluation" property="selfEvaluation" />
+		<result column="creationTime" property="creationTime" />
+		<result column="student_id" property="studentId" />
+	</resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="selectResumeVo">
-        select   r.resume_id, r.birthday, r.nativePlace, r.name, r.phonenumber, r.mailbox, r.currentResidence, r.education, r.graduateSchool, r.intention, r.speciality, r.experience, r.selfEvaluation, r.creationTime, r.student_id
-    form  resume r
-    </sql>
-    
-    <select id="selectResumeList" parameterType="Resume" resultMap="Resume">
-        <include refid="selectResumeVo"/>
-        where 
-        <if test="resumeId != null and resumeId != 0">
-           r.resume_id = #{resumeId}
-        </if>
-        <if test="nativePlace != null and nativePlace != ''">
-            AND r.nativePlace = #{nativePlace}
-        </if>
-        <if test="currentResidence != null and currentResidence != ''">
-            AND r.currentResidence = #{currentResidence}
-        </if>
-        <if test="education != null and education != ''">
-            AND r.education = #{education}
-        </if>
-        <if test="speciality != null and speciality != ''">
-             AND r.speciality like concat('%', #{speciality}, '%')
-        </if>   
-    </select>
-    
-    <insert id="insertResume" parameterType="Resume">
-        insert into Resume(
-        <if test="resumeId != null and resumeId != 0">resume_id,</if>
-        <if test="birthday != null and birthday != ''">birthday,</if>
-        <if test="nativePlace != null and nativePlace != ''">nativePlace,</if>
-        <if test="name != null and name != ''">name,</if>
-        <if test="phonenumber != null and phonenumber != 0">phonenumber,</if>
-        <if test="mailbox != null and mailbox != ''">mailbox,</if>
-        <if test="currentResidence != null and currentResidence != ''">currentResidence,</if>
-        <if test="education != null and education != ''">education,</if>
-        <if test="graduateSchool != null and graduateSchool != 0">graduateSchool,</if>
-        <if test="intention != null and intention != ''">intention,</if>
-        <if test="speciality != null and speciality != ''">speciality,</if>
-        <if test="experience != null and experience != ''">experience,</if>
-        <if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation</if>
-      	creationTime,
-        <if test="student_id != null and student_id != 0">studentId</if>
-        
-        )values(
-        <if test="resumeId != null and resumeId != 0">#{resume_id},</if>
-        <if test="birthday != null and birthday != ''">#{birthday},</if>
-        <if test="nativePlace != null and nativePlace != ''">#{nativePlace},</if>
-        <if test="name != null and name != ''">#{name},</if>
-        <if test="phonenumber != null and phonenumber != 0">#{phonenumber},</if>
-        <if test="mailbox != null and mailbox != ''">#{mailbox},</if>
-        <if test="currentResidence != null and currentResidence != ''">#{currentResidence},</if>
-        <if test="education != null and education != ''">#{education},</if>
-        <if test="graduateSchool != null and graduateSchool != 0">#{graduateSchool},</if>
-        <if test="intention != null and intention != ''">#{intention},</if>
-        <if test="speciality != null and speciality != ''">#{speciality},</if>
-        <if test="experience != null and experience != ''">#{experience},</if>
-        <if test="selfEvaluation != null and selfEvaluation != ''">#{selfEvaluation}</if>
-      	sysdate(), 
-        <if test="student_id != null and student_id != 0">#{studentId}</if>
-        )
-    </insert>
-    
-    <update id="updateResume" parameterType="Resume">
-        update Resume
-        <set>
-       	<if test="birthday != null and birthday != ''">birthday=#{birthday},</if>
-        <if test="nativePlace != null and nativePlace != ''">nativePlace=#{nativePlace},</if>
-        <if test="name != null and name != ''">name=#{name},</if>
-        <if test="phonenumber != null and phonenumber != 0">phonenumber=#{phonenumber},</if>
-        <if test="mailbox != null and mailbox != ''">mailbox=#{mailbox},</if>
-        <if test="currentResidence != null and currentResidence != ''">currentResidence=#{currentResidence},</if>
-        <if test="education != null and education != ''">education=#{education},</if>
-        <if test="graduateSchool != null and graduateSchool != 0">graduateSchool=#{graduateSchool},</if>
-        <if test="intention != null and intention != ''">intention=#{intention},</if>
-        <if test="speciality != null and speciality != ''">speciality=#{speciality},</if>
-        <if test="experience != null and experience != ''">experience=#{experience},</if>
-        <if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation=#{selfEvaluation}</if>
-        </set>
-        where resume_id = #{resumeId}
-    </update>
-    
-    <delete id="deleteResume" parameterType="Resume" >
-    delete from Resume where  resume_id = #{resumeId}
-    </delete>
-    
+	<!-- 通用查询结果列 -->
+	<sql id="selectResumeVo">
+		select r.resume_id, r.birthday, r.nativePlace, r.name,
+		r.phonenumber,
+		r.mailbox, r.currentResidence, r.education,
+		r.graduateSchool,
+		r.intention, r.speciality, r.experience,
+		r.selfEvaluation,
+		r.creationTime, r.student_id
+		from resume r
+	</sql>
+
+	<select id="selectResumeList"
+		parameterType="com.BYS.GWSystem.model.Resume" resultMap="ResumeResult">
+		<include refid="selectResumeVo" />
+		where
+		<if test="resumeId != null and resumeId != 0">
+			r.resume_id = #{resumeId}
+		</if>
+		<if test="nativePlace != null and nativePlace != ''">
+			AND r.nativePlace = #{nativePlace}
+		</if>
+		<if test="currentResidence != null and currentResidence != ''">
+			AND r.currentResidence = #{currentResidence}
+		</if>
+		<if test="education != null and education != ''">
+			AND r.education = #{education}
+		</if>
+		<if test="speciality != null and speciality != ''">
+			AND r.speciality like concat('%', #{speciality}, '%')
+		</if>
+	</select>
+
+	<select id="selectEditedResumeNumber" resultType="Integer">
+		SELECT
+		COUNT(distinct student_id) FROM resume;
+	</select>
+
+	<select id="selectResumeNumber" resultType="Integer">
+		SELECT COUNT(*) FROM
+		resume;
+	</select>
+
+	<select id="ConcernedAbout" resultType="Integer"
+		parameterType="int">
+		SELECT COUNT(bb.a) FROM (SELECT COUNT(*) a from enterprise_history
+		WHERE collection=1
+		GROUP BY resume_id
+		<if test="Small != null">HAVING a &gt; #{Small}</if>
+		<if test="large != null">and a &lt; #{large}</if>
+		) as bb
+	</select>
+
+	<select id="selectFollowNumber" resultType="Integer">
+		SELECT COUNT(distinct
+		resume_id) FROM enterprise_history where collection=1
+	</select>
+
+	<select id="selectResumeById"
+		resultType="com.BYS.GWSystem.dto.ResumeDto" parameterType="Long">
+		select
+		r.resume_id,g.avatarPath,r.birthday,r.nativePlace,r.`name`,g.sex,r.phonenumber,r.mailbox,r.currentResidence,r.education,r.graduateSchool,r.intention,r.speciality,r.experience,r.selfEvaluation,r.creationTime,r.student_id
+		from graduate g INNER JOIN resume r on g.student_id=r.student_id AND
+		g.student_id=#{id}
+	</select>
+
+
+	<insert id="insertResume"
+		parameterType="com.BYS.GWSystem.model.Resume">
+		insert into Resume(
+		<if test="resumeId != null and resumeId != 0">resume_id,</if>
+		<if test="birthday != null and birthday != ''">birthday,</if>
+		<if test="nativePlace != null and nativePlace != ''">nativePlace,</if>
+		<if test="name != null and name != ''">name,</if>
+		<if test="phonenumber != null and phonenumber != 0">phonenumber,</if>
+		<if test="mailbox != null and mailbox != ''">mailbox,</if>
+		<if test="currentResidence != null and currentResidence != ''">currentResidence,</if>
+		<if test="education != null and education != ''">education,</if>
+		<if test="graduateSchool != null and graduateSchool != 0">graduateSchool,</if>
+		<if test="intention != null and intention != ''">intention,</if>
+		<if test="speciality != null and speciality != ''">speciality,</if>
+		<if test="experience != null and experience != ''">experience,</if>
+		<if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation</if>
+		creationTime,
+		<if test="student_id != null and student_id != 0">studentId</if>
+
+		)values(
+		<if test="resumeId != null and resumeId != 0">#{resume_id},</if>
+		<if test="birthday != null and birthday != ''">#{birthday},</if>
+		<if test="nativePlace != null and nativePlace != ''">#{nativePlace},</if>
+		<if test="name != null and name != ''">#{name},</if>
+		<if test="phonenumber != null and phonenumber != 0">#{phonenumber},</if>
+		<if test="mailbox != null and mailbox != ''">#{mailbox},</if>
+		<if test="currentResidence != null and currentResidence != ''">#{currentResidence},</if>
+		<if test="education != null and education != ''">#{education},</if>
+		<if test="graduateSchool != null and graduateSchool != 0">#{graduateSchool},</if>
+		<if test="intention != null and intention != ''">#{intention},</if>
+		<if test="speciality != null and speciality != ''">#{speciality},</if>
+		<if test="experience != null and experience != ''">#{experience},</if>
+		<if test="selfEvaluation != null and selfEvaluation != ''">#{selfEvaluation}</if>
+		sysdate(),
+		<if test="student_id != null and student_id != 0">#{studentId}</if>
+		)
+	</insert>
+
+	<update id="updateResume"
+		parameterType="com.BYS.GWSystem.model.Resume">
+		update Resume
+		<set>
+			<if test="birthday != null and birthday != ''">birthday=#{birthday},</if>
+			<if test="nativePlace != null and nativePlace != ''">nativePlace=#{nativePlace},</if>
+			<if test="name != null and name != ''">name=#{name},</if>
+			<if test="phonenumber != null and phonenumber != 0">phonenumber=#{phonenumber},</if>
+			<if test="mailbox != null and mailbox != ''">mailbox=#{mailbox},</if>
+			<if test="currentResidence != null and currentResidence != ''">currentResidence=#{currentResidence},</if>
+			<if test="education != null and education != ''">education=#{education},</if>
+			<if test="graduateSchool != null and graduateSchool != 0">graduateSchool=#{graduateSchool},</if>
+			<if test="intention != null and intention != ''">intention=#{intention},</if>
+			<if test="speciality != null and speciality != ''">speciality=#{speciality},</if>
+			<if test="experience != null and experience != ''">experience=#{experience},</if>
+			<if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation=#{selfEvaluation}</if>
+		</set>
+		where resume_id = #{resumeId}
+	</update>
+
+	<delete id="deleteResume"
+		parameterType="com.BYS.GWSystem.model.Resume">
+		delete from Resume where resume_id = #{resumeId}
+	</delete>
+
 
 </mapper>
