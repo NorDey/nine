@@ -16,6 +16,7 @@ import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.service.IAdminService;
 import com.BYS.GWSystem.service.impl.AdminServiceImpl;
 
+@ResponseBody
 @Controller
 public class TestController {
 
