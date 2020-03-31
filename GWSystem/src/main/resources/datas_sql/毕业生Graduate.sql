@@ -2,7 +2,7 @@
 SQLyog Ultimate v11.27 (32 bit)
 MySQL - 5.5.27 : Database - gwsystemdb
 *********************************************************************
-*/
+*/
 
 /*!40101 SET NAMES utf8 */;
 
