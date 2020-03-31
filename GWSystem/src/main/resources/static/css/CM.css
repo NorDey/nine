@@ -1,10 +1,10 @@
-/*CM鍙戝竷绠＄悊閮ㄥ垎*/
+/*CM发布管理部分*/
 .media input{
 	margin-top: 40px;
 	width: 50%;
 }
 
-/*CI鍏徃浠嬬粛閮ㄥ垎*/
+/*CI公司介绍部分*/
 
 .introduce{
 	border: none;
@@ -15,7 +15,7 @@
 	width: 100%;
 }
 
-/*CC鏀惰棌閮ㄥ垎*/
+/*CC收藏部分*/
 .cancel{
 	float: right;
 	margin-top: -25px;
@@ -29,7 +29,7 @@
 	white-space: nowrap;
 }
 
-/*NH鏂板缓鎷涜仒*/
+/*NH新建招聘*/
 .newHired{
 	width: 50%;
 	margin: 0 auto;

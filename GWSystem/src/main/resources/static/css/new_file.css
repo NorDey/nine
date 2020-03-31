@@ -1,5 +1,5 @@
 body {
-	font: 14px / 1.5 "Hiragino Sans GB", "Microsoft YaHei", å¾®è½¯é›…é»‘, arial, Tahoma, SimSun, sans-serif, "PingFang SC Regular";
+	font: 14px / 1.5 "Hiragino Sans GB", "Microsoft YaHei", Î¢ÈíÑÅºÚ, arial, Tahoma, SimSun, sans-serif, "PingFang SC Regular";
 }
 
 a {
@@ -73,10 +73,10 @@ a {
 	z-index: 999;
 }
 .navtable dl dt a{
-	font: "é»‘ä½“";
+	font: "ºÚÌå";
 	color: #994444;
 }
-/*headerçš„éƒ¨åˆ†ç»“æŸ*/
+/*headerµÄ²¿·Ö½áÊø*/
 
 .clearfix:after {
 	content: "\0020";
@@ -179,7 +179,7 @@ a {
 }
 
 
-/*å›¾æ ‡å’Œæœç´¢å‘å¸–æŒ‰é’®end*/
+/*Í¼±êºÍËÑË÷·¢Ìû°´Å¥end*/
 
 .content {
 	width: 1190px;
@@ -298,7 +298,7 @@ dt {
 	margin-top: -44px;
 	width: 34%;
 }
-/*åŠ sæ˜¯hideéƒ¨åˆ†çš„è°ƒæ•´*/
+/*¼ÓsÊÇhide²¿·ÖµÄµ÷Õû*/
 
 .log-Managers {
 	margin-top: 6px;
