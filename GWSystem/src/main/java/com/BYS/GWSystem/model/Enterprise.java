@@ -1,6 +1,8 @@
 package com.BYS.GWSystem.model;
 import java.io.Serializable;
 
+import org.springframework.context.annotation.ComponentScan;
+
 /**
  * <p>
  * 
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * @author wxx
  * @since 2020-03-07
  */
+@ComponentScan(value = "com.BYS.GWSystem.model")
 public class Enterprise implements Serializable {
 
     private static final long serialVersionUID = 1L;

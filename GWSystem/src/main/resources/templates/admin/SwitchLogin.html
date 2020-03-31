@@ -62,11 +62,11 @@
 					<div class="panel-body">
 						<!--企业登陆-->
 						<nav id="Companylogin" class="  col-lg-12 col-4   bg-light navtable hidelog ">
-							<form class="clearfix" name="search" method="post" action="#" th:action="@{/CI}" th:object="${}">
-								<input name="username" type="text" class="username" id="UN" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入企业工商号"  th:field=*{id}/>
+							<form class="clearfix" name="search" method="post" action="#" th:action="@{/CI}" th:object="${enterprise}">
+								<input name="username" type="text" class="username" id="UN" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入企业工商号"  th:field=*{registrationId}/>
 								<!--x-webkit-speech x-webkit-grammar语音输入支持-->
 								<br />
-								<input name="PWD" type="password" class="PWD" id="PWD" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入密码"  th:field=*{id} />
+								<input name="PWD" type="password" class="PWD" id="PWD" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入密码"  th:field=*{password} />
 								<br /><br />
 								<input name="Companylog" id="Companylog" type="submit" value="登陆" class="btn-s" />
 								<input name="Companyfog" id="Companyfog" type="button" value="忘记密码" class="btn-s" />

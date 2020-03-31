@@ -3,7 +3,8 @@ package com.BYS.GWSystem.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.BYS.GWSystem.model.Enterprise;
 
 @Controller
 public class PublicController {
@@ -15,6 +16,7 @@ public class PublicController {
 	//登录页面
 	@GetMapping("/switchLog")
 	public String log(Model model) {
+		model.addAttribute("enterprise", new Enterprise());
 		return "admin/SwitchLogin";
 	}
 }
