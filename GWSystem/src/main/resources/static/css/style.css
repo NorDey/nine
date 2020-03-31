@@ -6,4 +6,25 @@ body {
 	padding: 0px;
 }
 .mui-content{height: 100%;}
-
+#quality{
+	width: 100%;
+	height: 30px;
+	font-size: 18px;
+	color: #fff;
+	letter-spacing: 25px;
+	background: #994444;
+	cursor: pointer;
+	border: 3px solid #994444;
+	position: relative;
+	float: left;
+	text-align: center;
+	text-decoration: none;
+}
+.qualityShowImText{
+	font-weight: 500;
+	font-size: large;
+	color: #994444;
+}
+.qualityShow{
+	font-style: oblique;
+}
