@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<head>
+<link rel="stylesheet" href="../css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="../css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<title>毕业生中心</title>
+</head>
+
+<body>
+	<div id="header">
+		<div class="header">
+			<div class="city">
+
+				</ul>
+				<a href="#" class="fc_city">武汉</a> <a href="#">[切换城市]</a>
+			</div>
+			<div class="weather">
+				<div class="weather_head">
+					<img class="w_ico"
+						src="//sta.ganjistatic1.com/src/image/v6/homepage/weather/m/阵雨.png"
+						alt=""> <span>天气&nbsp;</span> <span>&nbsp;温度
+						37℃&nbsp;</span> <span>&nbsp;污染指数 一级&nbsp;</span>
+				</div>
+			</div>
+			<div class="header_right">
+				<nav class="navbar" role="navigation">
+					<div class="container-fluid">
+						<div>
+							<ul class="nav navbar-nav">
+								<li class="dropdown"><a href="#" class="dropdown-toggle in"
+									data-toggle="dropdown"> 个人中心 <b class="caret"></b>
+								</a>
+									<ul class="dropdown-menu in">
+										<li><a href="#">个人信息 <!--数字徽章-->
+										</a></li>
+										<li><a href="#">我的简历</a></li>
+										<li class="divider"></li>
+										<li><a href="#">投递记录</a></li>
+									</ul></li>
+								<li class="active"><a href="#">帮助中心</a></li>
+								<li><a href="#" data-toggle="collapse" data-target="#guide">关于我们</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div class="userInfo">
+					<div class="reg_login">
+						<span class="clearfix"> 欢迎你：Leo </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div
+		style="width: 78%; height: 100px; margin: auto; text-align: center; padding-top: 30px;">
+		<ul class="nav nav-pills">
+			<li class="active"><a href="#">搜索岗位</a></li>
+			<li><a href="#">搜索毕业生信息</a></li>
+			<li><a href="#">个人简历</a></li>
+		</ul>
+	</div>
+	<!--图标和搜索发帖按钮end-->
+	<div class="content">
+		<h1>
+			<img class="img-circle" src="../headportrait/cxk.JPG"
+				style="border: 3px solid red; width: 50px; height: 50px;"> <span
+				class="label label-default">个人信息</span> <span
+				class="label label-default"><a href="/test">修改个人信息</a></span>
+		</h1>
+		<table class="table table-striped">
+			<tr>
+				<th>姓名:</th>
+
+				<th>Leo</th>
+			</tr>
+			<tr>
+				<th>性别:</th>
+
+				<th>男</th>
+			</tr>
+			<tr>
+				<th>联系方式:</th>
+
+				<th>15171122729</th>
+			</tr>
+			<tr>
+				<th>家庭住址:</th>
+
+				<th>湖北荆州</th>
+			</tr>
+			<tr>
+				<th>毕业去向:</th>
+
+				<th>广东深圳</th>
+			</tr>
+
+			<tr>
+				<th>就业情况:</th>
+
+				<th>已就业</th>
+			</tr>
+			<tr>
+				<th>工作岗位:</th>
+
+				<th>Java软件开发工程师</th>
+			</tr>
+			<tr>
+				<th>就业单位:</th>
+
+				<th>腾讯科技</th>
+			</tr>
+		</table>
+
+	</div>
+	<div
+		style="width: 78%; height: 240px; margin: auto; text-align: center;">
+		<div>
+			<h1>
+				<span class="label label-default">点击头像更换个人头像</span>
+			</h1>
+			<div
+				style="position: relative; border: 5px solid lightblue; width: 150px; height: 150px; margin: 5px auto; border-radius: 50%;">
+				<form action="#" th:action="@{/graduate/uploadPictures}" th:object="${graduate}" method="post" enctype="multipart/form-data">
+					<img src="../headportrait/cs.jpg" alt="选择并上传头像" id="avatar_img"
+						style="width: 140px; height: 140px; left: 0; top: 0; border-radius: 50%;" />
+					<input type="file" id="avatar_file" name="avatar_file"
+						accept="image/*"
+						style="width: 100%; height: 100%; opacity: 0; position: absolute; left: 0; top: 0;" />
+					<br> <input type="submit" class="btn-post" value="确认上传">
+				</form>
+			</div>
+			<br />
+		</div>
+	</div>
+</body>
+
+</html>
