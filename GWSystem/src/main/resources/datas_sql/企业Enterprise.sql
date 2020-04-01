@@ -21,7 +21,7 @@ USE `gwsystemdb`;
 DROP TABLE IF EXISTS `enterprise`;
 
 CREATE TABLE `enterprise` (
-  `registration_id` bigint(18) NOT NULL,
+  `registration_id` varchar(18) NOT NULL,
   `enterpriseName` varchar(25) DEFAULT NULL,
   `telephone` bigint(11) DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL,
