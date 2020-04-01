@@ -53,11 +53,11 @@ public class CompanyMainCtroller {
     //form提交映射到此处，@ModelAttribute映射页面的th:object，从而将form捕获并封装成Enterprise对象
     @PostMapping("/CI")
     public String greetingSubmit(@ModelAttribute Enterprise greeting) {
-    	System.out.println(greeting.getRegistrationId());
-    	System.out.println(greeting.getPassword());
+    	
     	greeting.getRegistrationId();
     	greeting.getPassword();
-        return "Company/CompanyInfo"; //提交表单后跳转的页面
+    	if(true) { return "Company/CompanyInfo";}
+        return "Public/SwitchLogin"; //提交表单后跳转的页面
     }
 	
 	@GetMapping("/CIS")//公司的主页信息（给别人看，不可以跳转修改）

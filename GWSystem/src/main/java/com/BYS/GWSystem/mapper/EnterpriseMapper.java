@@ -9,9 +9,12 @@ import com.BYS.GWSystem.model.Enterprise;
 @Mapper
 public interface EnterpriseMapper {
 	
-	//查询企业
+	//查询一部分企业
 	public List<Enterprise> selectEnterpriseList(Enterprise enterprise);
 	
+	//查询某个企业
+	public Enterprise selectEnterprise(Enterprise enterprise);
+		
 	//更改
 	public int updateEnterprise(Enterprise enterprise);
 	
