@@ -17,7 +17,7 @@ public class Enterprise implements Serializable {
     private static final long serialVersionUID = 1L;
     
     //工商注册号
-    private Long registrationId;
+    private String registrationId;
 
     //企业全名
     private String enterpriseName;
@@ -56,7 +56,7 @@ public class Enterprise implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Enterprise(Long registrationId, String enterpriseName, String telephone, String password, String number,
+	public Enterprise(String registrationId, String enterpriseName, String telephone, String password, String number,
 			String avatarPath, String synopsis, String address, String registeredCapital, Integer beListed,
 			Integer examination) {
 		super();
@@ -73,11 +73,11 @@ public class Enterprise implements Serializable {
 		this.examination = examination;
 	}
 
-	public Long getRegistrationId() {
+	public String getRegistrationId() {
         return registrationId;
     }
 
-    public void setRegistrationId(Long registrationId) {
+    public void setRegistrationId(String registrationId) {
         this.registrationId = registrationId;
     }
 
