@@ -23,10 +23,8 @@ public class PublicController {
 		//跳转到毕业生登录页面的OBJ
 		model.addAttribute("graduate", new Graduate());
 		return "Public/SwitchLogin";
+		
 	}
 	
-	/*
-	 * @PostMapping("/graduate/login") // 毕业生登录 public String login(Model model) {
-	 * model.addAttribute("graduate", new Graduate()); return "graduate/Register"; }
-	 */
+	
 }
