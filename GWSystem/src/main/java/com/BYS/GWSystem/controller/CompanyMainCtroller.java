@@ -14,32 +14,32 @@ public class CompanyMainCtroller {
 	
 	@GetMapping("/CC")//公司收藏
 	public String CC(Model model) {
-		return "admin/CompanyCollection";
+		return "Company/CompanyCollection";
 	}
 	
 	@GetMapping("/CHIC")//公司修改招聘信息
 	public String CHIC(Model model) {
-		return "admin/CompanyHiredInfoChange";
+		return "Company/CompanyHiredInfoChange";
 	}
 	
 	@GetMapping("/CHIQ")//公司招聘的详情（给未登录看）
 	public String CHIQ(Model model) {
-		return "admin/CompanyHiredInfoQuality";
+		return "Company/CompanyHiredInfoQuality";
 	}
 	
 	@GetMapping("/CHIS")//公司招聘信息简要列表（给未登录看）
 	public String CHIS(Model model) {
-		return "admin/CompanyHiredInfoToShow";
+		return "Company/CompanyHiredInfoToShow";
 	}
 	
 	@GetMapping("/CH")//公司浏览简历的历史记录
 	public String CH(Model model) {
-		return "admin/CompanyHistory";
+		return "Company/CompanyHistory";
 	}
 	
 	/*
 	 * @GetMapping("/CI") public String CI(Model model) { return
-	 * "admin/CompanyInfo"; }
+	 * "Company/CompanyInfo"; }
 	 */
 	
 	//公司的主页信息（可以修改）
@@ -57,27 +57,27 @@ public class CompanyMainCtroller {
     	System.out.println(greeting.getPassword());
     	greeting.getRegistrationId();
     	greeting.getPassword();
-        return "admin/CompanyHistory"; //提交表单后跳转的页面
+        return "Company/CompanyHistory"; //提交表单后跳转的页面
     }
 	
 	@GetMapping("/CIS")//公司的主页信息（给别人看，不可以跳转修改）
 	public String CIS(Model model) {
-		return "admin/CompanyInfoToShow";
+		return "Company/CompanyInfoToShow";
 	}
 	
 	@GetMapping("/CM")//公司招聘信息简要列表（可以修改）
 	public String CM(Model model) {
-		return "admin/CompanyManger";
+		return "Company/CompanyManger";
 	}
 	
 	@GetMapping("/CNH")//公司新建招聘信息
 	public String CNH(Model model) {
-		return "admin/CompanyNewHired";
+		return "Company/CompanyNewHired";
 	}
 	
 	@GetMapping("/CRCI")//公司主页信息修改页面
 	public String CRCI(Model model) {
-		return "admin/CompanyRebuildCompanyInfo";
+		return "Company/CompanyRebuildCompanyInfo";
 	}
 	
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<title th:text="${title==null} ? 'notitle' : ${title}">notitle</title>
+
+<!-- Required meta tags -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+	<header th:fragment="header">
+		<div id="header">
+			<div class="header">
+				<div class="city">
+
+					</ul>
+					<a href="#" class="fc_city">武汉</a> <a href="#">[切换城市]</a>
+				</div>
+				<div class="weather">
+					<div class="weather_head">
+						<img class="w_ico"
+							src="//sta.ganjistatic1.com/src/image/v6/homepage/weather/m/阵雨.png"
+							alt=""> <span>天气&nbsp;</span> <span>&nbsp;温度&nbsp;</span> <span>&nbsp;污染指数&nbsp;</span>
+					</div>
+				</div>
+				<div class="header_right">
+					<nav class="navbar" role="navigation">
+						<div class="container-fluid">
+							<div>
+								<ul class="nav navbar-nav">
+									<li class="dropdown"><a href="#"
+										class="dropdown-toggle in" data-toggle="dropdown"> 个人中心 <b
+											class="caret"></b>
+									</a>
+										<ul class="dropdown-menu in">
+											<li><a href="#">我的发布<span class="badge alert-danger">50</span>
+													<!--数字徽章-->
+											</a></li>
+											<li><a href="#">我的求职<span class="badge alert-danger">10</span></a>
+											</li>
+											<li><a href="#">我的招聘<span class="badge alert-danger">20</span></a>
+											</li>
+											<li class="divider"></li>
+											<li><a href="#">我的收藏</a></li>
+											<li class="divider"></li>
+											<li><a href="#">个人信息</a></li>
+										</ul></li>
+									<li class="active"><a href="#">帮助中心</a></li>
+									<li><a href="#" data-toggle="collapse"
+										data-target="#guide">网页导航</a>
+										<nav id="guide"
+											class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
+											<dl>
+												<dt>
+													<a>XX招聘XX</a>
+												</dt>
+												<dd>全职</dd>
+												<dd>兼职</dd>
+												<dd>高薪</dd>
+											</dl>
+											<dl>
+												<dt>
+													<a>XX求职XX</a>
+												</dt>
+												<dd>技能培训</dd>
+												<dd>职场技巧</dd>
+												<dd>职业培训</dd>
+												<dd>简历库</dd>
+											</dl>
+										</nav></li>
+
+								</ul>
+							</div>
+						</div>
+					</nav>
+					<div class="userInfo">
+						<div class="reg_login">
+							<span class="clearfix"> <a>登陆</a> <i>/</i> <a>注册</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+	</header>
+	<!--	头部结束-->
+	<footer th:fragment="footer">
+		<div>
+			<p>禁止复制、使用本网站上的文章、影像、照片等著作</p>
+			<p>このウェブサイト上の文章、映像、写真などの著作物の全部、または一部を了承なく複製、使用することを禁じます</p>
+			<p>Copyright ©︎GWSystem. AII Right Reserved</p>
+		</div>
+	</footer>
+</body>
+</html>
