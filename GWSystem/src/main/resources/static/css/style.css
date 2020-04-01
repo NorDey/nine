@@ -28,3 +28,28 @@ body {
 .qualityShow{
 	font-style: oblique;
 }
+.register-student{
+	width: 50%;
+	margin-top: 6px;
+	float: left;
+}
+.register-Company{
+	width: 50%;
+	margin:0 auto;
+	float: left;
+}
+
+/*加s是hide部分的调整*/
+
+.register-students {
+	margin-top: 6px;
+	width: 100%;
+	/* background-image: url(../img/final.gif); */
+	/* back */
+}
+.register-Companys{
+
+	width: 100%;
+	margin:0 auto;
+}
+
