@@ -51,4 +51,9 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 		return enterpriseMapper.selectEnterpriseOne(registrationId);
 	}
 
+	@Override
+	public int updateCInfo(Enterprise greeting) {
+		return enterpriseMapper.updateEnterprise(greeting);
+	}
+
 }

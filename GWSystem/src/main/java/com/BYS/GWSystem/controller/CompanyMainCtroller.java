@@ -1,11 +1,17 @@
 package com.BYS.GWSystem.controller;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.tags.Param;
 
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.service.IEnterpriseService;
@@ -55,14 +61,13 @@ public class CompanyMainCtroller {
 
 	// form提交映射到此处，@ModelAttribute映射页面的th:object，从而将form捕获并封装成Enterprise对象
 	@PostMapping("/CI")
-	public String greetingSubmit(@ModelAttribute Enterprise greeting,Model model) {
+	public String CIgreetingSubmit(@ModelAttribute Enterprise greeting,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(greeting.getRegistrationId());
 		if (enterpriseInfo.getPassword().equals(greeting.getPassword()) ) {
-			model.addAttribute("Name", enterpriseInfo.getEnterpriseName());
 			model.addAttribute("enterprises", enterpriseInfo);
-			return "Company/CompanyInfo";
+			return "Company/CompanyInfo";// 提交表单后跳转的页面
 		}
-		return "Public/SwitchLogin"; // 提交表单后跳转的页面
+		return "Public/SwitchLogin"; // 密码验证失败
 	}
 
 	@GetMapping("/CIS") // 公司的主页信息（给别人看，不可以跳转修改）
@@ -80,9 +85,26 @@ public class CompanyMainCtroller {
 		return "Company/CompanyNewHired";
 	}
 
+	/*
+	 * @GetMapping("/CRCI/{enterprises.registrationId}") // 公司主页信息修改页面 public String
+	 * CRCI(@PathVariable("enterprises.registrationId") String registrationId,Model
+	 * model) { System.out.println(registrationId); return
+	 * "Company/CompanyRebuildCompanyInfo"; }
+	 */
+	
 	@GetMapping("/CRCI") // 公司主页信息修改页面
-	public String CRCI(Model model) {
+	public String CRCIs(Model model, HttpServletRequest request) {
+		String registrationId = request.getParameter("registrationId");//获取公司的注册ID
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);
 		return "Company/CompanyRebuildCompanyInfo";
+	}
+	@PostMapping("/CRCI")
+	public String CRCIgreetingSubmit(@ModelAttribute Enterprise greeting,Model model) {
+		System.out.println(greeting.toString());
+		System.out.println(iEnterpriseService.updateCInfo(greeting));
+		model.addAttribute("enterprises",greeting);
+		return "Company/CompanyRebuildCompanyInfo"; 
 	}
 
 }

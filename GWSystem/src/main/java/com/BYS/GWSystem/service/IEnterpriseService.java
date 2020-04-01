@@ -21,5 +21,7 @@ public interface IEnterpriseService {
 
 	// 企业登陆验证ID并返回信息
 	public Enterprise selectEnterpriseOne(String registrationId);
+	//更新企业信息 
+	public int updateCInfo(Enterprise greeting);
 
 }

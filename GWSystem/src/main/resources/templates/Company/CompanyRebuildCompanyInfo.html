@@ -39,10 +39,10 @@
 		</div>
 		<!--图标和搜索发帖按钮end-->
 		<div class="content">
-			<form action="" method="post">
+			<form  method="post" action="#" th:action="@{/CRCI}" th:object="${enterprises}">
 				<h1><span class="label label-default">公司介绍修改</span></h1>
 				<table class="table table-striped">
-					<caption>公司名字</caption>
+					<caption th:text="${enterprises.enterpriseName==null} ? '未知' : ${enterprises.enterpriseName}">公司名字</caption>
 					<thead>
 						<tr>
 							<th>工商注册号</th>
@@ -54,16 +54,17 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>工商注册号</td>
-							<td><input type="" name="" id="" value="湖北武汉" /></td>
-							<td><input type="" name="" id="" value="110" /></td>
-							<td><input type="" name="" id="" value="100块" /></td>
-							<td><input type="" name="" id="" value="10万人" /></td>
+							<td><input type="text" disabled="disabled" th:value="${enterprises.registrationId==null} ? '未知' : ${enterprises.registrationId}"><input type="hidden" th:value="${enterprises.registrationId==null} ? '未知' : ${enterprises.registrationId}" th:field=*{registrationId}></td>
+							<!-- 不要问我为什么用隐藏域兄弟，th:filed标签只能读取这个要不然读取不到值!!!! -->
+							<td><input th:value="${enterprises.address==null} ? '未知' : ${enterprises.address}" placeholder="输入新的地址"type="text" th:field=*{address}/></td>
+							<td><input th:value="${enterprises.telephone==null} ? '未知' : ${enterprises.telephone}" placeholder="输入新的联系电话" type="text" th:field=*{telephone}/></td>
+							<td><input th:value="${enterprises.registeredCapital==null} ? '未知' : ${enterprises.registeredCapital}" placeholder="修改注册资本" type="text" th:field=*{registeredCapital}/></td>
+							<td><input th:value="${enterprises.number==null} ? '未知' : ${enterprises.number}" placeholder="修改企业目前员工人数" type="text" th:field=*{number} /></td>
 						</tr>
 					</tbody>
 				</table>
 				<h3><span class="label label-default">公司简介</span></h3>
-				<textarea class="introduce center-block text-danger" rows="15" cols="180">
+				<textarea class="introduce center-block text-danger" rows="15" cols="180" th:text="${enterprises.synopsis==null} ? '未知' : ${enterprises.synopsis}" th:field=*{synopsis}>
 				点击此处直接修改简介
 				点击此处直接修改简介	
 				点击此处直接修改简介	
