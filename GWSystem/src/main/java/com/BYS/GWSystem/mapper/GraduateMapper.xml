@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.BYS.GWSystem.mapper.GraduateMapper">
-
+	
+	<select id="queryStudentById" resultType="com.BYS.GWSystem.model.Graduate" parameterType="Long">
+		SELECT * FROM graduate WHERE student_id=#{id}
+	</select>
+	
+	<update id="updatePicByid" parameterType="com.BYS.GWSystem.model.Graduate">
+		UPDATE graduate SET avatarPath=#{avatarPath} WHERE student_id=#{studentId}
+	</update>
 	<!-- 通用查询映射结果 -->
 	<resultMap id="GraduateResult"
 		type="com.BYS.GWSystem.model.Graduate">
