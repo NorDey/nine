@@ -45,7 +45,7 @@
 	</select>
 
 
-<select id="selectEnterprise" resultMap="EnterpriseResult" parameterType="Long">
+<select id="selectEnterprise" resultMap="EnterpriseResult" parameterType="String">
 		<include refid="selectEnterpriseVo"/>
 		where e.registration_id=#{id}
 	</select>

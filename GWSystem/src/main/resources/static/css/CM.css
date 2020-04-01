@@ -1,10 +1,10 @@
-/*CM·¢²¼¹ÜÀí²¿·Ö*/
+/*CMï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .media input{
 	margin-top: 40px;
 	width: 50%;
 }
 
-/*CI¹«Ë¾½éÉÜ²¿·Ö*/
+/*CIï¿½ï¿½Ë¾ï¿½ï¿½ï¿½Ü²ï¿½ï¿½ï¿½*/
 
 .introduce{
 	border: none;
@@ -15,7 +15,7 @@
 	width: 100%;
 }
 
-/*CCÊÕ²Ø²¿·Ö*/
+/*CCï¿½Õ²Ø²ï¿½ï¿½ï¿½*/
 .cancel{
 	float: right;
 	margin-top: -25px;
@@ -29,7 +29,7 @@
 	white-space: nowrap;
 }
 
-/*NHÐÂ½¨ÕÐÆ¸*/
+/*NHï¿½Â½ï¿½ï¿½ï¿½Æ¸*/
 .newHired{
 	width: 50%;
 	margin: 0 auto;
@@ -58,4 +58,15 @@
 .longText{
 	height: 80px;
 	width: 98.5%;
+}
+
+
+.wide{
+	width:50px;
+}
+.wide1{
+	width:200px;
+}
+.wide3{
+	width:400px;
 }

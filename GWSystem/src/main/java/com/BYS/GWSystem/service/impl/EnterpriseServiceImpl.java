@@ -41,7 +41,7 @@ public class EnterpriseServiceImpl  implements IEnterpriseService {
 	}
 
 	//查看公司详情
-	public Enterprise selectEnterprise(Long id) {
+	public Enterprise selectEnterprise(String id) {
 		return enterpriseMapper.selectEnterprise(id);
 	}
 
