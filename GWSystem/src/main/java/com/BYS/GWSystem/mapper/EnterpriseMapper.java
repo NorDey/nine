@@ -25,6 +25,6 @@ public interface EnterpriseMapper {
 	public int selectEnterpriseNumber();
 
 	//查看公司详情
-	public Enterprise selectEnterprise(Long id);
+	public Enterprise selectEnterprise(String id);
 	
 }

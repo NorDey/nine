@@ -137,7 +137,7 @@ public class HomeController {
 
 	// 企业详情
 	@GetMapping("/companyDetails/{id}")
-	public String showCompanyDetails(@PathVariable(name = "id") Long id, Model model) {
+	public String showCompanyDetails(@PathVariable(name = "id") String id, Model model) {
 		Enterprise enterprise = iEnterpriseService.selectEnterprise(id);
 		model.addAttribute("enterprise", enterprise);
 		return "admin/EnterpriseDetails";
