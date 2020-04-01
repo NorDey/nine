@@ -1,6 +1,5 @@
 package com.BYS.GWSystem.controller;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,15 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.dto.HomeDto;
 import com.BYS.GWSystem.dto.ResumeDto;
 import com.BYS.GWSystem.model.Enterprise;
-import com.BYS.GWSystem.model.Graduate;
-import com.BYS.GWSystem.model.Resume;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IGraduateService;
 import com.BYS.GWSystem.service.IPostService;
