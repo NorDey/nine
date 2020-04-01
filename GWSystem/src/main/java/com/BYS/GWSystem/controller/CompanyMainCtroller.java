@@ -47,7 +47,7 @@ public class CompanyMainCtroller {
     @GetMapping("/CI")
     public String greetingForm(Model model) {
         model.addAttribute("enterprise", new Enterprise());
-        return "LogMsg"; //返回表单输入页
+        return "Public/SwitchLogin"; //返回表单输入页
     }
 
     //form提交映射到此处，@ModelAttribute映射页面的th:object，从而将form捕获并封装成Enterprise对象
@@ -57,7 +57,7 @@ public class CompanyMainCtroller {
     	System.out.println(greeting.getPassword());
     	greeting.getRegistrationId();
     	greeting.getPassword();
-        return "Company/CompanyHistory"; //提交表单后跳转的页面
+        return "Company/CompanyInfo"; //提交表单后跳转的页面
     }
 	
 	@GetMapping("/CIS")//公司的主页信息（给别人看，不可以跳转修改）
