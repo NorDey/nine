@@ -62,7 +62,7 @@
 				</nav>
 				<div class="userInfo">
 					<div class="reg_login">
-						<span class="clearfix"> 欢迎你：Leo </span>
+						<span class="clearfix"> 欢迎你：<a th:text="${graduate.studentName==null} ? '毕业生' : ${graduate.studentName}">毕业生</a> </span>
 					</div>
 				</div>
 			</div>
@@ -79,7 +79,8 @@
 	<!--图标和搜索发帖按钮end-->
 	<div class="content">
 		<h1>
-			<img class="img-circle" src="../headportrait/cxk.JPG"
+			<!-- <img class="img-circle" src="../headportrait/cxk.JPG" -->
+			<img class="img-circle" th:src="@{../headportrait/}+${graduate.avatarPath}"
 				style="border: 3px solid red; width: 50px; height: 50px;"> <span
 				class="label label-default">个人信息</span> <span
 				class="label label-default"><a href="/test">修改个人信息</a></span>
@@ -87,44 +88,43 @@
 		<table class="table table-striped">
 			<tr>
 				<th>姓名:</th>
-
-				<th>Leo</th>
+				<th th:text="${graduate.studentName}"></th>
 			</tr>
 			<tr>
 				<th>性别:</th>
 
-				<th>男</th>
+				<th th:text="${graduate.sex}"></th>
 			</tr>
 			<tr>
 				<th>联系方式:</th>
 
-				<th>15171122729</th>
+				<th th:text="${graduate.phonenumber}"></th>
 			</tr>
 			<tr>
 				<th>家庭住址:</th>
 
-				<th>湖北荆州</th>
+				<th th:text="${graduate.homeAddress}"></th>
 			</tr>
 			<tr>
 				<th>毕业去向:</th>
 
-				<th>广东深圳</th>
+				<th th:text="${graduate.whereabouts}"></th>
 			</tr>
 
 			<tr>
 				<th>就业情况:</th>
 
-				<th>已就业</th>
+				<th th:text="${graduate.cause==1}?'已就业':'未就业'"></th>
 			</tr>
 			<tr>
 				<th>工作岗位:</th>
 
-				<th>Java软件开发工程师</th>
+				<th th:text="${graduate.post}"></th>
 			</tr>
 			<tr>
 				<th>就业单位:</th>
 
-				<th>腾讯科技</th>
+				<th th:text="${graduate.company}"></th>
 			</tr>
 		</table>
 
@@ -138,7 +138,7 @@
 			<div
 				style="position: relative; border: 5px solid lightblue; width: 150px; height: 150px; margin: 5px auto; border-radius: 50%;">
 				<form action="#" th:action="@{/graduate/uploadPictures}" th:object="${graduate}" method="post" enctype="multipart/form-data">
-					<img src="../headportrait/cs.jpg" alt="选择并上传头像" id="avatar_img"
+					<img src="../headportrait/cs.JPG" th:src="@{../headportrait/}+${graduate.avatarPath}" alt="选择并上传头像" id="avatar_img"
 						style="width: 140px; height: 140px; left: 0; top: 0; border-radius: 50%;" />
 					<input type="file" id="avatar_file" name="avatar_file"
 						accept="image/*"
