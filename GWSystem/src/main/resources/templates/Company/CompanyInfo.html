@@ -41,7 +41,7 @@
 		<div class="content">
 			<h1><span class="label label-default">公司介绍</span></h1>
 			<table class="table table-striped">
-				<caption>公司名字</caption>
+				<caption th:text="${enterprises.enterpriseName==null} ? '未知公司名' : ${enterprises.enterpriseName}">公司名字</caption>
 				<thead>
 					<tr>
 						<th>工商注册号</th>
@@ -53,16 +53,16 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>工商注册号</td>
-						<td>所在地</td>
-						<td>联系方式</td>
-						<td>注册资本</td>
-						<td>公司员工（人数）</td>
+						<th th:text="${enterprises.registrationId==null} ? '未知' : ${enterprises.registrationId}">工商注册号</th>
+						<th th:text="${enterprises.address==null} ? '未知' : ${enterprises.address}">所在地</th>
+						<th th:text="${enterprises.telephone==null} ? '未知' : ${enterprises.telephone}">联系方式</th>
+						<th th:text="${enterprises.registeredCapital==null} ? '未知' : ${enterprises.registeredCapital}">注册资本</th>
+						<th th:text="${enterprises.number==null} ? '未知' : ${enterprises.number}">公司员工</th>
 					</tr>
 				</tbody>
 			</table>
 			<h3><span class="label label-default">公司简介</span></h3>
-			<textarea class="introduce center-block text-danger" readonly="readonly" rows="15" cols="180">
+			<textarea class="introduce center-block text-danger" readonly="readonly" rows="15" cols="180" th:text="${enterprises.synopsis==null} ? '未知' : ${enterprises.synopsis}">
 				华为技术有限公司成立于1987年，总部位于广东省深圳市龙岗区。
 				[1]  华为是全球领先的信息与通信技术（ICT）解决方案供应商，
 				专注于ICT领域，坚持稳健经营、持续创新、开放合作，在电信运营商、企业、终端和云计算等领域构筑了端到端的解决方案优势，为运营商客户、

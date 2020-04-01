@@ -57,9 +57,9 @@ public class CompanyMainCtroller {
 	@PostMapping("/CI")
 	public String greetingSubmit(@ModelAttribute Enterprise greeting,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(greeting.getRegistrationId());
-
 		if (enterpriseInfo.getPassword().equals(greeting.getPassword()) ) {
 			model.addAttribute("Name", enterpriseInfo.getEnterpriseName());
+			model.addAttribute("enterprises", enterpriseInfo);
 			return "Company/CompanyInfo";
 		}
 		return "Public/SwitchLogin"; // 提交表单后跳转的页面
