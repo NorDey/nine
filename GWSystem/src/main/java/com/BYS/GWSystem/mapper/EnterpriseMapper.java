@@ -13,7 +13,7 @@ public interface EnterpriseMapper {
 	public List<Enterprise> selectEnterpriseList(Enterprise enterprise);
 	
 	//查询某个企业
-	public Enterprise selectEnterprise(Enterprise enterprise);
+	public Enterprise selectEnterpriseOne(String registrationId);
 		
 	//更改
 	public int updateEnterprise(Enterprise enterprise);

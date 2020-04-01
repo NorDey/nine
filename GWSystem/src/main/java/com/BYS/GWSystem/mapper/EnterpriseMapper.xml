@@ -23,6 +23,12 @@
        from enterprise e
     </sql>
     
+    <select id="selectEnterpriseOne" parameterType="String" resultType="com.BYS.GWSystem.model.Enterprise">
+     <include refid="selectEnterpriseVo"/>
+     where
+            e.registration_id = #{registrationId}
+    </select>
+    
     <select id="selectEnterpriseList" parameterType="com.BYS.GWSystem.model.Enterprise" resultMap="EnterpriseResult">
         <include refid="selectEnterpriseVo"/>
         where 
