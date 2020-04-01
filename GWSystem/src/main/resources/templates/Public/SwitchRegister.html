@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<link rel="stylesheet" href="../css/new_file.css" />
+		<link rel="stylesheet" href="../css/style.css" />
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<meta charset="UTF-8">
+		<title>注册中心</title>
+	</head>
+
+	<body>
+		
+		<!---------------------------------->
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default">
+
+				<div class="panel-heading fl register-student">
+					<h4 class="panel-title">
+				<a  data-toggle="collapse" data-parent="#accordion" 
+				   href="#StudentRegister" >
+					学生注册
+				</a>
+			</h4>
+				</div>
+
+				<div id="StudentRegister" class="panel-collapse collapse  register-students">
+					<div class="panel-body">
+						<!--学生注册-->
+						<nav id="StudentRegister" class=" col-lg-12 col-4   bg-light navtable hidelog alpha">
+							<form class="clearfix" name="search" method="post" action onsubmit="return false">
+								<table class="table table-striped">
+									<tr>
+										<th>学号：</th>
+										<th><input type="text" name="student_id" maxlength="20" id="student_id" placeholder="请输入学号"
+											onblur="checkStudent_id()" />
+											<span id="student_id_span" style="color: red"></span></th>
+									</tr>
+									<tr>
+										<th>姓名：</th>
+										<th><input type="text" name="studentName" maxlength="20" id="studentName" placeholder="请输入真实姓名"
+												onblur="checkName()" />
+											<span id="studentName_span" style="color: red"></span></th>
+									</tr>
+									<tr>
+										<th>性别：</th>
+										<th>
+											<input type="radio" name="sex" id="sex1" value="1" checked />男
+											<input type="radio" name="sex" id="sex2" value="0" />女
+									</tr>
+									<tr>
+										<th>联系电话：</th>
+										<th><input type="text" name="phonenumber" id="phonenumber" maxlength="20" placeholder="请输入本人电话"
+												onblur="checkphone()" /> <span id="phonenumber_span" style="color: red"></span></th>
+									</tr>
+									<tr>
+										<th>家庭住址：</th>
+										<th><input type="text" name="homeAddress" id="homeAddress" maxlength="20" placeholder="请输入常住地址" /> </th>
+									</tr>
+									<tr>
+										<th>毕业去向：</th>
+										<th><input type="text" name="whereabouts" id="whereabouts" maxlength="20" placeholder="请输入毕业去向" /> </th>
+									</tr>
+									<tr>
+										<th>就业情况：</th>
+										<th>
+											<input type="radio" name="cause" id="cause1" value="1" checked />已就业
+											<input type="radio" name="cause" id="cause2" value="0" />未就业
+									</tr>
+									<tr>
+										<th>工作岗位：</th>
+										<th><input type="text" name="post" id="post" maxlength="20" placeholder="请输入工作岗位" /> </span></th>
+									</tr>
+									<tr>
+										<th>就业单位：</th>
+										<th><input type="text" name="company" id="company" maxlength="20" placeholder="请输入就业单位" /> </th>
+									</tr>
+									<tr>
+										<th>密码：</th>
+										<th><input type="password" name="password" id="password" maxlength="20" placeholder="请输入6位以上的密码"
+												onblur="checkPwd()" />
+											<span id="password_span" style="color: red"></span></th>
+									</tr>
+									<tr>
+										<th>确认密码：</th>
+										<th><input type="password" name="confirm" id="confirm" maxlength="20" placeholder="请再次输入密码"
+												onblur="checkconfirm()" />
+											<span id="confirm_span" style="color: red"></span></th>
+									</tr>
+						
+									<tr>
+										<th><input type="submit" id="sbmt" value="注册" onclick=" return OncheckFormStudent()" class="btn-post" />
+										</th>
+										<th>
+											<input type="reset" value="重置" class="btn-post" />
+										</th>
+									</tr>
+								</table>
+							</form>
+						</nav>
+					</div>
+				</div>
+
+			</div>
+
+			<!--第 2 部分-->
+			<div class="panel panel-default">
+				<div class="panel-heading register-Company ">
+					<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" 
+				   href="#CompanylRegister">
+					企业注册
+				</a>
+			</h4>
+				</div>
+				<div id="CompanylRegister" class="panel-collapse collapse register-Companys fl">
+					<div class="panel-body">
+						<!--企业注册-->
+						<nav id="CompanylRegister" class="  col-lg-12 col-4   bg-light navtable hidelog ">
+							<form class="clearfix" name="register" method="post" action onsubmit="return false">
+								<table class="table table-striped">
+									<tr>
+										<th>工商注册号：</th>
+										<th><input type="text" name="registrationId" maxlength="20" id="registrationId" placeholder="请输入真实工商注册号"
+												onblur="checkRegistrationId()" />
+											<span id="registrationId_span" style="color: red"></span></th>
+									</tr>
+									<tr>
+										<th>企业全名：</th>
+										<th><input type="text" name="enterpriseName" maxlength="20" id="enterpriseName" placeholder="请输入真实企业全名"
+												onblur="checkEnterpriseName()"  />
+											<span id="enterpriseName_span" style="color: red"></span></th>
+									</tr>
+									<tr>
+										<th>联系电话：</th>
+										<th><input type="text" name="telephone" id="telephone" maxlength="20" placeholder="请输入本人电话"
+												required /></th>
+									</tr>
+									<tr>
+										<th>密码：</th>
+										<th><input type="password" name="password" id="password" maxlength="20" placeholder="请输入6位以上的密码"
+										 required/>
+										</th>
+									</tr>
+									<tr>
+										<th>企业人数：</th>
+										<th><input type="text" name="number" maxlength="20" id="number" placeholder="可直接填文字单位"/>
+										</th>
+									</tr>
+									<tr>
+										<th style="padding-top:30px ;">公司简介：</th>
+										<th>
+											<textarea name="synopsis" id="synopsis" style="width: 400px;height: 50px;resize:none;" >请输入公司简介</textarea>
+										</th>
+									</tr>
+									<tr>
+										<th>企业地址：</th>
+										<th><input type="text" name="address" id="address" maxlength="20" placeholder="请输入企业地址" 
+											onblur="checkAddress()" /> 
+											<span id="address_span" style="color: red"></span></th>
+									</tr>
+									<tr>
+										<th>企业注册资本：</th>
+										<th><input type="text" name="registeredCapital" id="registeredCapital" maxlength="20" placeholder="请输入企业注册资本"
+											onblur="checkRegisteredCapital()" />
+											<span id="registeredCapital_span" style="color: red"></span> </th>
+									</tr>
+									<tr>
+										<th>企业是否上市：</th>
+										<th>
+											<input type="radio" name="beListed" id="beListed1" value="1" checked />已上市
+											<input type="radio" name="beListed" id="beListed2" value="0" />未上市
+									</tr>
+									<tr>
+										<th><input type="submit" id="sbmt" value="注册" onclick=" return OncheckFormCompany()" class="btn-post" />
+										</th>
+										<th>
+											<input type="reset" value="重置" class="btn-post" />
+										</th>
+									</tr>
+								</table>
+							</form>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+	</body>
+	<script
+	src="../js/graduate.js"
+	>
+</script>
+</html>
