@@ -47,6 +47,9 @@ public class GraduateController {
 		Graduate graduates = iGraduateService.queryStudentById(studentId);
 		if(graduates!=null) {
 			if(graduates.getPassword().equals(graduate.getPassword())) {
+				if(graduates.getAvatarPath().equals("")) {
+					graduates.setAvatarPath("cs.jpg");
+				}
 				model.addAttribute("graduate",graduates);
 				session.setAttribute("studentId", studentId);
 				session.setAttribute("password", graduates.getPassword());
@@ -54,11 +57,13 @@ public class GraduateController {
 			}else {
 				model.addAttribute("enterprise", new Enterprise());
 				model.addAttribute("graduate",new Graduate());
+				model.addAttribute("errorInfo","密码错误");
 				rest= "Public/SwitchLogin";
 			}
 		}else {
 			model.addAttribute("enterprise", new Enterprise());
 			model.addAttribute("graduate",new Graduate());
+			model.addAttribute("errorInfo","学号错误");
 			rest= "Public/SwitchLogin";
 		}
 		return rest;
