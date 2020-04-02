@@ -15,38 +15,38 @@ import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.service.IGraduateService;
 import com.github.pagehelper.Page;
 
-
 @Service
 public class GraduateServiceImpl implements IGraduateService {
-	
+
 	@Autowired
 	private GraduateMapper graduateMapper;
-	
+
 	@Autowired
 	private ResumeMapper resumeMapper;
-	
-	
+
 	DecimalFormat formater = new DecimalFormat("#0.##");
+
 	public Double StudentResumeEditingRate() {
-		//学生总数
-		int a=graduateMapper.selectGraduateNumber();
-		//已编辑简历数
-		int b=resumeMapper.selectEditedResumeNumber();
-		float totalPrice= ((float)b/a*100);
+		// 学生总数
+		int a = graduateMapper.selectGraduateNumber();
+		// 已编辑简历数
+		int b = resumeMapper.selectEditedResumeNumber();
+		float totalPrice = ((float) b / a * 100);
 		return Double.parseDouble(formater.format(totalPrice));
 	}
-	
-	//未编辑简历学生
+
+	// 未编辑简历学生
 	public List<GraduateDto> selectNotFilled() {
-		return graduateMapper.selectNotFilledStudent(); 
-	}
-	//未编辑简历学生分页
-	public Page<GraduateDto> PageNotFilled() {
-		
-		return (Page<GraduateDto>) graduateMapper.selectNotFilledStudent(); 
+		return graduateMapper.selectNotFilledStudent();
 	}
 
-	//学生列表
+	// 未编辑简历学生分页
+	public Page<GraduateDto> PageNotFilled() {
+
+		return (Page<GraduateDto>) graduateMapper.selectNotFilledStudent();
+	}
+
+	// 学生列表
 	public List<GraduateDto> selectCheckingStudents() {
 		return graduateMapper.selectCheckingStudents();
 	}
@@ -54,17 +54,28 @@ public class GraduateServiceImpl implements IGraduateService {
 	public Page<GraduateDto> PageCheckingStudents() {
 		return (Page<GraduateDto>) graduateMapper.selectBestResumeStudents();
 	}
-	
-	//最受欢迎学生列表
+
+	// 最受欢迎学生列表
 	public List<GraduateDto> selectBestResumeStudents() {
 		return graduateMapper.selectBestResumeStudents();
 	}
-
 
 	public Page<GraduateDto> PageBestResumeStudents() {
 		return (Page<GraduateDto>) graduateMapper.selectBestResumeStudents();
 	}
 
-	
+	// 根据学号查询学生信息
+	@Override
+	public Graduate queryStudentById(Long id) {
+		Graduate graduate = graduateMapper.queryStudentById(id);
+		return graduate;
+	}
+
+	// 修改头像根据id
+	@Override
+	public int updatePicByid(Graduate graduate) {
+		int rest = graduateMapper.updatePicByid(graduate);
+		return rest;
+	}
 
 }
