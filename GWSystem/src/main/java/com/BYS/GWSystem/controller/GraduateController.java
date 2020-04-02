@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.BYS.GWSystem.mapper.GraduateMapper;
+import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.service.IGraduateService;
@@ -43,7 +44,7 @@ public class GraduateController {
 
 	// 毕业生登录
 	@PostMapping("/login")
-	public String login(@ModelAttribute Graduate graduate, Model model, HttpSession session) {
+	public String login(@ModelAttribute Graduate graduate, Model model) {
 		String rest = "";// 返回界面地址
 		// 根据学号查询学生信息，看是否存在此学生
 		Long studentId = graduate.getStudentId();
@@ -63,29 +64,42 @@ public class GraduateController {
 				model.addAttribute("graduate", graduates);
 				rest = "graduate/GraduateHome";
 			} else {
-				// 传enterprise,graduate对象给前端显示数据
+				// 传enterprise,graduate,admin对象给前端显示数据
 				model.addAttribute("enterprise", new Enterprise());
 				model.addAttribute("graduate", new Graduate());
+				model.addAttribute("admin", new Admin());
 				// 回传登录失败错误信息
 				model.addAttribute("errorInfo", "密码错误");
 				rest = "Public/SwitchLogin";
 			}
 		} else {
-			// 传enterprise,graduate对象给前端显示数据
+			// 传enterprise,graduate,admin对象给前端显示数据
 			model.addAttribute("enterprise", new Enterprise());
 			model.addAttribute("graduate", new Graduate());
+			model.addAttribute("admin", new Admin());
 			// 回传登录失败错误信息
 			model.addAttribute("errorInfo", "学号错误");
 			rest = "Public/SwitchLogin";
 		}
 		return rest;
-
 	}
 
 	// 注册
-	@GetMapping("/register")
-	public String register() {
-		return "graduate/Register";
+	@PostMapping("/register")
+	public String register(@ModelAttribute Graduate graduate, Model model) {
+		int flag = iGraduateService.insertGraduate(graduate);
+		if (flag == 1) {
+			System.out.println("注册成功");
+		} else {
+			System.out.println("注册失败");
+		}
+		// 跳转到公司登录页面的OBJ
+		model.addAttribute("enterprise", new Enterprise());
+		// 跳转到毕业生登录页面的OBJ
+		model.addAttribute("graduate", new Graduate());
+		// 跳转到管理员登录页面的OBJ
+		model.addAttribute("admin", new Admin());
+		return "Public/SwitchLogin";
 	}
 
 	// 上传毕业生头像
@@ -96,9 +110,9 @@ public class GraduateController {
 		String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\headportrait";
 		// 获得上传的图片名字
 		String name = file.getOriginalFilename();
-		//如果未选择文件，则赋值为初始头像
-		if(name.equals("")) {
-			name="cs.jpg";
+		// 如果未选择文件，则赋值为初始头像
+		if (name.equals("")) {
+			name = "cs.jpg";
 		}
 		// 添加新的头像的文件名
 		graduate.setAvatarPath(name);

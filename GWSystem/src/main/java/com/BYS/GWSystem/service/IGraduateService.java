@@ -14,6 +14,9 @@ public interface IGraduateService {
 	// 修改头像根据id
 	public int updatePicByid(Graduate graduate);
 
+	// 添加毕业生
+	public int insertGraduate(Graduate graduate);
+
 	// 学生简历编辑率
 	public Double StudentResumeEditingRate();
 

@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
 
@@ -23,6 +24,8 @@ public class PublicController {
 		model.addAttribute("enterprise", new Enterprise());
 		// 跳转到毕业生登录页面的OBJ
 		model.addAttribute("graduate", new Graduate());
+		// 跳转到管理员登录页面的OBJ
+		model.addAttribute("admin", new Admin());
 		return "Public/SwitchLogin";
 
 	}
@@ -34,6 +37,8 @@ public class PublicController {
 		model.addAttribute("enterprise", new Enterprise());
 		// 跳转到毕业生登录页面的OBJ
 		model.addAttribute("graduate", new Graduate());
+		// 跳转到管理员登录页面的OBJ
+		model.addAttribute("admin", new Admin());
 		return "Public/SwitchRegister";
 
 	}

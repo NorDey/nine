@@ -78,4 +78,11 @@ public class GraduateServiceImpl implements IGraduateService {
 		return rest;
 	}
 
+	// 添加毕业生
+	@Override
+	public int insertGraduate(Graduate graduate) {
+		int rest = graduateMapper.insertGraduate(graduate);
+		return rest;
+	}
+
 }
