@@ -12,4 +12,8 @@ public interface IPostService  {
 	//查询工作岗位简要信息
 	public  List<Post> jobList(String registrationId);
 	public  Page<Post> jobListPage(String registrationId);
+
+	public int deleteOneHired(String postId);
+
+	public Post selectOneHiredMsg(String postId);
 }

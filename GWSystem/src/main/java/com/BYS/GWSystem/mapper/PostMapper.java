@@ -32,6 +32,9 @@ public interface PostMapper {
 	public int selectFollowNumber();
 
 	// 按公司查询简要的岗位
-	public List<Post> selectJobSimpleList(@Param(value="registrationId")String registrationId);
+	public List<Post> selectJobSimpleList(@Param(value = "registrationId") String registrationId);
+
+	// 查询在招岗位详细信息
+	public Post selectOneHiredMsg(String postId);
 
 }

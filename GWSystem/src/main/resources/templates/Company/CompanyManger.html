@@ -39,8 +39,8 @@
 					<p th:text="${psotSimpleList.demand}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 					<p th:text="${psotSimpleList.responsible}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 				</div>
-				<input name="change" id="change" type="button" value="修改" class="btn-s" />
-			    <input name="delete" id="delete" type="button" value="删除" class="btn-s" />
+				<a th:href="@{'/CHIC/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}}"><input name="change" id="change" type="button" value="修改" class="btn-s" /></a>
+			    <a th:href="@{'/CMDel/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}+'/'+${page}}"><input name="delete" id="delete" type="button" value="删除" class="btn-s" /></a>
 			</div>
 			<hr>
 			</div>

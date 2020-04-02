@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<head>
-		<link rel="stylesheet" href="css/new_file.css" />
+		<link rel="stylesheet" href="/css/new_file.css" />
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/CM.css" />
+		<link rel="stylesheet" type="text/css" href="/css/CM.css" />
 		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,18 +24,21 @@
 			<div class="newHired">
 				<h1><span class="label label-default">岗位信息修改</span></h1>
 				<hr />
-				<h3><span class="label label-default">此处显示公司名字</span></h3>
-				<h3><span class="label label-default">此处显示公司工商注册号</span></h3>
+				<h3>
+					<span class="label label-default" th:text="${enterprises.enterpriseName}">此处显示公司名字</span>
+					<span class="label label-default" th:text="${enterprises.registrationId}" >此处显示公司工商注册号</span>
+					<span class="label label-default" th:text="${post.postId}" >此处显示招聘信息ID号</span>
+				</h3>
 				<h3><span class="label label-warning">*号为必填项，其余选填</span></h3>
 				<br />
 				<form class="HirdMSG" name="MSG" method="post" action onsubmit="return false">
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="招聘岗位名*" class="btn-s alertB fl" />
-					<input name="postName" type="text" class="txt-HirdMSG" id="postName"  autocomplete="off"  placeholder="输入岗位名" />
+					<input name="postName" type="text" class="txt-HirdMSG" id="postName"  autocomplete="off"  placeholder="输入岗位名" th:value="${post.postName}" />
 					<span class="help-block">此处岗位名称为具体的细分类名</span>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="岗位专业*" class="btn-s alertB fl" />
-					<input name="major" type="text" class="txt-HirdMSG" id="major"  autocomplete="off"  placeholder="输入岗位所需的主修专业" />
+					<input name="major" type="text" class="txt-HirdMSG" id="major"  autocomplete="off"  placeholder="输入岗位所需的主修专业" th:value="${post.postName}"/>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="工种" class="btn-s alertB fl" />
 					<input name="profession" type="text" class="txt-HirdMSG" id="profession"  autocomplete="off"  placeholder="输入工种类别" />

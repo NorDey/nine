@@ -65,7 +65,13 @@
 			 p.registration_id = #{registrationId}
 		</if>
 	</select>
-
+	
+	<select id="selectOneHiredMsg" parameterType="String"
+		resultType="com.BYS.GWSystem.model.Post">
+		<include refid="selectPostVo" />
+		where
+			 p.post_id = #{postId}
+	</select>
 
 
 	<insert id="insertPost"

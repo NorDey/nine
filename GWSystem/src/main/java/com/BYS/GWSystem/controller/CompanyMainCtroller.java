@@ -33,9 +33,28 @@ public class CompanyMainCtroller {
 		return "Company/CompanyCollection";
 	}
 
-	@GetMapping("/CHIC") // 公司修改招聘信息
-	public String CHIC(Model model) {
+	@GetMapping("/CHIC/{postId}/{registrationId}") // 公司修改招聘信息
+	public String CHIC(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		Post HiredMsgDetil = iPostService.selectOneHiredMsg(postId);
+		model.addAttribute("post",HiredMsgDetil);//传入正在修改的岗位信息
 		return "Company/CompanyHiredInfoChange";
+	}
+	
+	@GetMapping("/CMDel/{postId}/{registrationId}/{page}") // 公司删除招聘信息
+	public String CHDel(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		if(page<=0)page=1;
+		PageHelper.startPage(page, 3);	//第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));//将原list转为page类型
+		if(page>=psotSimpleList.getLastPage())page=psotSimpleList.getLastPage();
+		model.addAttribute("psotSimpleList",psotSimpleList);
+		model.addAttribute("pages","第"+page+"页");
+		model.addAttribute("page",page);
+		System.out.println("删除+"+postId+"==="+iPostService.deleteOneHired(postId));
+		return "Company/CompanyManger";
 	}
 
 	@GetMapping("/CHIQ") // 公司招聘的详情（给未登录看）
@@ -99,6 +118,7 @@ public class CompanyMainCtroller {
 	//form表单的页面输入式跳转
 	@PostMapping("/CM/{registrationId}") // 公司招聘信息简要列表（可以修改）
 	public String CMPageTurn(@PathVariable(name = "registrationId") String registrationId,@RequestParam(value="pagesTurn") Integer pagesTurn,Model model) {
+		//@RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
 		int page=1;
 		if(pagesTurn>=1&&pagesTurn!=null)page=pagesTurn;
 		System.out.println("======================="+pagesTurn);

@@ -39,5 +39,21 @@ public class PostServiceImpl implements IPostService {
 		// TODO Auto-generated method stub
 		return (Page<Post>)postMapper.selectJobSimpleList(registrationId);
 	}
+	
+	// 删除工作岗位信息
+	@Override
+	public int deleteOneHired(String postId) {
+		Post posts = new Post();
+		posts.setPostId(postId);
+		return postMapper.deletePost(posts);
+	}
+	
+	//查询某一个工作岗位详细信息
+	@Override
+	public Post selectOneHiredMsg(String postId) {
+		// TODO Auto-generated method stub
+		
+		return postMapper.selectOneHiredMsg(postId);
+	}
 
 }
