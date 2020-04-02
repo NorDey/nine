@@ -67,6 +67,7 @@
 								<!--x-webkit-speech x-webkit-grammar语音输入支持-->
 								<br />
 								<input name="PWD" type="password" class="PWD" id="PWD" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入密码"  th:field=*{password} />
+								<span th:if="${wrongCodePWD}!=null" class="help-block alert-danger" th:text="${wrongCodePWD}"></span>
 								<br /><br />
 								<input name="Companylog" id="Companylog" type="submit" value="登陆" class="btn-s" />
 								<input name="Companyfog" id="Companyfog" type="button" value="忘记密码" class="btn-s" />
