@@ -40,7 +40,6 @@ public class PublicController {
 		// 跳转到管理员登录页面的OBJ
 		model.addAttribute("admin", new Admin());
 		return "Public/SwitchRegister";
-
 	}
 
 }
