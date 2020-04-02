@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `post`;
 
 CREATE TABLE `post` (
   `post_id` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT '岗位id',
-  `registration_id` bigint(18) NOT NULL COMMENT '工商注册号',
+  `registration_id` varchar(18) NOT NULL COMMENT '工商注册号',
   `responsible` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '负责事项',
   `type_id` bigint(20) DEFAULT NULL COMMENT '岗位类型id',
   `postName` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '招聘岗位名',

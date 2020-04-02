@@ -3,6 +3,7 @@ package com.BYS.GWSystem.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.BYS.GWSystem.model.Post;
 
@@ -31,6 +32,6 @@ public interface PostMapper {
 	public int selectFollowNumber();
 
 	// 按公司查询简要的岗位
-	public List<Post> selectJobSimpleList(String registrationId);
+	public List<Post> selectJobSimpleList(@Param(value="registrationId")String registrationId);
 
 }

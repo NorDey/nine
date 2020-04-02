@@ -62,7 +62,7 @@
 		<include refid="selectPostVo" />
 		where
 		<if test="registrationId != null and registrationId != 0">
-			AND p.registration_id = #{registrationId}
+			 p.registration_id = #{registrationId}
 		</if>
 	</select>
 

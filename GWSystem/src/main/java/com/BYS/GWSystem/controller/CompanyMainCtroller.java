@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.BYS.GWSystem.model.Enterprise;
@@ -77,9 +78,8 @@ public class CompanyMainCtroller {
 		return "Company/CompanyInfoToShow";
 	}
 
-	@GetMapping("/CM") // 公司招聘信息简要列表（可以修改）
-	public String CM(HttpServletRequest request,Model model) {
-		String registrationId = request.getParameter("registrationId");
+	@GetMapping("/CM/{registrationId}") // 公司招聘信息简要列表（可以修改）
+	public String CM(@PathVariable(name = "registrationId") String registrationId,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
 		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));

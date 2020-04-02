@@ -11,7 +11,7 @@ public class Post implements Serializable {
     /**
      * 工商注册号
      */
-    private Long registrationId;
+    private String registrationId;
     
     
     /**
@@ -70,7 +70,7 @@ public class Post implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Post(String postId, Long registrationId, String responsible, String typeId, String postName, String number,
+	public Post(String postId, String registrationId, String responsible, String typeId, String postName, String number,
 			 String salary, String demand, LocalDateTime creationTime, Integer popular) {
 		super();
 		this.postId = postId;
@@ -93,11 +93,11 @@ public class Post implements Serializable {
         this.postId = postId;
     }
 
-    public Long getRegistrationId() {
+    public String getRegistrationId() {
         return registrationId;
     }
 
-    public void setRegistrationId(Long registrationId) {
+    public void setRegistrationId(String registrationId) {
         this.registrationId = registrationId;
     }
 

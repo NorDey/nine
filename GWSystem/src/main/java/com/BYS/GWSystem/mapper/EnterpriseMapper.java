@@ -3,6 +3,7 @@ package com.BYS.GWSystem.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.BYS.GWSystem.model.Enterprise;
 
@@ -13,7 +14,7 @@ public interface EnterpriseMapper {
 	public List<Enterprise> selectEnterpriseList(Enterprise enterprise);
 
 	// 查询某个企业
-	public Enterprise selectEnterpriseOne(String registrationId);
+	public Enterprise selectEnterpriseOne(@Param(value="registrationId")String registrationId);
 
 	// 更改
 	public int updateEnterprise(Enterprise enterprise);
