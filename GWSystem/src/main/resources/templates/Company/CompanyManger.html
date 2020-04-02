@@ -45,8 +45,14 @@
 			<hr>
 			</div>
 			
-				<input type="button" value="上一页" class="btn-s" />
-			    <input type="button" value="下一页" class="btn-s" />
+				<a th:href="@{'/CM/'+${enterprises.registrationId}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<input type="button" disabled="disabled" th:value="${pages}" class="btn-s">
+				<a th:href="@{'/CM/'+${enterprises.registrationId}+'/'+${page+1}}"><input type="button" value="下一页" class="btn-s" /></a>
+				<form class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CM/'+${enterprises.registrationId}}" >
+				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
+				<input type="submit" value="跳转" class="btn-s" />
+				</form>
+			    
 					
 		</div>
 

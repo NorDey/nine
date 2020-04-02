@@ -1,5 +1,7 @@
 package com.BYS.GWSystem.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IPostService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -78,14 +83,37 @@ public class CompanyMainCtroller {
 		return "Company/CompanyInfoToShow";
 	}
 
-	@GetMapping("/CM/{registrationId}") // 公司招聘信息简要列表（可以修改）
-	public String CM(@PathVariable(name = "registrationId") String registrationId,Model model) {
+	@GetMapping("/CM/{registrationId}/{page}") // 公司招聘信息简要列表（可以修改）
+	public String CM(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "page") int page,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
-		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));
+		if(page<=0)page=1;
+		PageHelper.startPage(page, 3);	//第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));//将原list转为page类型
+		if(page>=psotSimpleList.getLastPage())page=psotSimpleList.getLastPage();
 		model.addAttribute("psotSimpleList",psotSimpleList);
+		model.addAttribute("pages","第"+page+"页");
+		model.addAttribute("page",page);
 		return "Company/CompanyManger";
 	}
+	//form表单的页面输入式跳转
+	@PostMapping("/CM/{registrationId}") // 公司招聘信息简要列表（可以修改）
+	public String CMPageTurn(@PathVariable(name = "registrationId") String registrationId,@RequestParam(value="pagesTurn") Integer pagesTurn,Model model) {
+		int page=1;
+		if(pagesTurn>=1&&pagesTurn!=null)page=pagesTurn;
+		System.out.println("======================="+pagesTurn);
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		if(page<=0)page=1;
+		PageHelper.startPage(page, 3);	//第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));//将原list转为page类型
+		if(page>=psotSimpleList.getLastPage())page=psotSimpleList.getLastPage();
+		model.addAttribute("psotSimpleList",psotSimpleList);
+		model.addAttribute("pages","第"+page+"页");
+		model.addAttribute("page",page);
+		return "Company/CompanyManger";
+	}
+	
 
 	@GetMapping("/CNH") // 公司新建招聘信息
 	public String CNH(Model model) {
