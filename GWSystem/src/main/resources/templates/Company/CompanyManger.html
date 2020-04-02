@@ -20,74 +20,33 @@
 	<body>
 		<header th:insert="~{Company/navigation::Cheader}"></header>
 		<!--search引用-->
-		<div class="search">
-			<div class="clearfix searchWrap">
-				<img class="GWLogo" src="img/文字logo.JPG">
-				<div class="search-div">
-					<form class="clearfix" name="search" method="post" action onsubmit="return false">
-						<i class="search-ico"></i>
-						<input name="search_keyword" type="text" class="txt-search" id="search_keyword" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="搜索岗位发布/专业简历/就业生" />
-						<!--x-webkit-speech x-webkit-grammar语音输入支持-->
-						<input data-role="btn" name="search" id="search_button" type="submit" value="搜 索" class="btn-s" />
-					</form>
-				</div>
-				<div class="edit-eara fr">
-					<a href="#" class="btn-post">发布招聘信息</a>
-					<a href="#" class="btn-change">修改/删除&nbsp;招聘信息</a>
-				</div>
-			</div>
-		</div>
+		<search th:insert="~{Company/navigation::CSearch}"></search>
 		<!--图标和搜索发帖按钮end-->
 		<div class="content">
 			<h1><span class="label label-default">公司岗位发布</span></h1>
 			<!--多媒体对象可以设置头部、居中、底部对齐，对应的类分别是 "media-top"、 "media-middle" 、 "media-bottom":-->
 			<br>
-			<div class="media">
-				<div class="media-left media-top">
-					<img src="https://static.runoob.com/images/mix/img_avatar.png" class="media-object" style="width:80px">
-				</div>
-				<div class="media-body">
-					<h4 class="media-heading">公司招聘信息</h4>
-					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
-					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
-					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
-				</div>
-				<input name="change" id="change" type="submit" value="修改" class="btn-s" />
-			    <input name="delete" id="delete" type="submit" value="删除" class="btn-s" />
-			</div>
-			<hr>
 			
-			<div class="media">
+			<div th:each="enterprise :${psotSimpleList.list}">
+			<div class="media" >
 				<div class="media-left media-top">
 					<img src="https://static.runoob.com/images/mix/img_avatar.png" class="media-object" style="width:80px">
 				</div>
 				<div class="media-body">
-					<h4 class="media-heading">公司招聘信息</h4>
+					<h4 class="media-heading" th:text="${psotSimpleList.postName}">公司招聘岗位名称</h4>
 					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 				</div>
-				<input name="change" id="change" type="submit" value="修改" class="btn-s" />
-			    <input name="delete" id="delete" type="submit" value="删除" class="btn-s" />
+				<input name="change" id="change" type="button" value="修改" class="btn-s" />
+			    <input name="delete" id="delete" type="button" value="删除" class="btn-s" />
 			</div>
 			<hr>
+			</div>
 			
-			<div class="media">
-				<div class="media-left media-top">
-					<img src="https://static.runoob.com/images/mix/img_avatar.png" class="media-object" style="width:80px">
-				</div>
-				<div class="media-body">
-					<h4 class="media-heading">公司招聘信息</h4>
-					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
-					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
-					<p>这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
-				</div>
-				<input name="change" id="change" type="submit" value="修改" class="btn-s" />
-			    <input name="delete" id="delete" type="submit" value="删除" class="btn-s" />
-			</div>
-			<hr>
-		
-
+				<input type="button" value="上一页" class="btn-s" />
+			    <input type="button" value="下一页" class="btn-s" />
+					
 		</div>
 
 	</body>

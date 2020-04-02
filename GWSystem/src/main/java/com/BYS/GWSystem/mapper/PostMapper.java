@@ -7,27 +7,30 @@ import org.apache.ibatis.annotations.Mapper;
 import com.BYS.GWSystem.model.Post;
 
 @Mapper
-public interface PostMapper  {
-	
-			//查询岗位
-			public List<Post> selectPostList();
-			
-			//更改
-			public int updatePost(Post post);
-			
-			//添加
-			public int insertPost(Post post);
-			
-			//删除
-			public int deletePost(Post post);
+public interface PostMapper {
 
-			
-			//查询发布招聘的公司数
-			public int selectRecruitmentCompaniesNumber();
+	// 查询岗位
+	public List<Post> selectPostList();
 
-			//岗位数
-			public int selectPostNumber();
-			//被关注岗位数
-			public int selectFollowNumber();
+	// 更改
+	public int updatePost(Post post);
+
+	// 添加
+	public int insertPost(Post post);
+
+	// 删除
+	public int deletePost(Post post);
+
+	// 查询发布招聘的公司数
+	public int selectRecruitmentCompaniesNumber();
+
+	// 岗位数
+	public int selectPostNumber();
+
+	// 被关注岗位数
+	public int selectFollowNumber();
+
+	// 按公司查询简要的岗位
+	public List<Post> selectJobSimpleList(String registrationId);
 
 }

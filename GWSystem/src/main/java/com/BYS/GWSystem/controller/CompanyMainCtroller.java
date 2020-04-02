@@ -1,25 +1,26 @@
 package com.BYS.GWSystem.controller;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.tags.Param;
 
 import com.BYS.GWSystem.model.Enterprise;
+import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IEnterpriseService;
+import com.BYS.GWSystem.service.IPostService;
+import com.github.pagehelper.PageInfo;
 
 @Controller
 public class CompanyMainCtroller {
 	@Autowired
 	private IEnterpriseService iEnterpriseService;
+	@Autowired
+	private IPostService iPostService;
 
 	@GetMapping("/CC") // 公司收藏
 	public String CC(Model model) {
@@ -67,6 +68,7 @@ public class CompanyMainCtroller {
 			model.addAttribute("enterprises", enterpriseInfo);
 			return "Company/CompanyInfo";// 提交表单后跳转的页面
 		}
+		model.addAttribute("wrongCodePWD","密码错误");
 		return "Public/SwitchLogin"; // 密码验证失败
 	}
 
@@ -76,7 +78,12 @@ public class CompanyMainCtroller {
 	}
 
 	@GetMapping("/CM") // 公司招聘信息简要列表（可以修改）
-	public String CM(Model model) {
+	public String CM(HttpServletRequest request,Model model) {
+		String registrationId = request.getParameter("registrationId");
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));
+		model.addAttribute("psotSimpleList",psotSimpleList);
 		return "Company/CompanyManger";
 	}
 

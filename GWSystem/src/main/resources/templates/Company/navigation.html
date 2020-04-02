@@ -6,11 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <body>
 	<header th:fragment="Cheader">
-		<div id="header">
 			<div class="header">
 				<div class="city">
-
-					</ul>
 					<a href="#" class="fc_city">武汉</a> <a href="#">[切换城市]</a>
 				</div>
 				<div class="weather">
@@ -30,17 +27,15 @@
 											class="caret"></b>
 									</a>
 										<ul class="dropdown-menu in">
-											<li><a href="#">我的发布<span class="badge alert-danger">50</span>
+											<li><a th:href="@{'/CM?registrationId='+${enterprises.registrationId}}">我的发布<span class="badge alert-danger">50</span>
 													<!--数字徽章-->
 											</a></li>
 											<li><a href="#">浏览历史<span class="badge alert-danger">10</span></a>
 											</li>
-											<li><a href="#">我的招聘<span class="badge alert-danger">20</span></a>
-											</li>
 											<li class="divider"></li>
 											<li><a href="#">简历收藏</a></li>
 											<li class="divider"></li>
-											<li><a href="#">企业信息</a></li>
+											<li><a th:href="@{'/CRCI?registrationId='+${enterprises.registrationId}}">企业信息</a></li>
 										</ul></li>
 									<li class="active"><a href="#">帮助中心</a></li>
 									<li><a href="#" data-toggle="collapse"
@@ -72,7 +67,7 @@
 					</nav>
 					<div class="userInfo">
 						<div class="reg_login">
-							<span class="clearfix"> <a >欢迎您</a> <i>/</i> <a th:text="${enterprises.enterpriseName==null} ? '未知公司名' : ${enterprises.enterpriseName}">未知公司名</a>
+							<span class="clearfix"> <a >欢迎您</a> <i>/</i> <a th:href="@{'/CRCI?registrationId='+${enterprises.registrationId}}" th:text="${enterprises.enterpriseName==null} ? '未知公司名' : ${enterprises.enterpriseName}">未知公司名</a>
 							</span>
 						</div>
 					</div>
@@ -80,6 +75,27 @@
 			</div>
 	</header>
 	<!--	头部结束-->
+	<!-- 搜索引擎部分 -->
+	<search th:fragment="CSearch">	
+		<div class="search">
+			<div class="clearfix searchWrap">
+				<img class="GWLogo" src="img/文字logo.JPG">
+				<div class="search-div">
+					<form class="clearfix" name="search" method="post" action onsubmit="return false">
+						<i class="search-ico"></i>
+						<input name="search_keyword" type="text" class="txt-search" id="search_keyword" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="搜索岗位发布/专业简历/就业生" />
+						<!--x-webkit-speech x-webkit-grammar语音输入支持-->
+						<input data-role="btn" name="search" id="search_button" type="submit" value="搜 索" class="btn-s" />
+					</form>
+				</div>
+				<div class="edit-eara fr">
+					<a href="#" class="btn-post">发布招聘信息</a>
+					<a href="#" class="btn-change">修改/删除&nbsp;招聘信息</a>
+				</div>
+			</div>
+		</div>
+	</search>
+	<!-- 搜索引擎部分 -->
 	<footer th:fragment="footer">
 		<div>
 			<p>禁止复制、使用本网站上的文章、影像、照片等著作</p>
