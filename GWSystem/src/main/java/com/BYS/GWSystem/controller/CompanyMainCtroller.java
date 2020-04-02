@@ -10,12 +10,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.BYS.GWSystem.model.Enterprise;
+import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IEnterpriseService;
+import com.BYS.GWSystem.service.IPostService;
+import com.github.pagehelper.PageInfo;
 
 @Controller
 public class CompanyMainCtroller {
 	@Autowired
 	private IEnterpriseService iEnterpriseService;
+	@Autowired
+	private IPostService iPostService;
 
 	@GetMapping("/CC") // 公司收藏
 	public String CC(Model model) {
@@ -73,7 +78,12 @@ public class CompanyMainCtroller {
 	}
 
 	@GetMapping("/CM") // 公司招聘信息简要列表（可以修改）
-	public String CM(Model model) {
+	public String CM(HttpServletRequest request,Model model) {
+		String registrationId = request.getParameter("registrationId");
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));
+		model.addAttribute("psotSimpleList",psotSimpleList);
 		return "Company/CompanyManger";
 	}
 

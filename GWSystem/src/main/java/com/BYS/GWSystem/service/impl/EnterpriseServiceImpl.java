@@ -50,7 +50,7 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 	public Enterprise selectEnterpriseOne(String registrationId) {
 		return enterpriseMapper.selectEnterpriseOne(registrationId);
 	}
-
+	// 更新企业信息
 	@Override
 	public int updateCInfo(Enterprise greeting) {
 		return enterpriseMapper.updateEnterprise(greeting);
