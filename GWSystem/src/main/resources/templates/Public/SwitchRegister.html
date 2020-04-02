@@ -31,13 +31,13 @@
 					<div class="panel-body">
 						<!--学生注册-->
 						<nav id="StudentRegister" class=" col-lg-12 col-4   bg-light navtable hidelog alpha">
-							<form class="clearfix" name="search" method="post" action onsubmit="return false">
+							<form class="clearfix" name="search" method="post" action="#" th:action="@{/graduate/register}" th:object="${graduate}" >
 								<table class="table table-striped">
 									<tr>
 										<th>学号：</th>
-										<th><input type="text" name="student_id" maxlength="20" id="student_id" placeholder="请输入学号"
+										<th><input type="text" name="studentId" maxlength="20" id="studentId" placeholder="请输入学号"
 											onblur="checkStudent_id()" />
-											<span id="student_id_span" style="color: red"></span></th>
+											<span id="studentId_span" style="color: red"></span></th>
 									</tr>
 									<tr>
 										<th>姓名：</th>

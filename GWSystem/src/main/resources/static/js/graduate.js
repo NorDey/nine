@@ -12,8 +12,8 @@ function appendHtml(obj,str,className){
 //验证学生号必填
 function checkStudent_id(){
 	var flag = true;
-	var odom = e("student_id");//输入框DOM对象
-	var omsg = e("student_id_span");//信息提示DOM对象
+	var odom = e("studentId");//输入框DOM对象
+	var omsg = e("studentId_span");//信息提示DOM对象
 	if(odom.value == ""){
 		appendHtml(omsg,"不能为空","red");
         flag =  false;
