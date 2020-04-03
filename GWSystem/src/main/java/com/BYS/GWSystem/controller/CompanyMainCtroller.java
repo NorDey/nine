@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.BYS.GWSystem.dto.CompanyHiredInfoDto;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IEnterpriseService;
+import com.BYS.GWSystem.service.IJobsUTypeWorkUPsotService;
 import com.BYS.GWSystem.service.IPostService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -27,6 +29,8 @@ public class CompanyMainCtroller {
 	private IEnterpriseService iEnterpriseService;
 	@Autowired
 	private IPostService iPostService;
+	@Autowired
+	private IJobsUTypeWorkUPsotService ijobInfoService;
 
 	@GetMapping("/CC") // 公司收藏
 	public String CC(Model model) {
@@ -37,8 +41,22 @@ public class CompanyMainCtroller {
 	public String CHIC(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
-		Post HiredMsgDetil = iPostService.selectOneHiredMsg(postId);
-		model.addAttribute("post",HiredMsgDetil);//传入正在修改的岗位信息
+		//System.out.println("+++++++++++++++++++++++++++============"+ijobInfoService.searchOne(postId).toString());
+		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);
+		model.addAttribute("JobsInfo",JobsInfo);//传入正在修改的岗位信息
+		//System.out.println(ijobInfoService.updateJobsHiredMSG(jobs));
+		return "Company/CompanyHiredInfoChange";
+	}
+	@PostMapping("/CHICupdate/{postId}/{registrationId}/1")
+	public String CHICUpdate(@ModelAttribute CompanyHiredInfoDto greeting,@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		System.out.println("====================================="+greeting.toString());
+		greeting.setPostId(postId);
+		greeting.setRegistrationId(registrationId);
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"+ijobInfoService.updateJobsHiredMSG(greeting));
+		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);
+		model.addAttribute("JobsInfo",JobsInfo);//传入正在修改的岗位信息
 		return "Company/CompanyHiredInfoChange";
 	}
 	

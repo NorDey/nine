@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.BYS.GWSystem.mapper.JobsUTypeWorkUPsotMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="JobsInfoResult"
+		type="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+		<id column="post_id" property="postId" />
+		<result column="fatherTypeId" property="fatherTypeId" />
+		<result column="postName" property="postName" />
+		<result column="major" property="major" />
+		<result column="profession" property="profession" />
+
+		<result column="registration_id" property="registrationId" />
+		<result column="type_id" property="typeId" />
+		<result column="responsible" property="responsible" />
+		<result column="demand" property="demand" />
+		<result column="number" property="number" />
+		<result column="arrived" property="arrived" />
+		<result column="salary" property="salary" />
+	</resultMap>
+
+
+	<!-- 通用查询结果列 -->
+	<sql id="selectJobInfoVo">
+		select
+		t.post_id,t.fatherTypeId,t.postName,t.major,t.profession,p.registration_id,p.type_id,p.responsible,p.demand,p.number,p.arrived,p.salary
+		from type_work t , post p
+	</sql>
+
+	<select id="searchOne" parameterType="String"
+		resultType="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+		<include refid="selectJobInfoVo" />
+		where
+		p.post_id=t.post_id
+		AND
+		p.post_id = #{postId}
+	</select>
+
+	<!--  UPDATE post,type_work SET post.number='40' ,type_work.major='设计专业' 
+		where post.post_id ='10002285246076921164' and post.post_id=type_work.post_id  -->
+	<update id="updateOneMSG"
+		parameterType="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+		update post,type_work
+		<set>
+			<if test="fatherTypeId != null and fatherTypeId != ''">type_work.fatherTypeId = #{fatherTypeId},</if>
+			<if test="postName != null and postName !=''">type_work.postName = #{postName},</if>
+			<if test="major != null and major != ''">type_work.major = #{major},</if>
+			<if test="profession != null and profession != ''">type_work.profession = #{profession},</if>
+
+			<if test="typeId != null and typeId !=''and typeId!=0">post.type_id = #{typeId},</if>
+			<if test="responsible != null and responsible !=''">post.responsible = #{responsible},</if>
+			<if test="demand != null and demand !=''">post.demand = #{demand},</if>
+			<if test="number != null and number != 0">post.number = #{number},</if>
+			<if test="arrived != null and arrived != 0">post.arrived = #{arrived},</if>
+			<if test="salary != null and salary != ''">post.salary = #{salary}</if>
+		</set>
+		where post.post_id = type_work.post_id AND post.post_id =#{postId}
+	</update>
+    
+    </mapper>
