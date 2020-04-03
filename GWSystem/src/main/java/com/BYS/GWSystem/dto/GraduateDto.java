@@ -4,7 +4,7 @@ public class GraduateDto {
 	    /**
 	     * 学号
 	     */
-	    private Long studentId;
+	    private String studentId;
 
 	    /**
 	     * 姓名
@@ -59,7 +59,7 @@ public class GraduateDto {
 
 	    
 	    
-	    public GraduateDto(Long studentId, String studentName, String sex, String phonenumber, String homeAddress,
+	    public GraduateDto(String studentId, String studentName, String sex, String phonenumber, String homeAddress,
 				String avatarPath, String whereabouts, String cause, String post, String company, Long resumeId) {
 			super();
 			this.studentId = studentId;
@@ -80,11 +80,11 @@ public class GraduateDto {
 			// TODO Auto-generated constructor stub
 		}
 
-		public Long getStudentId() {
+		public String getStudentId() {
 	        return studentId;
 	    }
 
-	    public void setStudentId(Long studentId) {
+	    public void setStudentId(String studentId) {
 	        this.studentId = studentId;
 	    }
 

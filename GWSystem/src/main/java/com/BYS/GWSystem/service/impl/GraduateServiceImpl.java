@@ -66,7 +66,7 @@ public class GraduateServiceImpl implements IGraduateService {
 
 	// 根据学号查询学生信息
 	@Override
-	public Graduate queryStudentById(Long id) {
+	public Graduate queryStudentById(String id) {
 		Graduate graduate = graduateMapper.queryStudentById(id);
 		return graduate;
 	}

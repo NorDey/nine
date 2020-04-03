@@ -39,26 +39,40 @@
 										<li><a href="/enterpriseList/1">企业</a></li>
 									</ul></li>
 								<li class="active"><a href="/home">主页</a></li>
-								<li><a href="#" data-toggle="collapse" data-target="#guide">毕业生操作</a>
-									<nav id="guide"
-										class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
-										<dl>
-											<dt>
-												<a href="#">导入毕业生</a>
-											</dt>
-										</dl>
-										<dl>
-											<dt>
-												<a href="#">导出毕业生</a>
-											</dt>
-										</dl>
-									</nav></li>
+								<li style="width: 150px"><a href="#" data-toggle="collapse"
+									data-target="#guide">毕业生操作</a>
+									<form action='poiImport' enctype="multipart/form-data" method='post'>
+										<nav id="guide"
+											class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
+											<dl>
+												<dt>
+													<a>导入毕业生</a>
+												</dt>
+												<dt>
+													                    <input id="file" name="file"
+														type="file" accept=".xls,.xlsx" style="width: 150px;"
+														onchange="editType();" />
+													<button>提交</button>
+												</dt>
+											</dl>
+											<dl>
+												<dt>
+													<a href="/poiExport">导出毕业生</a>
+												</dt>
+											</dl>
+										</nav>
+										       
+									</form></li>
 							</ul>
 						</div>
 					</div>
 				</nav>
 			</div>
 		</div>
+
+
+
+		    
 		<!--head引用-->
 		<!--search引用-->
 		<div class="search">
@@ -78,7 +92,6 @@
 				</div>
 			</div>
 		</div>
-		<!--head引用-->
 	</div>
 </body>
 </html>

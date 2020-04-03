@@ -1,6 +1,5 @@
 package com.BYS.GWSystem;
 
-import org.hibernate.validator.internal.metadata.raw.BeanConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

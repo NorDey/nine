@@ -1,22 +1,38 @@
 package com.BYS.GWSystem.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.dto.HomeDto;
 import com.BYS.GWSystem.dto.ResumeDto;
 import com.BYS.GWSystem.model.Enterprise;
+import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IGraduateService;
 import com.BYS.GWSystem.service.IPostService;
 import com.BYS.GWSystem.service.IResumeService;
+import com.BYS.GWSystem.utils.ExportExcel;
 import com.BYS.GWSystem.utils.GetPetAgeUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -136,4 +152,127 @@ public class HomeController {
 		model.addAttribute("enterprise", enterprise);
 		return "admin/EnterpriseDetails";
 	}
+	
+	 //导出excel表
+		@GetMapping("/poiExport")
+		public ModelAndView exportExcel(HttpServletResponse response ) throws Exception {
+				ModelAndView modelAndView=new ModelAndView();
+		       // 定义表的标题
+		       String title = "毕业生列表一览";		 
+		       //定义表的列名
+		       String[] rowsName = new String[] { "学号", "姓名", "性别", "电话", "家庭住址","毕业去向","就业情况","工作岗位","就业单位"};
+		 
+		       //定义表的内容
+		       List<Object[]> dataList = new ArrayList<Object[]>();
+		       Object[] objs = null;
+		       List<GraduateDto> listGraduate = iGraduateService.selectCheckingStudents();
+		       for (int i = 0; i < listGraduate.size(); i++) {
+		    	   GraduateDto per = listGraduate.get(i);
+		           objs = new Object[rowsName.length];
+		           objs[0] = per.getStudentId();
+		           objs[1] = per.getStudentName();
+		           objs[2] = per.getSex().equals("1")?"男":"女";
+		           objs[3] = per.getPhonenumber()==null?"-":per.getPhonenumber();
+		           objs[4] = per.getHomeAddress()==null?"-":per.getHomeAddress();
+		           objs[5] = per.getWhereabouts()==null?"-":per.getWhereabouts();
+		           if (per.getCause()!=null) {
+		        	   objs[6] = per.getCause().equals("1")?"已就业":"未就业";
+				}
+		           else {
+		        	   objs[6] ="-";
+		           }
+		           objs[7] = per.getPost()==null?"-":per.getPost();
+		           objs[8] = per.getCompany()==null?"-":per.getCause();		         		           
+		           dataList.add(objs);
+		       }
+		 
+		       // 创建ExportExcel对象
+		       ExportExcel ex = new ExportExcel(title, rowsName, dataList);
+		 
+		       // 输出Excel文件
+		       try {
+		           OutputStream output = response.getOutputStream();
+		           response.reset();
+		           response.setHeader("Content-disposition",
+		                   "attachment; filename="+new String("学生表".getBytes("gbk"), "iso8859-1")+".xls");         
+		           response.setContentType("application/msexcel");
+		           response.setCharacterEncoding("utf-8");
+		           ex.export(output);
+		           output.close();
+		       } catch (IOException e) {
+		           e.printStackTrace();
+		       }
+		       modelAndView.setViewName("redirect:/courseList");
+		       return modelAndView;//返回主页
+		   }
+	
+		@GetMapping("/poiImport")
+		   public ModelAndView importExcel() throws Exception {	
+			return new ModelAndView();
+		}
+		
+		 //导入excel表中的数据
+		@ResponseBody
+		@PostMapping("/poiImport")
+		   public ModelAndView importExcel(@RequestParam(value="file",required=false)MultipartFile  file) throws Exception {	
+			ModelAndView modelAndView=new ModelAndView(); 
+		       Graduate per = new Graduate();// 新建一个per对象 
+		       try {
+		           @SuppressWarnings("resource")
+				HSSFWorkbook hssfWorkbook = new HSSFWorkbook(file.getInputStream());//将输入流对象存到工作簿对象里面
+		 
+		           // 循环工作表Sheet
+		           for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+		               HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
+		               if (hssfSheet == null) {
+		                   continue;
+		               }
+		 
+		               // 循环行Row
+		               for (int rowNum = 3; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+		                   HSSFRow hssfRow = hssfSheet.getRow(rowNum);
+		                   if (hssfRow == null) {
+		                       continue;
+		                   }
+		 
+		                   // 循环列Cell
+		                   // "学号", "姓名", "性别", "电话" 
+		                   per.setStudentId(getValue(hssfRow.getCell(0)));               
+		                   per.setStudentName(getValue(hssfRow.getCell(1)));
+		                   per.setSex(getValue(hssfRow.getCell(2)).equals("男")?"1":"0");
+		                   per.setPhonenumber(getValue(hssfRow.getCell(3)));
+		                   per.setPassword("123456"); 
+		                   iGraduateService.insertGraduate(per);//写入到数据中
+		               }
+		           }
+		       } catch (Exception e) {
+		           // TODO: handle exception
+		           e.printStackTrace();
+		       }
+		       modelAndView.setViewName("redirect:/courseList");
+		       return modelAndView;//返回主页
+		   }
+		
+		
+		  /**
+		    * 得到Excel表中的值
+		    * 
+		    * @param hssfCell
+		    *            Excel中的每一个格子
+		    * @return Excel中每一个格子中的值
+		    */
+		   @SuppressWarnings("static-access")
+		   private static String getValue(HSSFCell hssfCell) {
+		       if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
+		           // 返回布尔类型的值
+		           return String.valueOf(hssfCell.getBooleanCellValue());
+		       } else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
+		           // 返回数值类型的值
+		           return String.valueOf(hssfCell.getNumericCellValue());
+		       } else {
+		           // 返回字符串类型的值
+		           return String.valueOf(hssfCell.getStringCellValue());
+		       }
+		 
+		   }
 }

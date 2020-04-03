@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.BYS.GWSystem.mapper.GraduateMapper">
 	
-	<select id="queryStudentById" resultType="com.BYS.GWSystem.model.Graduate" parameterType="Long">
+	<select id="queryStudentById" resultType="com.BYS.GWSystem.model.Graduate" parameterType="String">
 		SELECT * FROM graduate WHERE student_id=#{id}
 	</select>
 	

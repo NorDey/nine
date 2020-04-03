@@ -11,7 +11,7 @@ import com.BYS.GWSystem.model.Graduate;
 public interface GraduateMapper {
 		
 		//根据学号查询学生信息
-		public Graduate queryStudentById(Long id) ;
+		public Graduate queryStudentById(String id) ;
 		
 		//修改头像根据id
 		public int updatePicByid(Graduate graduate) ;
