@@ -24,8 +24,8 @@
 			<div class="newHired">
 				<h1><span class="label label-default">新建岗位发布</span></h1>
 				<hr />
-				<h3><span class="label label-default">此处显示公司名字</span></h3>
-				<h3><span class="label label-default">此处显示公司工商注册号</span></h3>
+				<h3><span class="label label-default" th:text="${enterprises.enterpriseName}">此处显示公司名字</span></h3>
+				<h3><span class="label label-default" th:text="'工商注册号：'+${enterprises.registrationId}" >此处显示公司工商注册号</span></h3>
 				<h3><span class="label label-warning">*号为必填项，其余选填</span></h3>
 				<br />
 				<form class="HirdMSG" name="MSG" method="post" action onsubmit="return false">

@@ -48,7 +48,8 @@
 			<if test="postName != null and postName !=''">type_work.postName = #{postName},</if>
 			<if test="major != null and major != ''">type_work.major = #{major},</if>
 			<if test="profession != null and profession != ''">type_work.profession = #{profession},</if>
-
+			
+			<if test="postName != null and postName !=''">post.postName = #{postName},</if>
 			<if test="typeId != null and typeId !=''and typeId!=0">post.type_id = #{typeId},</if>
 			<if test="responsible != null and responsible !=''">post.responsible = #{responsible},</if>
 			<if test="demand != null and demand !=''">post.demand = #{demand},</if>

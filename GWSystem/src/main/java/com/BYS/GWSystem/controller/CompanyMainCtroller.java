@@ -32,7 +32,7 @@ public class CompanyMainCtroller {
 	@Autowired
 	private IJobsUTypeWorkUPsotService ijobInfoService;
 
-	@GetMapping("/CC") // 公司收藏
+	@GetMapping("/CC") // 公司收藏--公司的简历收取
 	public String CC(Model model) {
 		return "Company/CompanyCollection";
 	}
@@ -75,17 +75,52 @@ public class CompanyMainCtroller {
 		return "Company/CompanyManger";
 	}
 
-	@GetMapping("/CHIQ") // 公司招聘的详情（给未登录看）
-	public String CHIQ(Model model) {
+	@GetMapping("/CHIQ/{postId}") // 公司招聘的详情（可给未登录看）
+	public String CHIQ(@PathVariable(name = "postId") String postId,Model model) {
+		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);//招聘的详情
+		Post postMsg = iPostService.selectOneHiredMsg(postId);
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		model.addAttribute("JobsInfo",JobsInfo);//传入岗位信息
+		model.addAttribute("postMsg",postMsg);//传入岗位简要信息
 		return "Company/CompanyHiredInfoQuality";
 	}
 
-	@GetMapping("/CHIS") // 公司招聘信息简要列表（给未登录看）
-	public String CHIS(Model model) {
+	
+	@GetMapping("/CHIS/{registrationId}/{page}") // 公司招聘信息简要列表（可给未登录看）
+	public String CHIS(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		if(page<=0)page=1;
+		PageHelper.startPage(page, 3);	//第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));//将原list转为page类型
+		if(page>=psotSimpleList.getLastPage())page=psotSimpleList.getLastPage();
+		model.addAttribute("psotSimpleList",psotSimpleList);
+		model.addAttribute("pages","第"+page+"页");
+		model.addAttribute("page",page);
 		return "Company/CompanyHiredInfoToShow";
 	}
+	
+	//form表单的页面输入式跳转
+		@PostMapping("/CHIS/{registrationId}") // 公司招聘信息简要列表（可给未登录看）
+		public String CHISPageTurn(@PathVariable(name = "registrationId") String registrationId,@RequestParam(value="pagesTurn") Integer pagesTurn,Model model) {
+			//@RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			int page=1;
+			if(pagesTurn>=1&&pagesTurn!=null)page=pagesTurn;
+			System.out.println("======================="+pagesTurn);
+			Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+			model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+			if(page<=0)page=1;
+			PageHelper.startPage(page, 3);	//第几页，每页几条
+			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));//将原list转为page类型
+			if(page>=psotSimpleList.getLastPage())page=psotSimpleList.getLastPage();
+			model.addAttribute("psotSimpleList",psotSimpleList);
+			model.addAttribute("pages","第"+page+"页");
+			model.addAttribute("page",page);
+			return "Company/CompanyHiredInfoToShow";
+		}
 
-	@GetMapping("/CH") // 公司浏览简历的历史记录
+	@GetMapping("/CH") // 公司浏览简历的历史记录--现在没用了暂时不做
 	public String CH(Model model) {
 		return "Company/CompanyHistory";
 	}
@@ -97,7 +132,7 @@ public class CompanyMainCtroller {
 
 	// 公司的主页信息（可以修改）
 	// 客户get请求一个form页面时，返回的model里有一个空Enterprise实例，去binding页面的th:object，没有bingding则报错
-	@GetMapping("/CI")
+	@GetMapping("/CI")//这个案例不要删！！！！
 	public String greetingForm(Model model) {
 		model.addAttribute("enterprise", new Enterprise());
 		return "Public/SwitchLogin"; // 返回表单输入页
@@ -115,8 +150,10 @@ public class CompanyMainCtroller {
 		return "Public/SwitchLogin"; // 密码验证失败
 	}
 
-	@GetMapping("/CIS") // 公司的主页信息（给别人看，不可以跳转修改）
-	public String CIS(Model model) {
+	@GetMapping("/CIS/{registrationId}") // 公司的主页信息（给别人看，不可以跳转修改）
+	public String CIS(@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises", enterpriseInfo);
 		return "Company/CompanyInfoToShow";
 	}
 
