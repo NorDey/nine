@@ -13,9 +13,12 @@ public interface IEnterpriseService {
 
 	// 查看企业列表
 	public List<Enterprise> selectEnterpriseList(Enterprise enterprise);
-
 	public Page<Enterprise> PageEnterpriseList(Enterprise enterprise);
-
+	
+	//模糊查询企业列表
+	public List<Enterprise> selectEnterpriseListByMore(Enterprise enterprise);
+	public Page<Enterprise> PageEnterpriseListByMore(Enterprise enterprise);
+	
 	// 查看公司详情
 	public Enterprise selectEnterprise(String id);
 
@@ -23,5 +26,5 @@ public interface IEnterpriseService {
 	public Enterprise selectEnterpriseOne(String registrationId);
 	//更新企业信息 
 	public int updateCInfo(Enterprise greeting);
-
+	
 }

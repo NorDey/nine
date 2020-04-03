@@ -7,17 +7,20 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.hibernate.validator.internal.constraintvalidators.bv.number.InfinityNumberComparatorHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,6 +71,7 @@ public class HomeController {
 		return "admin/Home";
 	}
 
+	
 	@GetMapping("/notFilled/{page}")
 	public String showNotFilled(Model model, @PathVariable(name = "page") int page) {
 		PageHelper.startPage(page, 10);
@@ -96,7 +100,7 @@ public class HomeController {
 		return listPages;
 	}
 
-	
+	//学生列表
 	@GetMapping("/CheckingStudents/{page}")
 	public String showCheckingStudents(Model model, @PathVariable(name = "page") int page) {	
 		PageHelper.startPage(page, 10);
@@ -131,7 +135,7 @@ public class HomeController {
 		return "admin/SeeStudent";
 	}
 
-	// 企业列表
+	/*// 企业列表
 	@GetMapping("/enterpriseList/{page}")
 	public String showEnterpriseList(@PathVariable(name = "page") int page,Model model) {
 		Enterprise enterprise = new Enterprise();
@@ -143,8 +147,55 @@ public class HomeController {
 		model.addAttribute("address", "enterpriseList");	
 		model.addAttribute("enterprises", enterprises);
 		return "admin/SeeEnterprise";
+	}*/
+	
+	//存放查询条件
+	public String lookup;
+	
+	@PostMapping("/seEnterpriseList/{page}")
+	public String showEnterpriseListByMore(@PathVariable(name = "page") int page,Model model,@RequestParam(value="selectEnterprise",required=false)String  look) {
+		Enterprise enterprise = new Enterprise();		 		
+			lookup=look;			
+		enterprise.setExamination(1);	
+		PageHelper.startPage(page, 10);
+		PageInfo<Enterprise> enterprises =null;
+		if (lookup == null || lookup.length() <= 0) {
+			enterprises= new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));
+		}else {
+			enterprise.setEnterpriseName(lookup);//将条件放到对象中
+		 enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));
+		}		
+		List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
+		model.addAttribute("listPages",listPages);
+		model.addAttribute("returnDisplay",lookup);
+		model.addAttribute("address", "seEnterpriseList");	
+		model.addAttribute("enterprises", enterprises);
+		return "admin/SeeEnterprise";
 	}
-
+	
+	@GetMapping("/seEnterpriseList/{page}")
+	public String showEnterpriseListByMore(@PathVariable(name = "page") int page,Model model) {
+		Enterprise enterprise = new Enterprise();
+		enterprise.setExamination(1);	
+		PageHelper.startPage(page, 10);
+		PageInfo<Enterprise> enterprises =null;
+		if (lookup == null || lookup.length() <= 0) {
+			enterprises= new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));
+		}else {
+			enterprise.setEnterpriseName(lookup);//将条件放到对象中
+		 enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));
+		}		
+		List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
+		model.addAttribute("listPages",listPages);
+		model.addAttribute("returnDisplay",lookup);
+		model.addAttribute("address", "seEnterpriseList");	
+		model.addAttribute("enterprises", enterprises);
+		return "admin/SeeEnterprise";
+	}
+	
+	
+	
+	
 	// 企业详情
 	@GetMapping("/companyDetails/{id}")
 	public String showCompanyDetails(@PathVariable(name = "id") String id, Model model) {
@@ -202,7 +253,7 @@ public class HomeController {
 		       } catch (IOException e) {
 		           e.printStackTrace();
 		       }
-		       modelAndView.setViewName("redirect:/courseList");
+		       modelAndView.setViewName("redirect:/home");
 		       return modelAndView;//返回主页
 		   }
 	
@@ -242,14 +293,14 @@ public class HomeController {
 		                   per.setSex(getValue(hssfRow.getCell(2)).equals("男")?"1":"0");
 		                   per.setPhonenumber(getValue(hssfRow.getCell(3)));
 		                   per.setPassword("123456"); 
-		                   iGraduateService.insertGraduate(per);//写入到数据中
+		                  int a= iGraduateService.insertGraduate(per);//写入到数据中
 		               }
 		           }
 		       } catch (Exception e) {
 		           // TODO: handle exception
 		           e.printStackTrace();
 		       }
-		       modelAndView.setViewName("redirect:/courseList");
+		       modelAndView.setViewName("redirect:/home");
 		       return modelAndView;//返回主页
 		   }
 		

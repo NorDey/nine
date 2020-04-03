@@ -46,6 +46,19 @@
         </if>  
     </select>
 
+
+<select id="selectEnterpriseListByMore" parameterType="com.BYS.GWSystem.model.Enterprise" resultMap="EnterpriseResult">
+        <include refid="selectEnterpriseVo"/>
+        where 
+        <if test="examination != null and examination != ''">
+            e.examination = #{examination}
+        </if> 
+        <if test="enterpriseName != null and enterpriseName != ''">
+             AND e.enterpriseName like concat('%', #{enterpriseName}, '%') or e.registration_id like concat('%', #{enterpriseName}, '%')
+        </if>
+            
+    </select>
+
 	<select id="selectEnterpriseNumber" resultType="int">
 		SELECT COUNT(*) FROM enterprise
 	</select>

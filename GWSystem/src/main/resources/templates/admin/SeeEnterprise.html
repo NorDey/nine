@@ -24,9 +24,11 @@
 	<!--head引用-->
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-			<form class="navbar-form navbar-left" role="search">
+			<form class="navbar-form navbar-left" role="search" action='../seEnterpriseList/1' method='post'>
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Search">
+					<input type="text" class="form-control" placeholder="按公司名或注册号查找"  id="selectEnterprise" name="selectEnterprise"
+					 th:value="${returnDisplay}">
+				
 				</div>
 				<button type="submit" class="btn btn-default">查看</button>
 			</form>	

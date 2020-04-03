@@ -31,4 +31,7 @@ public interface EnterpriseMapper {
 	// 查看公司详情
 	public Enterprise selectEnterprise(String id);
 
+	//模糊查询企业列表
+	public List<Enterprise> selectEnterpriseListByMore(Enterprise enterprise);
+
 }
