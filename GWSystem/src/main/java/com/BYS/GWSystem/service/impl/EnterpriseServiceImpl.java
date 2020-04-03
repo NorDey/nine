@@ -40,6 +40,15 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 		return (Page<Enterprise>) enterpriseMapper.selectEnterpriseList(enterprise);
 	}
 
+	//模糊查询企业列表
+	public List<Enterprise> selectEnterpriseListByMore(Enterprise enterprise) {
+		return enterpriseMapper.selectEnterpriseListByMore(enterprise);
+	}
+	public Page<Enterprise> PageEnterpriseListByMore(Enterprise enterprise) {
+		return (Page<Enterprise>)enterpriseMapper.selectEnterpriseListByMore(enterprise);
+	}
+	
+	
 	// 查看公司详情
 	public Enterprise selectEnterprise(String id) {
 		return enterpriseMapper.selectEnterprise(id);
@@ -55,5 +64,7 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 	public int updateCInfo(Enterprise greeting) {
 		return enterpriseMapper.updateEnterprise(greeting);
 	}
+
+	
 
 }
