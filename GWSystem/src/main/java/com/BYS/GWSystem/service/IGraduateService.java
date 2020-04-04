@@ -27,12 +27,17 @@ public interface IGraduateService {
 
 	// 学生列表
 	public List<GraduateDto> selectCheckingStudents();
-
 	public Page<GraduateDto> PageCheckingStudents();
 
+	//模糊条件查询学生列表
+	public List<GraduateDto> selectGraduateListByMore(String lookup);
+	public Page<GraduateDto> PageGraduateListByMore(String lookup);
+	
 	// 简历最受欢迎学生列表
 	public List<GraduateDto> selectBestResumeStudents();
 
 	public Page<GraduateDto> PageBestResumeStudents();
+
+	
 
 }

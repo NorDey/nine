@@ -56,6 +56,7 @@
 		</if>
 	</select>
 
+
 	<select id="selectGraduateNumber" resultType="int">
 		SELECT COUNT(*)
 		FROM graduate
@@ -85,6 +86,20 @@
 		r.resume_id
 		from graduate g LEFT JOIN resume r on
 		g.student_id=r.student_id
+	</select>
+
+<select id="selectGraduateListByMore"
+		resultType="com.BYS.GWSystem.dto.GraduateDto" parameterType="String">
+		select g.student_id, g.studentName, g.sex, g.phonenumber,
+		g.homeAddress,
+		g.avatarPath, g.whereabouts, g.cause, g.post, g.company,
+		r.resume_id
+		from (SELECT * from graduate g 
+		<if test="lookup != null and lookup != ''">
+		WHERE g.studentName like concat('%', #{lookup}, '%') or g.student_id like concat('%', #{lookup}, '%')
+		</if>
+		) g   LEFT JOIN  resume r on
+		g.student_id=r.student_id 
 	</select>
 
 

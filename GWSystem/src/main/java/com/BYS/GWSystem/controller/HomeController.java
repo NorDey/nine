@@ -54,6 +54,9 @@ public class HomeController {
 	@Autowired
 	private IResumeService iResumeService;
 
+	//存放查询条件
+	public String lookup;
+	
 	// 主页加载页
 	@GetMapping("/home")
 	public String showHome(Model model) {
@@ -101,7 +104,7 @@ public class HomeController {
 	}
 
 	//学生列表
-	@GetMapping("/CheckingStudents/{page}")
+	/*@GetMapping("/CheckingStudents/{page}")
 	public String showCheckingStudents(Model model, @PathVariable(name = "page") int page) {	
 		PageHelper.startPage(page, 10);
 		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.selectCheckingStudents());
@@ -110,8 +113,33 @@ public class HomeController {
 		model.addAttribute("address", "CheckingStudents");
 		model.addAttribute("listGraduate", listGraduateDto);
 		return "admin/SeeStudent";
-	}
+	}*/
 
+	@PostMapping("/seStudentsList/{page}")
+	public String showCheckingStudentsByMore(@PathVariable(name = "page") int page,Model model,@RequestParam(value="selectStudent",required=false)String  look) {	 		
+			lookup=look;			
+		PageHelper.startPage(page, 10);
+		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.selectGraduateListByMore(lookup));						
+		List<Integer> listPages= calculateOptionalPages(page,listGraduateDto.getPages());
+		model.addAttribute("listPages",listPages);
+		model.addAttribute("returnDisplay",lookup);
+		model.addAttribute("address", "seStudentsList");	
+		model.addAttribute("listGraduate", listGraduateDto);
+		return "admin/SeeStudent";
+	}
+	@GetMapping("/seStudentsList/{page}")
+	public String showCheckingStudentsByMore(@PathVariable(name = "page") int page,Model model) {	 					
+		PageHelper.startPage(page, 10);
+		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.selectGraduateListByMore(lookup));						
+		List<Integer> listPages= calculateOptionalPages(page,listGraduateDto.getPages());
+		model.addAttribute("listPages",listPages);
+		model.addAttribute("returnDisplay",lookup);
+		model.addAttribute("address", "seStudentsList");	
+		model.addAttribute("listGraduate", listGraduateDto);
+		return "admin/SeeStudent";
+	}
+	
+	
 	// 根据id查询简历
 	@GetMapping("/viewResume/{id}")
 	public String viewResume(@PathVariable(name = "id") Long id, Model model) {
@@ -149,8 +177,7 @@ public class HomeController {
 		return "admin/SeeEnterprise";
 	}*/
 	
-	//存放查询条件
-	public String lookup;
+	
 	
 	@PostMapping("/seEnterpriseList/{page}")
 	public String showEnterpriseListByMore(@PathVariable(name = "page") int page,Model model,@RequestParam(value="selectEnterprise",required=false)String  look) {

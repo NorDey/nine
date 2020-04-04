@@ -54,6 +54,19 @@ public class GraduateServiceImpl implements IGraduateService {
 	public Page<GraduateDto> PageCheckingStudents() {
 		return (Page<GraduateDto>) graduateMapper.selectBestResumeStudents();
 	}
+	
+	//根据id和name模糊查询学生列表
+	@Override
+	public List<GraduateDto> selectGraduateListByMore(String lookup) {
+		return graduateMapper.selectGraduateListByMore(lookup);
+	}
+
+	@Override
+	public Page<GraduateDto> PageGraduateListByMore(String lookup) {
+		return (Page<GraduateDto>) graduateMapper.selectGraduateListByMore(lookup);
+	}
+	
+	
 
 	// 最受欢迎学生列表
 	public List<GraduateDto> selectBestResumeStudents() {
@@ -84,5 +97,7 @@ public class GraduateServiceImpl implements IGraduateService {
 		int rest = graduateMapper.insertGraduate(graduate);
 		return rest;
 	}
+
+	
 
 }
