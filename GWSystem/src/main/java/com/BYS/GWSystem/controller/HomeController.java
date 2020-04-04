@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -82,7 +84,7 @@ public class HomeController {
 		List<Integer> listPages= calculateOptionalPages(page,listGraduateDto.getPages());
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("address", "notFilled");
-		model.addAttribute("listGraduate", listGraduateDto);
+		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
 	
@@ -92,7 +94,7 @@ public class HomeController {
 		List<Integer> listPages=new ArrayList<Integer>();
 		listPages.add(page);
 		for (int i = 1; i <= 3; i++) {
-			if (page+i<pages) {
+			if (page+i<=pages) {
 				listPages.add(page+i);
 			}
 			if (page-i>0) {
@@ -124,7 +126,7 @@ public class HomeController {
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
 		model.addAttribute("address", "seStudentsList");	
-		model.addAttribute("listGraduate", listGraduateDto);
+		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
 	@GetMapping("/seStudentsList/{page}")
@@ -135,7 +137,7 @@ public class HomeController {
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
 		model.addAttribute("address", "seStudentsList");	
-		model.addAttribute("listGraduate", listGraduateDto);
+		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
 	
@@ -159,7 +161,7 @@ public class HomeController {
 		List<Integer> listPages= calculateOptionalPages(1,listGraduateDto.getPages());
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("address", "CheckingStudents");
-		model.addAttribute("listGraduate", listGraduateDto);
+		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
 
@@ -183,7 +185,7 @@ public class HomeController {
 	public String showEnterpriseListByMore(@PathVariable(name = "page") int page,Model model,@RequestParam(value="selectEnterprise",required=false)String  look) {
 		Enterprise enterprise = new Enterprise();		 		
 			lookup=look;			
-		enterprise.setExamination(1);	
+		enterprise.setExamination(2);	
 		PageHelper.startPage(page, 10);
 		PageInfo<Enterprise> enterprises =null;
 		if (lookup == null || lookup.length() <= 0) {
@@ -196,14 +198,14 @@ public class HomeController {
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
 		model.addAttribute("address", "seEnterpriseList");	
-		model.addAttribute("enterprises", enterprises);
+		model.addAttribute("traversingList", enterprises);
 		return "admin/SeeEnterprise";
 	}
 	
 	@GetMapping("/seEnterpriseList/{page}")
 	public String showEnterpriseListByMore(@PathVariable(name = "page") int page,Model model) {
 		Enterprise enterprise = new Enterprise();
-		enterprise.setExamination(1);	
+		enterprise.setExamination(2);	
 		PageHelper.startPage(page, 10);
 		PageInfo<Enterprise> enterprises =null;
 		if (lookup == null || lookup.length() <= 0) {
@@ -216,7 +218,7 @@ public class HomeController {
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
 		model.addAttribute("address", "seEnterpriseList");	
-		model.addAttribute("enterprises", enterprises);
+		model.addAttribute("traversingList", enterprises);
 		return "admin/SeeEnterprise";
 	}
 	
@@ -353,4 +355,41 @@ public class HomeController {
 		       }
 		 
 		   }
+		   
+		   //公司申请列表
+		   @GetMapping("/companyApplicationList/{page}")
+			public String companyApplicationList(@PathVariable(name = "page") int page,Model model) {
+				Enterprise enterprise = new Enterprise();
+				enterprise.setExamination(1);	
+				PageHelper.startPage(page, 10);
+				PageInfo<Enterprise> enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));				
+				List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
+				model.addAttribute("listPages",listPages);
+				model.addAttribute("address", "companyApplicationList");	
+				model.addAttribute("traversingList", enterprises);
+				return "admin/CompanyApproval";
+			}   
+		   
+		   //审核
+		@GetMapping("/enterpriseOperation/{id}/{operation}")
+		public ModelAndView   EnterpriseOperation(@PathVariable(name = "id") String id,@PathVariable(name = "operation") Integer operation) {
+			ModelAndView modelAndView=new ModelAndView();
+			Enterprise enterprise= new Enterprise();
+			  enterprise.setRegistrationId(id);
+			  enterprise.setExamination(operation);
+			 int a= iEnterpriseService.updateCInfo(enterprise);
+			 modelAndView.setViewName("redirect:/companyApplicationList/1");
+		      return modelAndView;//返回列表
+		  }
+		
+		//待审核公司数
+		@RequestMapping(value="/toBeAudited",method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+		@ResponseBody
+		public Integer dodataList(HttpServletRequest request, HttpServletResponse response)throws Exception {
+			Enterprise enterprise = new Enterprise();
+			enterprise.setExamination(1);
+			List<Enterprise> enterprises=iEnterpriseService.selectEnterpriseListByMore(enterprise);
+			return enterprises.size();
+		}
+		
 }

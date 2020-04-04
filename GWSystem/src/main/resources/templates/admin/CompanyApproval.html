@@ -23,23 +23,19 @@
 	</div>
 	<!--head引用-->
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
-	<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-			<form class="navbar-form navbar-left" role="search" action='../seEnterpriseList/1' method='post'>
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="按公司名或注册号查找"  id="selectEnterprise" name="selectEnterprise"
-					 th:value="${returnDisplay}">
-				</div>
-				<button type="submit" class="btn btn-default">查看</button>
-			</form>	
+	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
 		<table class="table table-striped">
-			<caption>企业名单</caption>
+			<caption>企业申请名单</caption>
 			<thead>
 				<tr>
 					<th>企业名</th>
 					<th>企业工商注册号</th>
 					<th>电话</th>
+					<th>企业人数</th>
+					<th>企业注册资本</th>
 					<th>地址</th>
 					<th>查看</th>
+					<th>操作</th>				
 				</tr>
 			</thead>
 			<tbody>
@@ -47,8 +43,13 @@
 					<th th:text="${enterprise.enterpriseName}">企业名</th>
 					<th th:text="${enterprise.registrationId}">企业工商注册号</th>
 					<th th:text="${enterprise.telephone}">电话</th>
+					<th th:text="${enterprise.number}">企业人数</th>
+					<th th:text="${enterprise.registeredCapital}">企业注册资本</th>
 					<th th:text="${enterprise.address}">地址</th>
 					<th><a th:href="@{'/companyDetails/'+${enterprise.registrationId}}">查看详情</a></th>
+					<th><a th:href="@{'/enterpriseOperation/'+${enterprise.registrationId}+'/2'}">通过</a>
+					<a th:href="@{'/enterpriseOperation/'+${enterprise.registrationId}+'/3'}">拒绝</a>
+					</th>		
 				</tr>
 			</tbody>
 		</table>
@@ -57,21 +58,6 @@
 			<header th:insert="~{admin/paging::page}"></header>
 		</nav>
 		</div>
-	<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-		<h3>
-			<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-			了解
-		</h3>
-		<hr>
-		<div>
-			<dl class="dl-horizontal">
-				<dt>企业</dt>
-				<dd>公司注册审批后及时提醒该公司审批已通过,防止企业方长时间等待</dd>
-				<dt>岗位</dt>
-				<dd>尽量确保能及时联系上企业负责人,在得到审批后及时提醒公司发布招聘信息,并及时和企业方沟通推荐优秀代表</dd>
-			</dl>
-		</div>
-	</div>
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 
 
