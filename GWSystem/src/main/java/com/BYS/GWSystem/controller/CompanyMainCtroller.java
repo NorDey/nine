@@ -63,6 +63,7 @@ public class CompanyMainCtroller {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
 		model.addAttribute("JobsInfo",new CompanyHiredInfoDto());
+		model.addAttribute("waringMSG","务必确认无误！");
 		return "Company/CompanyNewHired";
 	}
 	
@@ -74,12 +75,16 @@ public class CompanyMainCtroller {
 	    greeting.setFatherTypeId(iPostService.toGetFid(greeting.getProfession()));//系统安排一个fatherTypeID，父类ID
 	    greeting.setPostId(ijobInfoService.count());//系统安排一个postID
 	    greeting.setTypeId(iPostService.toGetTid(greeting.getPostName()));
+	    model.addAttribute("waringMSG","务必确认无误！");
 	    if(greeting.getProfession()==null||greeting.getProfession()=="") {greeting.setProfession("其他");}
-	    if(greeting.getPostName()==ijobInfoService.seletOne(greeting.getPostName()).getPostName()) {//不可重复添加同一个岗位
-	    	
+	    if(ijobInfoService.seletOne(greeting.getPostName())!=null||ijobInfoService.seletOne(greeting.getPostName())!="") {//不可重复添加同一个岗位
+	    	model.addAttribute("waringMSG","无法重复添加同一招聘信息");
+	    	System.out.println(ijobInfoService.seletOne(greeting.getPostName()));
+	    	return "Company/CompanyNewHired";
 	    }
 	    System.out.println(greeting.toString()+"-----------------------");
 		ijobInfoService.insertNewJobs(greeting);
+		model.addAttribute("waringMSG","已完成添加");
 		return "Company/CompanyNewHired";
 	}
 	

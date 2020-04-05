@@ -10,6 +10,6 @@ public interface IJobsUTypeWorkUPsotService {
 	//统计数目
 	public String count();
 	//按名字搜索一次
-	public CompanyHiredInfoDto seletOne(String postName);
+	public String seletOne(String postName);
 	
 }

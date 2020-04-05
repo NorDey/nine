@@ -27,6 +27,7 @@
 				<h3><span class="label label-default" th:text="${enterprises.enterpriseName}">此处显示公司名字</span></h3>
 				<h3><span class="label label-default" th:text="'工商注册号：'+${enterprises.registrationId}" >此处显示公司工商注册号</span></h3>
 				<h3><span class="label label-warning">*号为必填项，其余选填</span></h3>
+				<h3><span class="label label-danger" th:text="${waringMSG}"></span></h3>
 				<br />
 				<form class="HirdMSG" name="MSG" method="post" action="#" th:action="@{'/CNHinsert/'+${enterprises.registrationId}}" th:object="${JobsInfo}" >
 					
@@ -60,6 +61,7 @@
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="薪资待遇" class="btn-s alertB fl" />
 					<input name="salary" type="text" class="txt-HirdMSG" id="salary"  autocomplete="off"  placeholder="输入薪资待遇"  th:field=*{salary}/>
 					<span class="help-block">未定，可输入“面谈”</span>
+					
 					<br />
 					
 					<input name="Infochange" id="Infochange" type="submit" value="完成并提交" class="btn-s Infochanges" />

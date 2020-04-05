@@ -39,9 +39,9 @@ public class IJobsUTypeWorkUPostImpl implements IJobsUTypeWorkUPsotService {
 
 	// 按名字查询 
 	@Override
-	public CompanyHiredInfoDto seletOne(String postName) {
+	public String seletOne(String postName) {
 		// TODO Auto-generated method stub
-		return null;
+		return jobsMapper.selectOne(postName);
 	}
 	
 }

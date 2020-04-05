@@ -42,6 +42,10 @@
 		AND
 		p.post_id = #{postId}
 	</select>
+	
+	<select id="selectOne" parameterType="String" resultType="String">
+		 select postName from post where postName = #{postName}
+	</select>
 
 	<!--  UPDATE post,type_work SET post.number='40' ,type_work.major='设计专业' 
 		where post.post_id ='10002285246076921164' and post.post_id=type_work.post_id  -->

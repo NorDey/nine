@@ -17,4 +17,6 @@ public interface JobsUTypeWorkUPsotMapper {
 	public int insertNewJobs2(CompanyHiredInfoDto greeting);
 	//统计数目
 	public String count();
+	//寻一个
+	public String selectOne(@Param(value="postName") String postName);
 }
