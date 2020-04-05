@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"/>
+<body>
+<div th:fragment="page">
+<ul class="pagination">
+				<li th:if="${traversingList.pageNum} gt '4'"><a
+					th:href="@{'/'+${address}+'/1'}" aria-label="Previous"> <span
+						aria-hidden="true">&lt;&lt;</span>
+				</a></li>
+				<li th:if="${traversingList.hasPreviousPage}"><a
+					th:href="@{'/'+${address}+'/'+${traversingList.prePage} }"
+					aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+				</a></li>
+
+				<li th:each="page:${listPages}"
+					th:class="${traversingList.pageNum==page}?'active':'' "><a
+					th:href="@{'/'+${address}+'/'+${page}}" th:text="${page}"> </a></li>
+				<li th:if="${traversingList.hasNextPage}"><a
+					th:href="@{'/'+${address}+'/'+${traversingList.nextPage}}"
+					aria-label="Previous"> <span aria-hidden="true">&gt;</span>
+				</a></li>
+				<li th:if="${traversingList.pageNum} lt ${traversingList.pages-3}">
+					<a th:href="@{'/'+${address}+'/'+${traversingList.pages}}"
+					aria-label="Previous"> <span aria-hidden="true">&gt;&gt;</span>
+				</a>
+				</li>
+				<li><a aria-label="Previous"> 共<span aria-hidden="true"
+						th:text="${traversingList.pages}"></span>页
+				</a></li>
+				<!-- <li ><span aria-label="Previous" style="height:33px" >
+				<input name="Page" type="text" size="4" th:placeholder="${traversingList.pageNum}" > 
+				<input type="submit" name="Submit" value="&gt;&gt;">	
+				</span>
+				</li> -->
+			</ul>
+</div>
+</body>
+</html>
