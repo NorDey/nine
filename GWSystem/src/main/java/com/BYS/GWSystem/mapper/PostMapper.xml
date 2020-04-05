@@ -49,7 +49,7 @@
 	</select>
 
 
-	<select id="selectPostNumber" resultType="String">
+	<select id="selectPostNumber" resultType="int">
 		SELECT COUNT(*) FROM post
 	</select>
 	
