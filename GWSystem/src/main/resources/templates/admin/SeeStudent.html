@@ -61,7 +61,7 @@
 					<th th:text="${graduate.post}">暂无</th>
 					<th th:text="${graduate.company}">暂无</th>
 					<th><span th:if="${graduate.resumeId} != null"><a
-							th:href="@{'/viewResume/'+${graduate.studentId}}">查看</a></span> <span
+							th:href="@{'/admin/viewResume/'+${graduate.studentId}}">查看</a></span> <span
 						th:if="${graduate.resumeId} == null">暂无</span></th>
 				</tr>
 			</tbody>

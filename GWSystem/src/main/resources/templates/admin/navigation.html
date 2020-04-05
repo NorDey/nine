@@ -23,25 +23,25 @@
 								</a>
 									<ul class="dropdown-menu in">
 										<li><a href="#">更改密码</a></li>
-										<li><a href="#">退出登录</a></li>
+										<li><a href="/admin/Logout">退出登录</a></li>
 									</ul></li>
 								<li class="dropdown"><a href="#" class="dropdown-toggle in"
 									data-toggle="dropdown"> 查看详情 <b class="caret"></b>
 								</a>
 									<ul class="dropdown-menu in">
-										<li><a href="/companyApplicationList/1">新上线公司<span
+										<li><a href="/admin/companyApplicationList/1">新上线公司<span
 												class="badge alert-danger" id="newlyAdded"></span> <!--数字徽章-->
 										</a></li>
 										<li><a href="#">最新岗位</a>
 										</li>
 										<li class="divider"></li>
-										<li><a href="/seStudentsList/1">学生</a></li>
-										<li><a href="/seEnterpriseList/1">企业</a></li>
+										<li><a href="/admin/seStudentsList/1">学生</a></li>
+										<li><a href="/admin/seEnterpriseList/1">企业</a></li>
 									</ul></li>
-								<li class="active"><a href="/home">主页</a></li>
+								<li class="active"><a href="/admin/home">主页</a></li>
 								<li style="width: 150px"><a href="#" data-toggle="collapse"
 									data-target="#guide">毕业生操作</a>
-									<form action='poiImport' enctype="multipart/form-data" method='post'>
+									<form action='admin/poiImport' enctype="multipart/form-data" method='post'>
 										<nav id="guide"
 											class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
 											<dl>
@@ -57,7 +57,7 @@
 											</dl>
 											<dl>
 												<dt>
-													<a href="/poiExport">导出毕业生</a>
+													<a href="/admin/poiExport">导出毕业生</a>
 												</dt>
 											</dl>
 										</nav>

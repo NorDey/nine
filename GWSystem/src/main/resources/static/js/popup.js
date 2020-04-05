@@ -12,7 +12,7 @@ function editType() {
 
 //开局加载待审核公司数
 $(function() {
-	$.get("/toBeAudited",function(data,status){
+	$.get("/admin/toBeAudited",function(data,status){
 	      $("#newlyAdded").html(data) 
 	    });
 });

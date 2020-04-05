@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.javassist.expr.NewArray;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +33,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.dto.HomeDto;
 import com.BYS.GWSystem.dto.ResumeDto;
+import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
+import com.BYS.GWSystem.service.IAdminService;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IGraduateService;
 import com.BYS.GWSystem.service.IPostService;
@@ -43,6 +47,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping("/admin")
 public class HomeController {
 	@Autowired
 	private IGraduateService iGraduateService;
@@ -56,8 +61,33 @@ public class HomeController {
 	@Autowired
 	private IResumeService iResumeService;
 
+	@Autowired
+	private IAdminService iAdminService;
 	//存放查询条件
 	public String lookup;
+	
+	@PostMapping("/adminLogin")
+	public ModelAndView adminLogin(@ModelAttribute Admin  admin,Model model,HttpSession session) {
+		ModelAndView modelAndView= new ModelAndView();
+		int a=iAdminService.selectAdmin(admin);
+		if (a!=1) {
+			modelAndView.addObject("wrongCodePWD", "登录错误,账号或密码错误");
+			modelAndView.setViewName("redirect:/switchLog");
+		}else {
+			session.setAttribute("adminUser", admin);
+			modelAndView.setViewName("redirect:/admin/home");
+		}
+	    return modelAndView;//返回列表
+	}
+	@GetMapping("/Logout")
+	public ModelAndView Logout(HttpSession session) {
+		ModelAndView modelAndView= new ModelAndView();
+		session.removeAttribute("adminUser");
+		modelAndView.setViewName("redirect:/admin/switchLog");
+		return modelAndView;
+	}
+	
+	
 	
 	// 主页加载页
 	@GetMapping("/home")
@@ -125,7 +155,7 @@ public class HomeController {
 		List<Integer> listPages= calculateOptionalPages(page,listGraduateDto.getPages());
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
-		model.addAttribute("address", "seStudentsList");	
+		model.addAttribute("address", "admin/seStudentsList");	
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -136,7 +166,7 @@ public class HomeController {
 		List<Integer> listPages= calculateOptionalPages(page,listGraduateDto.getPages());
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
-		model.addAttribute("address", "seStudentsList");	
+		model.addAttribute("address", "admin/seStudentsList");	
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -160,7 +190,7 @@ public class HomeController {
 		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.selectBestResumeStudents());
 		List<Integer> listPages= calculateOptionalPages(1,listGraduateDto.getPages());
 		model.addAttribute("listPages",listPages);
-		model.addAttribute("address", "CheckingStudents");
+		model.addAttribute("address", "admin/CheckingStudents");
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -197,7 +227,7 @@ public class HomeController {
 		List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
-		model.addAttribute("address", "seEnterpriseList");	
+		model.addAttribute("address", "admin/seEnterpriseList");	
 		model.addAttribute("traversingList", enterprises);
 		return "admin/SeeEnterprise";
 	}
@@ -217,7 +247,7 @@ public class HomeController {
 		List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
 		model.addAttribute("listPages",listPages);
 		model.addAttribute("returnDisplay",lookup);
-		model.addAttribute("address", "seEnterpriseList");	
+		model.addAttribute("address", "admin/seEnterpriseList");	
 		model.addAttribute("traversingList", enterprises);
 		return "admin/SeeEnterprise";
 	}
@@ -282,7 +312,7 @@ public class HomeController {
 		       } catch (IOException e) {
 		           e.printStackTrace();
 		       }
-		       modelAndView.setViewName("redirect:/home");
+		       modelAndView.setViewName("redirect:/admin/home");
 		       return modelAndView;//返回主页
 		   }
 	
@@ -329,7 +359,7 @@ public class HomeController {
 		           // TODO: handle exception
 		           e.printStackTrace();
 		       }
-		       modelAndView.setViewName("redirect:/home");
+		       modelAndView.setViewName("redirect:/admin/home");
 		       return modelAndView;//返回主页
 		   }
 		
@@ -365,7 +395,7 @@ public class HomeController {
 				PageInfo<Enterprise> enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));				
 				List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
 				model.addAttribute("listPages",listPages);
-				model.addAttribute("address", "companyApplicationList");	
+				model.addAttribute("address", "admin/companyApplicationList");	
 				model.addAttribute("traversingList", enterprises);
 				return "admin/CompanyApproval";
 			}   
@@ -378,7 +408,7 @@ public class HomeController {
 			  enterprise.setRegistrationId(id);
 			  enterprise.setExamination(operation);
 			 int a= iEnterpriseService.updateCInfo(enterprise);
-			 modelAndView.setViewName("redirect:/companyApplicationList/1");
+			 modelAndView.setViewName("redirect:/admin/companyApplicationList/1");
 		      return modelAndView;//返回列表
 		  }
 		

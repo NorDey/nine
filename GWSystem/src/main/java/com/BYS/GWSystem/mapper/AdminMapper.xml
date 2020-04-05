@@ -16,4 +16,8 @@
     SELECT number, password FROM `admin`
     </select>
 	
+	<select id="selectAdmin" resultType="int" parameterType="com.BYS.GWSystem.model.Admin">
+    SELECT COUNT(*) FROM `admin` a WHERE a.number=#{number} and a.`password`=#{password}
+    </select>
+	
 </mapper>
