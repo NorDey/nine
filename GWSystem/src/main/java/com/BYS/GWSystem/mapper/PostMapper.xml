@@ -49,10 +49,10 @@
 	</select>
 
 
-	<select id="selectPostNumber" resultType="int">
+	<select id="selectPostNumber" resultType="String">
 		SELECT COUNT(*) FROM post
 	</select>
-
+	
 	<select id="selectFollowNumber" resultType="int">
 		SELECT COUNT(distinct post_id) FROM student_history where collection=1
 	</select>
@@ -72,7 +72,26 @@
 		where
 			 p.post_id = #{postId}
 	</select>
-
+	<!-- father id 这里写完才发现写错了mapper算了...反正一样用兄弟取个type_Work的max值 -->
+	<select id="maxFid" resultType="int">
+		SELECT max(fatherTypeId) from type_work
+	</select>
+	
+	<!-- type id -->
+	<select id="maxTid" resultType="int">
+		SELECT max(type_id) from post
+	</select>
+	
+	<!-- 按照工种查询父类ID 这里写完才发现写错了mapper算了...反正一样用兄弟 -->
+	<select id="seletExeists" parameterType="String"  resultType="int">
+		SELECT fatherTypeId from type_work where profession = #{pro}
+	</select>
+	
+	<!-- 	按照岗位名称查询type_ID -->
+	<select id="seletTExeists" parameterType="String"  resultType="int">
+		SELECT type_id from post where postName = #{postNmae}
+	</select>
+	
 
 	<insert id="insertPost"
 		parameterType="com.BYS.GWSystem.model.Post">

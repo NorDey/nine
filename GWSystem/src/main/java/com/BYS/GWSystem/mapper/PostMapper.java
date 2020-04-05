@@ -37,4 +37,16 @@ public interface PostMapper {
 	// 查询在招岗位详细信息
 	public Post selectOneHiredMsg(String postId);
 
+	// 是否存在这个fatherID存在这个fatherID是多少
+	public Integer seletExeists(@Param(value ="pro")String pro);
+
+	// 分配一个FID的最大值
+	public int maxFid();
+	
+	// 是否存在这个TID存在这个TID是多少
+	public Integer seletTExeists(@Param(value ="postNmae")String postNmae);
+	
+	// 分配一个TID的最大值
+	public int maxTid();
+
 }

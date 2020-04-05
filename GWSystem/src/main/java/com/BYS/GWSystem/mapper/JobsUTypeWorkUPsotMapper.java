@@ -11,5 +11,10 @@ public interface JobsUTypeWorkUPsotMapper {
 	public int updateOneMSG(CompanyHiredInfoDto HiredInfo);
 	//联表查询某一个招聘信息
 	public CompanyHiredInfoDto searchOne(@Param(value="postId") String postId);
-
+	
+	//新建一个招聘信息
+	public int insertNewJobs(CompanyHiredInfoDto greeting);
+	public int insertNewJobs2(CompanyHiredInfoDto greeting);
+	//统计数目
+	public String count();
 }

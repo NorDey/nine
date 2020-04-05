@@ -41,10 +41,8 @@ public class CompanyMainCtroller {
 	public String CHIC(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
-		//System.out.println("+++++++++++++++++++++++++++============"+ijobInfoService.searchOne(postId).toString());
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);
 		model.addAttribute("JobsInfo",JobsInfo);//传入正在修改的岗位信息
-		//System.out.println(ijobInfoService.updateJobsHiredMSG(jobs));
 		return "Company/CompanyHiredInfoChange";
 	}
 	@PostMapping("/CHICupdate/{postId}/{registrationId}/1")
@@ -60,6 +58,32 @@ public class CompanyMainCtroller {
 		return "Company/CompanyHiredInfoChange";
 	}
 	
+	@GetMapping("/CNH/{registrationId}") // 公司新建招聘信息
+	public String CNH(@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+		model.addAttribute("JobsInfo",new CompanyHiredInfoDto());
+		return "Company/CompanyNewHired";
+	}
+	
+	@PostMapping("/CNHinsert/{registrationId}") // 公司新建招聘信息
+	public String CNHinsert(@ModelAttribute CompanyHiredInfoDto greeting,@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
+	    model.addAttribute("JobsInfo",greeting);
+	    greeting.setFatherTypeId(iPostService.toGetFid(greeting.getProfession()));//系统安排一个fatherTypeID，父类ID
+	    greeting.setPostId(ijobInfoService.count());//系统安排一个postID
+	    greeting.setTypeId(iPostService.toGetTid(greeting.getPostName()));
+	    if(greeting.getProfession()==null||greeting.getProfession()=="") {greeting.setProfession("其他");}
+	    if(greeting.getPostName()==ijobInfoService.seletOne(greeting.getPostName()).getPostName()) {//不可重复添加同一个岗位
+	    	
+	    }
+	    System.out.println(greeting.toString()+"-----------------------");
+		ijobInfoService.insertNewJobs(greeting);
+		return "Company/CompanyNewHired";
+	}
+	
+
 	@GetMapping("/CMDel/{postId}/{registrationId}/{page}") // 公司删除招聘信息
 	public String CHDel(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
@@ -190,10 +214,7 @@ public class CompanyMainCtroller {
 	}
 	
 
-	@GetMapping("/CNH") // 公司新建招聘信息
-	public String CNH(Model model) {
-		return "Company/CompanyNewHired";
-	}
+	
 
 	/*
 	 * @GetMapping("/CRCI/{enterprises.registrationId}") // 公司主页信息修改页面 public String
