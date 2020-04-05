@@ -36,6 +36,11 @@ public class CompanyMainCtroller {
 	public String CC(Model model) {
 		return "Company/CompanyCollection";
 	}
+	
+	@GetMapping("/CH") // 公司浏览简历的历史记录--现在没用了暂时不做
+	public String CH(Model model) {
+		return "Company/CompanyHistory";
+	}
 
 	@GetMapping("/CHIC/{postId}/{registrationId}") // 公司修改招聘信息
 	public String CHIC(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
@@ -49,9 +54,10 @@ public class CompanyMainCtroller {
 	public String CHICUpdate(@ModelAttribute CompanyHiredInfoDto greeting,@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("enterprises",enterpriseInfo);//Cheader头部的信息刷新
-		System.out.println("====================================="+greeting.toString());
 		greeting.setPostId(postId);
 		greeting.setRegistrationId(registrationId);
+		greeting.setTypeId(iPostService.toGetTid(greeting.getPostName()));//按照新的岗位名分配id
+		greeting.setFatherTypeId(iPostService.toGetFid(greeting.getProfession()));//系统安排一个fatherTypeID，父类ID
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"+ijobInfoService.updateJobsHiredMSG(greeting));
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);
 		model.addAttribute("JobsInfo",JobsInfo);//传入正在修改的岗位信息
@@ -149,10 +155,7 @@ public class CompanyMainCtroller {
 			return "Company/CompanyHiredInfoToShow";
 		}
 
-	@GetMapping("/CH") // 公司浏览简历的历史记录--现在没用了暂时不做
-	public String CH(Model model) {
-		return "Company/CompanyHistory";
-	}
+	
 
 	/*
 	 * @GetMapping("/CI") public String CI(Model model) { return
