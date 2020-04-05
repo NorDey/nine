@@ -24,5 +24,24 @@ public class IJobsUTypeWorkUPostImpl implements IJobsUTypeWorkUPsotService {
 		// TODO Auto-generated method stub
 		return jobsMapper.searchOne(postId);
 	}
+	//新建一个招聘信息
+	@Override
+	public int insertNewJobs(CompanyHiredInfoDto greeting) {
+		// TODO Auto-generated method stub 一个针对post第二个针对type_work的insert
+		return jobsMapper.insertNewJobs(greeting)+jobsMapper.insertNewJobs2(greeting);
+	}
+	//统计数目
+	@Override
+	public String count() {
+		// TODO Auto-generated method stub
+		return jobsMapper.count();
+	}
 
+	// 按名字查询 
+	@Override
+	public CompanyHiredInfoDto seletOne(String postName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
