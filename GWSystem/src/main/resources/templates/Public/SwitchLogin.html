@@ -34,14 +34,14 @@
 					<div class="panel-body">
 						<!--管理员登陆-->
 						<nav id="Managerlogin" class=" col-lg-12 col-4   bg-light navtable hidelog alpha">
-							<form class="clearfix" name="search" method="post" action onsubmit="return false">
-								<input name="username" type="text" class="username" id="UN" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入管理员ID" />
+							<form class="clearfix" name="search" method="post"   action='#' th:action="@{/admin/adminLogin}" th:object="${admin}">
+								<input name="username" type="text" class="username" id="UN" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入管理员ID"  th:field=*{number}/>
 								<!--x-webkit-speech x-webkit-grammar语音输入支持-->
 								<br />
-								<input name="PWD" type="password" class="PWD" id="PWD" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入密码" />
+								<input name="PWD" type="password" class="PWD" id="PWD" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入密码" th:field=*{password} />
 								<br /><br />
 								<input name="Managerlog" id="Managerlog" type="submit" value="登陆" class="btn-s" />
-							</form>
+							</form>					
 						</nav>
 					</div>
 				</div>

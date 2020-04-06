@@ -48,7 +48,7 @@
 					<th th:text="${enterprise.registrationId}">企业工商注册号</th>
 					<th th:text="${enterprise.telephone}">电话</th>
 					<th th:text="${enterprise.address}">地址</th>
-					<th><a th:href="@{'/companyDetails/'+${enterprise.registrationId}}">查看详情</a></th>
+					<th><a th:href="@{'/admin/companyDetails/'+${enterprise.registrationId}}">查看详情</a></th>
 				</tr>
 			</tbody>
 		</table>

@@ -10,5 +10,8 @@ import com.BYS.GWSystem.model.Admin;
 public interface AdminMapper  {
 
 	public List<Admin> selectAdminList();
+
+	//登录验证
+	public int selectAdmin(Admin admin);
 	
 }
