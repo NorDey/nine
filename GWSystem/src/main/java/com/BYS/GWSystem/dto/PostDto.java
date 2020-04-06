@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class PostDto {
 
 	  /**
-     *  工商注册号
+     * 工商注册号
      */
     private String registrationId;
     
