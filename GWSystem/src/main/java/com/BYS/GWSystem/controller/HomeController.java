@@ -32,10 +32,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.dto.HomeDto;
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.dto.ResumeDto;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
+import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IAdminService;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IGraduateService;
@@ -393,8 +395,8 @@ public class HomeController {
 				enterprise.setExamination(1);	
 				PageHelper.startPage(page, 10);
 				PageInfo<Enterprise> enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));				
-				List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
-				model.addAttribute("listPages",listPages);
+				//List<Integer> listPages= calculateOptionalPages(page,enterprises.getPages());
+				//model.addAttribute("listPages",listPages);
 				model.addAttribute("address", "admin/companyApplicationList");	
 				model.addAttribute("traversingList", enterprises);
 				return "admin/CompanyApproval";
@@ -420,6 +422,20 @@ public class HomeController {
 			enterprise.setExamination(1);
 			List<Enterprise> enterprises=iEnterpriseService.selectEnterpriseListByMore(enterprise);
 			return enterprises.size();
+		}
+		
+		
+		@GetMapping(value={"/companyRecruitmentPosition/{page}/{registrationId}","/companyRecruitmentPosition/{page}"})
+		public String CompanyRecruitmentPosition(Model model,@PathVariable(name = "page") int page,@PathVariable(name = "registrationId" ,required=false) String registrationId) {
+			PageHelper.startPage(page, 8);
+			PostDto postDto=new PostDto();
+			postDto.setRegistrationId(registrationId);
+			PageInfo<PostDto> psotSimpleList= new PageInfo<>(iPostService.selectPostListByMore(postDto));//将原list转为page类型
+			List<Integer> listPages= calculateOptionalPages(page,psotSimpleList.getPages());
+			model.addAttribute("listPages",listPages);
+			model.addAttribute("address", "admin/companyRecruitmentPosition");	
+			model.addAttribute("traversingList", psotSimpleList);
+			return "admin/Post";			
 		}
 		
 }
