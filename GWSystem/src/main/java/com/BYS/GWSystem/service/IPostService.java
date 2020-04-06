@@ -2,6 +2,7 @@ package com.BYS.GWSystem.service;
 
 import java.util.List;
 
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.model.*;
 import com.github.pagehelper.Page;
 
@@ -40,4 +41,8 @@ public interface IPostService {
 
 	// 分配一个TID的最大值//是否存在这个TID存在这个TID是多少
 	public Integer toGetTid(String postName);
+
+	//条件查询岗位详细信息
+	public List<PostDto> selectPostListByMore(PostDto postDto);
+	public Page<PostDto> PagePostListByMore(PostDto postDto);
 }

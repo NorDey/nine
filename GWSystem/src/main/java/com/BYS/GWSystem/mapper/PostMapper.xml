@@ -44,6 +44,22 @@
 		</if>
 	</select>
 
+
+<select id="selectPostListByMore"
+		parameterType="com.BYS.GWSystem.dto.PostDto" resultType="com.BYS.GWSystem.dto.PostDto">
+		SELECT e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
+		from enterprise e LEFT JOIN post p on e.registration_id=p.registration_id LEFT JOIN type_work t on t.post_id=p.post_id
+		where p.number>0
+		<if test="registrationId != null and registrationId != ''">
+		and	 e.registration_id = #{registrationId}
+		</if>
+		<if test="postName != null and postName != ''">
+		and	 t.postName like concat('%', #{postName}, '%')
+		</if>
+	</select>
+
+
+
 	<select id="selectRecruitmentCompaniesNumber" resultType="int">
 		SELECT COUNT(distinct registration_id) FROM post
 	</select>
@@ -59,10 +75,9 @@
 
 	<select id="selectJobSimpleList" parameterType="String"
 		resultMap="PostResult">
-		<include refid="selectPostVo" />
-		where
-		<if test="registrationId != null and registrationId != 0">
-			 p.registration_id = #{registrationId}
+		<include refid="selectPostVo" />	
+		<if test="registrationId != null and registrationId != '' ">
+			where p.registration_id = #{registrationId}
 		</if>
 	</select>
 	

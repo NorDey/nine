@@ -43,36 +43,25 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>001</td>
-					<td>阿里巴巴</td>
-					<td>软件开发</td>
-					<td>java开发工程师</td>
-					<td>上海</td>
-					<td>5</td>
-					<td>web后端开发与调试,数据库设计以优化</td>
-					<td>8K-12K</td>
-					<td>本科,计算机相关专业,有过java开发相关经验3年以上</td>
-					<td>2020.3.25</td>
-					<td>否</td>
-				</tr>
-				<tr>
-					<td>002</td>
-					<td>腾讯</td>
-					<td>软件开发</td>
-					<td>前端开发工程师</td>
-					<td>深圳</td>
-					<td>3</td>
-					<td>web前端开发与调试,与UI设计一起研发前端开发技术巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</td>
-					<td>7K-10K</td>
-					<td>本科,计算机相关专业,有过前端以及相关工作经验2年以上巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉
-					巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉
-					巴拉巴拉巴拉巴拉巴拉</td>
-					<td>2020.3.25</td>
-					<td>否</td>
+				<tr th:each="postDto :${traversingList.list}">
+					<th th:text="${postDto.registrationId}">001</th>
+					<th th:text="${postDto.enterpriseName}">阿里巴巴</th>
+					<th th:text="${postDto.major}">软件开发</th>
+					<th th:text="${postDto.postName}">java开发工程师</th>
+					<th th:text="${postDto.address}">上海</th>
+					<th th:text="${postDto.number}">5</th>
+					<th th:text="${postDto.responsible}">web后端开发与调试,数据库设计以优化</th>
+					<th th:text="${postDto.salary}">8K-12K</th>
+					<th th:text="${postDto.demand}">本科,计算机相关专业,有过java开发相关经验3年以上</th>
+					<th th:text="${postDto.creationTime}">2020.3.25</th>
+					<th th:text="${postDto.popular}">否</th>
 				</tr>
 			</tbody>
 		</table>
+		
+		<nav aria-label="Page navigation">
+			<header th:insert="~{admin/paging::page}"></header>
+		</nav>
 	</div>
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 

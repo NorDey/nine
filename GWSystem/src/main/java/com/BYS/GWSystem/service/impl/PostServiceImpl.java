@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.mapper.PostMapper;
 import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IPostService;
@@ -110,6 +111,17 @@ public class PostServiceImpl implements IPostService {
 			id=(seletMaxTID()+1);//不存在该工种则新建这个岗位名称
 		}
 		return id;
+	}
+
+	@Override
+	public List<PostDto> selectPostListByMore(PostDto postDto) {
+		return postMapper.selectPostListByMore(postDto);
+	}
+
+	@Override
+	public Page<PostDto> PagePostListByMore(PostDto postDto) {
+		// TODO Auto-generated method stub
+		return (Page<PostDto>) postMapper.selectPostListByMore(postDto);
 	}
 
 }
