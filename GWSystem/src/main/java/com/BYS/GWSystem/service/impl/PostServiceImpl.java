@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.mapper.PostMapper;
+import com.BYS.GWSystem.mapper.TypeWorkMapper;
 import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IPostService;
 import com.github.pagehelper.Page;
@@ -18,6 +19,8 @@ public class PostServiceImpl implements IPostService {
 
 	@Autowired
 	private PostMapper postMapper;
+	@Autowired
+	private TypeWorkMapper typeWorkMapper;
 
 	DecimalFormat formater = new DecimalFormat("#0.##");
 
@@ -47,7 +50,7 @@ public class PostServiceImpl implements IPostService {
 	public int deleteOneHired(String postId) {
 		Post posts = new Post();
 		posts.setPostId(postId);
-		return postMapper.deletePost(posts);
+		return postMapper.deletePost(posts)+typeWorkMapper.deletePost(posts);
 	}
 
 	// 查询某一个工作岗位详细信息

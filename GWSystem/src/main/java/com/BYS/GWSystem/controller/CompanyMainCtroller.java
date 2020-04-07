@@ -162,11 +162,12 @@ public class CompanyMainCtroller {
 		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
 		page = pageMax(page, psotSimpleList);
 		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("postnamesArrage",postName);
 		model.addAttribute("pros", Professions);
 		model.addAttribute("psotSimpleList", psotSimpleList);
 		model.addAttribute("pages", "第" + page + "页");
 		model.addAttribute("page", page);
-		return "Company/CompanyHiredInfoToShow";
+		return "Company/CompanyHiredInfoToShowArrage";
 	}
 	// form表单的页面输入式跳转
 	@PostMapping("/CHIS") // 公司招聘信息简要列表（可给未登录看）
@@ -185,6 +186,24 @@ public class CompanyMainCtroller {
 		model.addAttribute("page", page);
 		return "Company/CompanyHiredInfoToShow";
 	}
+	// form表单的页面输入式跳转
+		@PostMapping("/CHIS/{postnames}") // 公司招聘信息简要列表（可给未登录看）分类后
+		public String CHISPageTurnArrage(@PathVariable(name = "postnames") String postName,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
+			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			int page = pageMinx(pagesTurn);
+			PageHelper.startPage(page, 5); // 第几页，每页几条
+			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
+			if (page >= psotSimpleList.getLastPage())
+				page = psotSimpleList.getLastPage();
+			pageMax(page, psotSimpleList);
+			List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+			model.addAttribute("postnamesArrage", postName);
+			model.addAttribute("pros", Professions);
+			model.addAttribute("psotSimpleList", psotSimpleList);
+			model.addAttribute("pages", "第" + page + "页");
+			model.addAttribute("page", page);
+			return "Company/CompanyHiredInfoToShowArrage";
+		}
 
 	public int pageMinx(Integer pagesTurn) {
 		int page = 1;

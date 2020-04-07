@@ -22,4 +22,9 @@
 	<select id="allPostName" parameterType="String" resultType="String">
 		 select DISTINCT postName from type_work where profession = #{pros}
 	</select>
+	
+	<delete id="deletePost"
+		parameterType="com.BYS.GWSystem.model.Post">
+		delete from Post where post_id = #{postId}
+	</delete>
 </mapper>
