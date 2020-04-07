@@ -45,4 +45,8 @@ public interface IPostService {
 	//条件查询岗位详细信息
 	public List<PostDto> selectPostListByMore(PostDto postDto);
 	public Page<PostDto> PagePostListByMore(PostDto postDto);
+	
+	//新增加的岗位(七天)
+	public List<PostDto> doNewPostList();
+	public Page<PostDto> PageNewPostList();
 }

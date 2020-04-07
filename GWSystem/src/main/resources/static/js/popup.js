@@ -15,4 +15,8 @@ $(function() {
 	$.get("/admin/toBeAudited",function(data,status){
 	      $("#newlyAdded").html(data) 
 	    });
+	
+	$.get("/admin/doNewPostSize",function(data,status){
+	      $("#newPostSize").html(data) 
+	    });
 });

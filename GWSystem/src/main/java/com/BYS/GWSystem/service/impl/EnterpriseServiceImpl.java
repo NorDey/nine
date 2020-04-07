@@ -64,6 +64,16 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 	public int updateCInfo(Enterprise greeting) {
 		return enterpriseMapper.updateEnterprise(greeting);
 	}
+	
+	//已发布招聘信息的公司查询加模糊查询
+	@Override
+	public List<Enterprise> selectPostEnterpriseListByMore(Enterprise enterprise) {		
+		return enterpriseMapper.selectPostEnterpriseListByMore(enterprise);
+	}
+	@Override
+	public Page<Enterprise> PagePostEnterpriseListByMore(Enterprise enterprise) {
+		return (Page<Enterprise>) enterpriseMapper.selectPostEnterpriseListByMore(enterprise);
+	}
 
 	
 

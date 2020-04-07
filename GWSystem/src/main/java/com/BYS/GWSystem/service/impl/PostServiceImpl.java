@@ -112,16 +112,25 @@ public class PostServiceImpl implements IPostService {
 		}
 		return id;
 	}
-
+	//条件查询岗位详情
 	@Override
 	public List<PostDto> selectPostListByMore(PostDto postDto) {
 		return postMapper.selectPostListByMore(postDto);
 	}
-
+	//条件查询岗位详情加分页
 	@Override
 	public Page<PostDto> PagePostListByMore(PostDto postDto) {
 		// TODO Auto-generated method stub
 		return (Page<PostDto>) postMapper.selectPostListByMore(postDto);
+	}
+	
+	//新增加的岗位(七天)
+	@Override
+	public List<PostDto> doNewPostList() {
+		return postMapper.doNewPostList();
+	}
+	public Page<PostDto> PageNewPostList(){
+		return (Page<PostDto>) postMapper.doNewPostList();
 	}
 
 }
