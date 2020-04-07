@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.BYS.GWSystem.dto.CompanyHiredInfoDto;
+import com.BYS.GWSystem.dto.TypeWorkUJobs;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.model.Post;
+import com.BYS.GWSystem.model.TypeWork;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IJobsUTypeWorkUPsotService;
 import com.BYS.GWSystem.service.IPostService;
+import com.BYS.GWSystem.service.ITypeWorkService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,13 +36,15 @@ public class CompanyMainCtroller {
 	private IPostService iPostService;
 	@Autowired
 	private IJobsUTypeWorkUPsotService ijobInfoService;
+	@Autowired
+	private ITypeWorkService itypeWork;
 
-	@GetMapping("/CC") // 公司收藏--公司的简历收取
+	@GetMapping("/CC") // 公司收藏--公司的简历收录
 	public String CC(Model model) {
 		return "Company/CompanyCollection";
 	}
 
-	@GetMapping("/CH") // 公司浏览简历的历史记录--现在没用了暂时不做
+	@GetMapping("/CH") // 公司浏览简历的历史记录--改为简历投递的接收
 	public String CH(Model model) {
 		return "Company/CompanyHistory";
 	}
@@ -134,17 +139,15 @@ public class CompanyMainCtroller {
 		return "Company/CompanyHiredInfoQuality";
 	}
 
-	@GetMapping("/CHIS/{registrationId}/{page}") // 公司招聘信息简要列表（可给未登录看）
-	public String CHIS(@PathVariable(name = "page") int page,
-			@PathVariable(name = "registrationId") String registrationId, Model model) {
-		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
-		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+	@GetMapping("/CHIS/{page}") // 公司招聘信息简要列表（可给未登录看）
+	public String CHIS(@PathVariable(name = "page") int page, Model model) {
 		if (page <= 0)
 			page = 1;
-		PageHelper.startPage(page, 3); // 第几页，每页几条
-		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));// 将原list转为page类型
-		if (page >= psotSimpleList.getLastPage())
-			page = psotSimpleList.getLastPage();
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListAll());// 将原list转为page类型
+		page = pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("pros", Professions);
 		model.addAttribute("psotSimpleList", psotSimpleList);
 		model.addAttribute("pages", "第" + page + "页");
 		model.addAttribute("page", page);
@@ -152,26 +155,37 @@ public class CompanyMainCtroller {
 	}
 
 	// form表单的页面输入式跳转
-	@PostMapping("/CHIS/{registrationId}") // 公司招聘信息简要列表（可给未登录看）
-	public String CHISPageTurn(@PathVariable(name = "registrationId") String registrationId,
-			@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
+	@PostMapping("/CHIS") // 公司招聘信息简要列表（可给未登录看）
+	public String CHISPageTurn(@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
 		// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
-		int page = 1;
-		if (pagesTurn >= 1 && pagesTurn != null)
-			page = pagesTurn;
-		System.out.println("=======================" + pagesTurn);
-		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
-		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
-		if (page <= 0)
-			page = 1;
-		PageHelper.startPage(page, 3); // 第几页，每页几条
-		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobList(registrationId));// 将原list转为page类型
+		int page = pageMinx(pagesTurn);
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListAll());// 将原list转为page类型
 		if (page >= psotSimpleList.getLastPage())
 			page = psotSimpleList.getLastPage();
+		pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("pros", Professions);
 		model.addAttribute("psotSimpleList", psotSimpleList);
 		model.addAttribute("pages", "第" + page + "页");
 		model.addAttribute("page", page);
 		return "Company/CompanyHiredInfoToShow";
+	}
+
+	public int pageMinx(Integer pagesTurn) {
+		int page = 1;
+		if (pagesTurn >= 1 && pagesTurn != null)
+			page = pagesTurn;
+		if (page <= 0)
+			page = 1;
+		return page;
+	}
+
+	public int pageMax(int page, PageInfo<Post> psotSimpleList) {
+
+		if (page >= psotSimpleList.getLastPage())
+			page = psotSimpleList.getLastPage();
+		return page;
 	}
 
 	/*

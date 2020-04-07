@@ -13,7 +13,13 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        post_id, fatherTypeId, postName, profession, major
+        select post_id, fatherTypeId, postName, profession, major from type_work
     </sql>
-
+	
+	<select id="allPros" resultType="String">
+		select DISTINCT profession from type_work
+	</select>
+	<select id="allPostName" parameterType="String" resultType="String">
+		 select DISTINCT postName from type_work where profession = #{pros}
+	</select>
 </mapper>

@@ -60,7 +60,6 @@
 	width: 98.5%;
 }
 
-
 .wide{
 	width:50px;
 }
@@ -69,4 +68,14 @@
 }
 .wide3{
 	width:400px;
+}
+
+.arrageNv{
+    height: 1050px;
+    overflow:auto; 
+	width: 360px;
+}
+.arrageNvs{
+	height:800px;
+	position: relative;
 }

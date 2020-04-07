@@ -106,8 +106,10 @@
 	<select id="seletTExeists" parameterType="String"  resultType="int">
 		SELECT type_id from post where postName = #{postNmae}
 	</select>
-	
-
+	<!--  查询工作岗位简要信息(全查) -->
+	<select id="jobListAll" resultMap="PostResult">
+		select * from post
+	</select>
 	<insert id="insertPost"
 		parameterType="com.BYS.GWSystem.model.Post">
 		insert into Post(

@@ -123,5 +123,18 @@ public class PostServiceImpl implements IPostService {
 		// TODO Auto-generated method stub
 		return (Page<PostDto>) postMapper.selectPostListByMore(postDto);
 	}
+	
+	// 查询工作岗位简要信息(全查)
+	@Override
+	public List<Post> jobListAll() {
+		// TODO Auto-generated method stub
+		return postMapper.jobListAll();
+	}
+
+	@Override
+	public Page<Post> jobListAllPage() {
+		// TODO Auto-generated method stub
+		return (Page<Post>) postMapper.jobListAll();
+	}
 
 }

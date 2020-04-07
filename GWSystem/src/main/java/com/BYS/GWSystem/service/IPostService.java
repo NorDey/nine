@@ -14,7 +14,9 @@ public interface IPostService {
 	public List<Post> jobList(String registrationId);
 
 	public Page<Post> jobListPage(String registrationId);
-
+	// 查询工作岗位简要信息(全查)
+	public List<Post> jobListAll();
+	public Page<Post> jobListAllPage();
 	// 删除岗位信息
 	public int deleteOneHired(String postId);
 
@@ -45,4 +47,6 @@ public interface IPostService {
 	//条件查询岗位详细信息
 	public List<PostDto> selectPostListByMore(PostDto postDto);
 	public Page<PostDto> PagePostListByMore(PostDto postDto);
+
+	
 }

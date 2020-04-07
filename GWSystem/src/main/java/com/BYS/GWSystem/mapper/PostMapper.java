@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.model.Post;
+import com.github.pagehelper.Page;
 
 @Mapper
 public interface PostMapper {
@@ -52,5 +53,8 @@ public interface PostMapper {
 
 	//条件查询岗位详细信息
 	public List<PostDto> selectPostListByMore(PostDto postDto);
+	
+	// 查询工作岗位简要信息(全查)
+	public List<Post> jobListAll();
 
 }
