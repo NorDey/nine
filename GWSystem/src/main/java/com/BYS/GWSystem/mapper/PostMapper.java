@@ -59,5 +59,8 @@ public interface PostMapper {
 
 	//新增加的岗位(七天)
 	public List<PostDto> doNewPostList();
+	
+	//条件查询岗位简要信息
+	public List<Post> jobListArrage(String postName);
 
 }

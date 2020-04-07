@@ -153,7 +153,21 @@ public class CompanyMainCtroller {
 		model.addAttribute("page", page);
 		return "Company/CompanyHiredInfoToShow";
 	}
-
+	
+	@GetMapping("/CHIS/{postnames}/{page}") // 公司招聘信息简要列表（可给未登录看）按照岗位分类后
+	public String CHISBypostnames(@PathVariable(name = "postnames") String postName,@PathVariable(name = "page") int page, Model model) {
+		if (page <= 0)
+			page = 1;
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
+		page = pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShow";
+	}
 	// form表单的页面输入式跳转
 	@PostMapping("/CHIS") // 公司招聘信息简要列表（可给未登录看）
 	public String CHISPageTurn(@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {

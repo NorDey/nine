@@ -56,4 +56,7 @@ public interface IPostService {
 	public List<PostDto> doNewPostList();
 
 	public Page<PostDto> PageNewPostList();
+	// 条件查询岗位简要信息
+	public List<Post> jobListArrage(String postName);
+	public Page<Post> jobListArragePage(String postName);
 }

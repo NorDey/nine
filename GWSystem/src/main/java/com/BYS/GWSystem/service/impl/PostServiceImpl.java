@@ -154,4 +154,17 @@ public class PostServiceImpl implements IPostService {
 		return (Page<PostDto>) postMapper.doNewPostList();
 	}
 
+	// 条件查询岗位简要信息
+	@Override
+	public List<Post> jobListArrage(String postName) {
+		// TODO Auto-generated method stub
+		return postMapper.jobListArrage(postName);
+	}
+
+	@Override
+	public Page<Post> jobListArragePage(String postName) {
+		// TODO Auto-generated method stub
+		return (Page<Post>) postMapper.jobListArrage(postName);
+	}
+
 }

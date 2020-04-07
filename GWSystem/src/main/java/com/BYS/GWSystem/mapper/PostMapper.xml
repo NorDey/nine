@@ -122,6 +122,10 @@
 	<select id="jobListAll" resultMap="PostResult">
 		select * from post
 	</select>
+	<!-- //条件查询岗位简要信息 -->
+	<select id="jobListArrage" parameterType="String" resultMap="PostResult">
+		select * from post where postName = #{postNmae}
+	</select>
 	<insert id="insertPost"
 		parameterType="com.BYS.GWSystem.model.Post">
 		insert into Post(

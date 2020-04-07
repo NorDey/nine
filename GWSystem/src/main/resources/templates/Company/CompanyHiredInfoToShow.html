@@ -104,7 +104,7 @@
 					<input type="button" class="btn-post dropdown-toggle" id="dropdownMenu1" th:value="${pros.pros}" data-toggle="dropdown"/>
 					<ul class="dropdown-menu pull-right dropdown" role="menu" aria-labelledby="dropdownMenu1" >
 						<li role="presentation" th:each="postnames :${pros.postName}">
-							<a role="menuitem" tabindex="-1" th:text="${postnames}">Java</a>
+							<a role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHIS/'+${postnames}+'/1'}">Java</a>
 						</li>
 					</ul>
 				</div>
