@@ -26,5 +26,8 @@ public interface IEnterpriseService {
 	public Enterprise selectEnterpriseOne(String registrationId);
 	//更新企业信息 
 	public int updateCInfo(Enterprise greeting);
-	
+
+	//已发布招聘信息的公司查询加模糊查询
+	public List<Enterprise> selectPostEnterpriseListByMore(Enterprise enterprise);
+	public Page<Enterprise> PagePostEnterpriseListByMore(Enterprise enterprise);
 }

@@ -32,11 +32,13 @@
 										<li><a href="/admin/companyApplicationList/1">新上线公司<span
 												class="badge alert-danger" id="newlyAdded"></span> <!--数字徽章-->
 										</a></li>
-										<li><a href="#">最新岗位</a>
+										<li><a href="/admin/seNewPostList/1">最新岗位<span
+												class="badge alert-danger" id="newPostSize"></span></a>
 										</li>
 										<li class="divider"></li>
 										<li><a href="/admin/seStudentsList/1">学生</a></li>
 										<li><a href="/admin/seEnterpriseList/1">企业</a></li>
+										<li><a href="/admin/companyRecruitmentPosition/1">岗位</a></li>
 									</ul></li>
 								<li class="active"><a href="/admin/home">主页</a></li>
 								<li style="width: 150px"><a href="#" data-toggle="collapse"
@@ -79,16 +81,15 @@
 			<div class="clearfix searchWrap">
 				<img class="GWLogo" src="img/文字logo.JPG">
 				<div class="search-div">
-					<form class="clearfix" name="search" method="post" action
-						onsubmit="return false">
-						<i class="search-ico"></i> <input name="search_keyword"
-							type="text" class="txt-search" id="search_keyword" value
-							autocomplete="off" x-webkit-speech
-							x-webkit-grammar="builtin:translate" placeholder="搜索企业/岗位" />
-						<!--x-webkit-speech x-webkit-grammar语音输入支持-->
+					<form class="clearfix" name="search" method="post" action='/admin/homepageSearchPost/1'>
+						<i class="search-ico"></i> 
+						<input name="search_keyword"
+							type="text" class="txt-search" id="search_keyword" 
+							autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="搜索在招岗位/职业"  />
 						<input data-role="btn" name="search" id="search_button"
 							type="submit" value="搜 索" class="btn-s" />
-					</form>
+					</form>	
+					<!-- onsubmit="return false" -->				
 				</div>
 			</div>
 		</div>

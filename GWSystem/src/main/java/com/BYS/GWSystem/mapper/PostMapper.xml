@@ -54,14 +54,26 @@
 		and	 e.registration_id = #{registrationId}
 		</if>
 		<if test="postName != null and postName != ''">
-		and	 t.postName like concat('%', #{postName}, '%')
+		and	 (t.postName like concat('%', #{postName}, '%') or t.major like concat('%', #{postName}, '%'))
 		</if>
+		<if test="enterpriseName != null and enterpriseName != ''">
+		and	 e.enterpriseName like concat('%', #{enterpriseName}, '%')
+		</if>
+		<if test="popular != null and popular != ''">
+		and	 p.popular = #{popular}
+		</if>
+	</select>
+	
+	<select id="doNewPostList" resultType="com.BYS.GWSystem.dto.PostDto">
+		SELECT e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
+		from enterprise e LEFT JOIN post p on e.registration_id=p.registration_id LEFT JOIN type_work t on t.post_id=p.post_id
+		where p.number > 0 and date_sub(CURDATE(), interval 7 day) &lt;= date(p.creationTime)
 	</select>
 
 
 
 	<select id="selectRecruitmentCompaniesNumber" resultType="int">
-		SELECT COUNT(distinct registration_id) FROM post
+		SELECT COUNT(distinct registration_id) FROM post p WHERE p.registration_id in (SELECT distinct registration_id from enterprise e WHERE e.examination=2)
 	</select>
 
 

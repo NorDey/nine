@@ -57,4 +57,7 @@ public interface PostMapper {
 	// 查询工作岗位简要信息(全查)
 	public List<Post> jobListAll();
 
+	//新增加的岗位(七天)
+	public List<PostDto> doNewPostList();
+
 }

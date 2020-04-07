@@ -25,6 +25,18 @@
 
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+	<div th:if="${address} != 'admin/seHotPosts'" >
+	<form class="navbar-form navbar-left" role="search" action='#' th:action="@{/admin/companyRecruitmentPosition/1}" 
+	method='post' th:object="${postDto}" th:if="${address} != 'admin/seNewPostList'" >
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="公司"  id="selectEnterprise" name="selectEnterprise"
+					 th:value="${postDto.enterpriseName}" th:field=*{enterpriseName}>
+					 <input type="text" class="form-control" placeholder="岗位"  id="selectEnterprise" name="selectEnterprise"
+					 th:value="${postDto.postName}" th:field=*{postName}>		 					 
+				</div>
+				<button type="submit" class="btn btn-default">条件搜索</button>
+	</form>
+	</div>	
 		<table class="table table-striped">
 			<caption>招聘岗位</caption>
 			<thead>

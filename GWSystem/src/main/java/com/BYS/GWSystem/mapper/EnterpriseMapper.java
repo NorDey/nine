@@ -34,4 +34,7 @@ public interface EnterpriseMapper {
 	//模糊查询企业列表
 	public List<Enterprise> selectEnterpriseListByMore(Enterprise enterprise);
 
+	//已发布招聘信息的公司查询加模糊查询
+	public List<Enterprise> selectPostEnterpriseListByMore(Enterprise enterprise);
+
 }
