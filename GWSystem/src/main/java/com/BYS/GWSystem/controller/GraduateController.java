@@ -47,7 +47,7 @@ public class GraduateController {
 	public String login(@ModelAttribute Graduate graduate, Model model) {
 		String rest = "";// 返回界面地址
 		// 根据学号查询学生信息，看是否存在此学生
-		Long studentId = graduate.getStudentId();
+		String studentId = graduate.getStudentId();
 		Graduate graduates = iGraduateService.queryStudentById(studentId);
 		if (graduates != null) {
 			// 验证登录密码是否正确

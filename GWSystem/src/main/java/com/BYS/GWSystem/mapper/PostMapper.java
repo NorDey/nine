@@ -5,13 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.model.Post;
 
 @Mapper
 public interface PostMapper {
 
 	// 查询岗位
-	public List<Post> selectPostList();
+	public List<Post> selectPostList(Post post);
 
 	// 更改
 	public int updatePost(Post post);
@@ -32,6 +33,24 @@ public interface PostMapper {
 	public int selectFollowNumber();
 
 	// 按公司查询简要的岗位
-	public List<Post> selectJobSimpleList(@Param(value="registrationId")String registrationId);
+	public List<Post> selectJobSimpleList(@Param(value = "registrationId") String registrationId);
+
+	// 查询在招岗位详细信息
+	public Post selectOneHiredMsg(String postId);
+
+	// 是否存在这个fatherID存在这个fatherID是多少
+	public Integer seletExeists(@Param(value ="pro")String pro);
+
+	// 分配一个FID的最大值
+	public int maxFid();
+	
+	// 是否存在这个TID存在这个TID是多少
+	public Integer seletTExeists(@Param(value ="postNmae")String postNmae);
+	
+	// 分配一个TID的最大值
+	public int maxTid();
+
+	//条件查询岗位详细信息
+	public List<PostDto> selectPostListByMore(PostDto postDto);
 
 }

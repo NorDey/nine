@@ -20,4 +20,12 @@ public class AdminServiceImpl implements IAdminService {
 		return adminMapper.selectAdminList();
 	}
 
+	
+	//登录验证
+	@Override
+	public int selectAdmin(Admin admin) {
+		// TODO Auto-generated method stub
+		return adminMapper.selectAdmin(admin);
+	}
+
 }

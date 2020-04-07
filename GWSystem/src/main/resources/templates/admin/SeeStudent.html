@@ -13,6 +13,7 @@
 <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
 <script
 	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/popup.js"></script>
 <meta charset="UTF-8">
 <title>查看学生</title>
 </head>
@@ -23,9 +24,10 @@
 	<!--head引用-->
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-		<form class="navbar-form navbar-left" role="search">
+		<form class="navbar-form navbar-left" role="search" action='../seStudentsList/1' method='post'>
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
+				<input type="text" class="form-control" placeholder="按姓名或学号号查找" id="selectStudent" name="selectStudent"
+				th:value="${returnDisplay}">
 			</div>
 			<button type="submit" class="btn btn-default">查看</button>
 		</form>
@@ -46,7 +48,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="graduate :${listGraduate.list}">
+				<tr th:each="graduate :${traversingList.list}">
 					<th th:text="${graduate.studentId}"></th>
 					<th th:text="${graduate.studentName}">周元帅</th>
 					<th><span th:if="${graduate.sex}eq'1'">男</span> <span
@@ -59,43 +61,13 @@
 					<th th:text="${graduate.post}">暂无</th>
 					<th th:text="${graduate.company}">暂无</th>
 					<th><span th:if="${graduate.resumeId} != null"><a
-							th:href="@{'/viewResume/'+${graduate.studentId}}">查看</a></span> <span
+							th:href="@{'/admin/viewResume/'+${graduate.studentId}}">查看</a></span> <span
 						th:if="${graduate.resumeId} == null">暂无</span></th>
 				</tr>
 			</tbody>
 		</table>
 		<nav aria-label="Page navigation">
-			<ul class="pagination">
-				<li th:if="${listGraduate.pageNum} gt '4'"><a
-					th:href="@{'/'+${address}+'/1'}" aria-label="Previous"> <span
-						aria-hidden="true">&lt;&lt;</span>
-				</a></li>
-				<li th:if="${listGraduate.hasPreviousPage}"><a
-					th:href="@{'/'+${address}+'/'+${listGraduate.prePage} }"
-					aria-label="Previous"> <span aria-hidden="true">&lt;</span>
-				</a></li>
-
-				<li th:each="page:${listPages}"
-					th:class="${listGraduate.pageNum==page}?'active':'' "><a
-					th:href="@{'/'+${address}+'/'+${page}}" th:text="${page}"> </a></li>
-				<li th:if="${listGraduate.hasNextPage}"><a
-					th:href="@{'/'+${address}+'/'+${listGraduate.nextPage}}"
-					aria-label="Previous"> <span aria-hidden="true">&gt;</span>
-				</a></li>
-				<li th:if="${listGraduate.pageNum} lt ${listGraduate.pages-3}">
-					<a th:href="@{'/'+${address}+'/'+${listGraduate.pages}}"
-					aria-label="Previous"> <span aria-hidden="true">&gt;&gt;</span>
-				</a>
-				</li>
-				<li><a aria-label="Previous"> 共<span aria-hidden="true"
-						th:text="${listGraduate.pages}"></span>页
-				</a></li>
-				<!-- <li ><span aria-label="Previous" style="height:33px" >
-				<input name="Page" type="text" size="4" th:placeholder="${listGraduate.pageNum}" > 
-				<input type="submit" name="Submit" value="&gt;&gt;">	
-				</span>
-				</li> -->
-			</ul>
+			<header th:insert="~{admin/paging::page}"></header>
 		</nav>
 
 	</div>

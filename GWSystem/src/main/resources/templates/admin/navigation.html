@@ -23,42 +23,56 @@
 								</a>
 									<ul class="dropdown-menu in">
 										<li><a href="#">更改密码</a></li>
-										<li><a href="#">退出登录</a></li>
+										<li><a href="/admin/Logout">退出登录</a></li>
 									</ul></li>
 								<li class="dropdown"><a href="#" class="dropdown-toggle in"
 									data-toggle="dropdown"> 查看详情 <b class="caret"></b>
 								</a>
 									<ul class="dropdown-menu in">
-										<li><a href="/admin/EnApproval.html">新上线公司<span
-												class="badge alert-danger">50</span> <!--数字徽章-->
+										<li><a href="/admin/companyApplicationList/1">新上线公司<span
+												class="badge alert-danger" id="newlyAdded"></span> <!--数字徽章-->
 										</a></li>
-										<li><a href="#">最新岗位<span class="badge alert-danger">20</span></a>
+										<li><a href="#">最新岗位</a>
 										</li>
 										<li class="divider"></li>
-										<li><a href="/CheckingStudents/1">学生</a></li>
-										<li><a href="/enterpriseList/1">企业</a></li>
+										<li><a href="/admin/seStudentsList/1">学生</a></li>
+										<li><a href="/admin/seEnterpriseList/1">企业</a></li>
 									</ul></li>
-								<li class="active"><a href="/home">主页</a></li>
-								<li><a href="#" data-toggle="collapse" data-target="#guide">毕业生操作</a>
-									<nav id="guide"
-										class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
-										<dl>
-											<dt>
-												<a href="#">导入毕业生</a>
-											</dt>
-										</dl>
-										<dl>
-											<dt>
-												<a href="#">导出毕业生</a>
-											</dt>
-										</dl>
-									</nav></li>
+								<li class="active"><a href="/admin/home">主页</a></li>
+								<li style="width: 150px"><a href="#" data-toggle="collapse"
+									data-target="#guide">毕业生操作</a>
+									<form action='admin/poiImport' enctype="multipart/form-data" method='post'>
+										<nav id="guide"
+											class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
+											<dl>
+												<dt>
+													<a>导入毕业生</a>
+												</dt>
+												<dt>
+													                    <input id="file" name="file"
+														type="file" accept=".xls,.xlsx" style="width: 150px;"
+														onchange="editType();" />
+													<button>提交</button>
+												</dt>
+											</dl>
+											<dl>
+												<dt>
+													<a href="/admin/poiExport">导出毕业生</a>
+												</dt>
+											</dl>
+										</nav>
+										       
+									</form></li>
 							</ul>
 						</div>
 					</div>
 				</nav>
 			</div>
 		</div>
+
+
+
+		    
 		<!--head引用-->
 		<!--search引用-->
 		<div class="search">
@@ -78,7 +92,6 @@
 				</div>
 			</div>
 		</div>
-		<!--head引用-->
 	</div>
 </body>
 </html>

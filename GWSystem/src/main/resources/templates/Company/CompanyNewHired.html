@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<head>
-		<link rel="stylesheet" href="css/new_file.css" />
+		<link rel="stylesheet" href="/css/new_file.css" />
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/CM.css" />
+		<link rel="stylesheet" type="text/css" href="/css/CM.css" />
 		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,44 +24,46 @@
 			<div class="newHired">
 				<h1><span class="label label-default">新建岗位发布</span></h1>
 				<hr />
-				<h3><span class="label label-default">此处显示公司名字</span></h3>
-				<h3><span class="label label-default">此处显示公司工商注册号</span></h3>
+				<h3><span class="label label-default" th:text="${enterprises.enterpriseName}">此处显示公司名字</span></h3>
+				<h3><span class="label label-default" th:text="'工商注册号：'+${enterprises.registrationId}" >此处显示公司工商注册号</span></h3>
 				<h3><span class="label label-warning">*号为必填项，其余选填</span></h3>
+				<h3><span class="label label-danger" th:text="${waringMSG}"></span></h3>
 				<br />
-				<form class="HirdMSG" name="MSG" method="post" action onsubmit="return false">
+				<form class="HirdMSG" name="MSG" method="post" action="#" th:action="@{'/CNHinsert/'+${enterprises.registrationId}}" th:object="${JobsInfo}" >
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="招聘岗位名*" class="btn-s alertB fl" />
-					<input name="postName" type="text" class="txt-HirdMSG" id="postName"  autocomplete="off"  placeholder="输入岗位名" />
+					<input name="postName" type="text" class="txt-HirdMSG" id="postName"  autocomplete="off"  placeholder="输入岗位名"  th:field=*{postName} />
 					<span class="help-block">此处岗位名称为具体的细分类名</span>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="岗位专业*" class="btn-s alertB fl" />
-					<input name="major" type="text" class="txt-HirdMSG" id="major"  autocomplete="off"  placeholder="输入岗位所需的主修专业" />
+					<input name="major" type="text" class="txt-HirdMSG" id="major"  autocomplete="off"  placeholder="输入岗位所需的主修专业"  th:field=*{major}/>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="工种" class="btn-s alertB fl" />
-					<input name="profession" type="text" class="txt-HirdMSG" id="profession"  autocomplete="off"  placeholder="输入工种类别" />
+					<input name="profession" type="text" class="txt-HirdMSG" id="profession"  autocomplete="off"  placeholder="输入工种类别"  th:field=*{profession}/>
 					<span class="help-block">此处工种名称为岗位的的模糊（大）分类</span>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="负责事项" class="btn-s alertB fl" />
-					<textarea name="responsible" type="text" class="txt-HirdMSG longText" id="responsible"  autocomplete="off"  placeholder="输入负责事项介绍,不超过200字"></textarea>
+					<textarea name="responsible" type="text" class="txt-HirdMSG longText" id="responsible"  autocomplete="off"  placeholder="输入负责事项介绍,不超过200字"  th:field=*{responsible}></textarea>
 					<br />
 					<span class="help-block">负责事项介绍词禁止超过200字</span>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="相关要求" class="btn-s alertB fl" />
-					<textarea name="demand" type="text" class="txt-HirdMSG longText" id="demand"  autocomplete="off"  placeholder="输入相关要求，禁止超过500字"></textarea>
+					<textarea name="demand" type="text" class="txt-HirdMSG longText" id="demand"  autocomplete="off"  placeholder="输入相关要求，禁止超过500字"  th:field=*{demand}></textarea>
 					<br />
 					<span class="help-block">相关要求介绍词禁止超过500字</span>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="招聘人数*" class="btn-s alertB fl" />
-					<input name="number" type="number" class="txt-HirdMSG" id="number"  autocomplete="off"  placeholder="输入招聘人数，纯数字" />
+					<input name="number" type="number" class="txt-HirdMSG" id="number"  autocomplete="off"  placeholder="输入招聘人数，纯数字"  th:field=*{number}/>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="已招人数" class="btn-s alertB fl" />
-					<input name="arrived" type="number" class="txt-HirdMSG" id="arrived"  autocomplete="off"  placeholder="输入已招人数，纯数字" />
+					<input name="arrived" type="number" class="txt-HirdMSG" id="arrived"  autocomplete="off"  placeholder="输入已招人数，纯数字" th:field=*{arrived}/>
 					
 					<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="薪资待遇" class="btn-s alertB fl" />
-					<input name="salary" type="text" class="txt-HirdMSG" id="salary"  autocomplete="off"  placeholder="输入薪资待遇" />
+					<input name="salary" type="text" class="txt-HirdMSG" id="salary"  autocomplete="off"  placeholder="输入薪资待遇"  th:field=*{salary}/>
 					<span class="help-block">未定，可输入“面谈”</span>
 					
 					<br />
+					
 					<input name="Infochange" id="Infochange" type="submit" value="完成并提交" class="btn-s Infochanges" />
 				</form>
 			</div>

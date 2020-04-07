@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.BYS.GWSystem.mapper.JobsUTypeWorkUPsotMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="JobsInfoResult"
+		type="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+		<id column="post_id" property="postId" />
+		<result column="fatherTypeId" property="fatherTypeId" />
+		<result column="postName" property="postName" />
+		<result column="major" property="major" />
+		<result column="profession" property="profession" />
+
+		<result column="registration_id" property="registrationId" />
+		<result column="type_id" property="typeId" />
+		<result column="responsible" property="responsible" />
+		<result column="demand" property="demand" />
+		<result column="number" property="number" />
+		<result column="arrived" property="arrived" />
+		<result column="salary" property="salary" />
+	</resultMap>
+
+
+
+	<!-- 通用查询结果列 -->
+	<sql id="selectJobInfoVo">
+		select
+		t.post_id,t.fatherTypeId,t.postName,t.major,t.profession,p.registration_id,p.type_id,p.responsible,p.demand,p.number,p.arrived,p.salary
+		from type_work t , post p
+	</sql>
+
+	<select id="count" resultType="String">
+		select count(*) from post
+	</select>
+
+	<select id="searchOne" parameterType="String"
+		resultType="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+		<include refid="selectJobInfoVo" />
+		where
+		p.post_id=t.post_id
+		AND
+		p.post_id = #{postId}
+	</select>
+	
+	<select id="selectOne" parameterType="String" resultType="String">
+		 select postName from post where postName = #{postName}
+	</select>
+
+	<!--  UPDATE post,type_work SET post.number='40' ,type_work.major='设计专业' 
+		where post.post_id ='10002285246076921164' and post.post_id=type_work.post_id  -->
+	<update id="updateOneMSG"
+		parameterType="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+		update post,type_work
+		<set>
+			<if test="fatherTypeId != null and fatherTypeId != ''">type_work.fatherTypeId = #{fatherTypeId},</if>
+			<if test="postName != null and postName !=''">type_work.postName = #{postName},</if>
+			<if test="major != null and major != ''">type_work.major = #{major},</if>
+			<if test="profession != null and profession != ''">type_work.profession = #{profession},</if>
+			
+			<if test="postName != null and postName !=''">post.postName = #{postName},</if>
+			<if test="typeId != null and typeId !=''and typeId!=0">post.type_id = #{typeId},</if>
+			<if test="responsible != null and responsible !=''">post.responsible = #{responsible},</if>
+			<if test="demand != null and demand !=''">post.demand = #{demand},</if>
+			<if test="number != null and number != 0">post.number = #{number},</if>
+			<if test="arrived != null and arrived != 0">post.arrived = #{arrived},</if>
+			<if test="salary != null and salary != ''">post.salary = #{salary}</if>
+		</set>
+		where post.post_id = type_work.post_id AND post.post_id =#{postId}
+	</update>
+    
+    <insert id="insertNewJobs" parameterType="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+    	 insert into post(
+			<if test="postId != null and postId !=''">post.post_id,</if>
+			<if test="registrationId != null and registrationId != ''">post.registration_id,</if>
+			<if test="postName != null and postName !=''">post.postName,</if>
+			<if test="typeId != null and typeId !=''and typeId!=0">post.type_id,</if>
+			<if test="responsible != null and responsible !=''">post.responsible,</if>
+			<if test="demand != null and demand !=''">post.demand,</if>
+			<if test="number != null and number != 0">post.number,</if>
+			<if test="arrived != null and arrived != 0">post.arrived,</if>
+			<if test="salary != null and salary != ''">post.salary</if>
+    	 )values(
+    		<if test="postId != null and postId !=''">#{postId},</if>
+    		<if test="registrationId != null and registrationId != ''">#{registrationId},</if>
+    	 	<if test="postName != null and postName !=''">#{postName},</if>
+			<if test="typeId != null and typeId !=''and typeId!=0">#{typeId},</if>
+			<if test="responsible != null and responsible !=''">#{responsible},</if>
+			<if test="demand != null and demand !=''">#{demand},</if>
+			<if test="number != null and number != 0">#{number},</if>
+			<if test="arrived != null and arrived != 0">#{arrived},</if>
+			<if test="salary != null and salary != ''">#{salary}</if>
+    	 )
+    </insert>
+     <insert id="insertNewJobs2" parameterType="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
+    	 insert into type_work(
+			<if test="postId != null and postId !=''">type_work.post_id,</if>
+			<if test="fatherTypeId != null and fatherTypeId != ''">type_work.fatherTypeId,</if>
+			<if test="postName != null and postName !=''">type_work.postName,</if>
+			<if test="major != null and major != ''">type_work.major,</if>
+			<if test="profession != null and profession != ''">type_work.profession</if>
+    	 )values(
+    	 	<if test="postId != null and postId !=''">#{postId},</if>
+    	 	<if test="fatherTypeId != null and fatherTypeId != ''">#{fatherTypeId},</if>
+			<if test="postName != null and postName !=''">#{postName},</if>
+			<if test="major != null and major != ''">#{major},</if>
+			<if test="profession != null and profession != ''">#{profession}</if>
+    	 )
+    </insert>
+    </mapper>

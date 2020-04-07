@@ -44,6 +44,22 @@
 		</if>
 	</select>
 
+
+<select id="selectPostListByMore"
+		parameterType="com.BYS.GWSystem.dto.PostDto" resultType="com.BYS.GWSystem.dto.PostDto">
+		SELECT e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
+		from enterprise e LEFT JOIN post p on e.registration_id=p.registration_id LEFT JOIN type_work t on t.post_id=p.post_id
+		where p.number>0
+		<if test="registrationId != null and registrationId != ''">
+		and	 e.registration_id = #{registrationId}
+		</if>
+		<if test="postName != null and postName != ''">
+		and	 t.postName like concat('%', #{postName}, '%')
+		</if>
+	</select>
+
+
+
 	<select id="selectRecruitmentCompaniesNumber" resultType="int">
 		SELECT COUNT(distinct registration_id) FROM post
 	</select>
@@ -52,21 +68,45 @@
 	<select id="selectPostNumber" resultType="int">
 		SELECT COUNT(*) FROM post
 	</select>
-
+	
 	<select id="selectFollowNumber" resultType="int">
 		SELECT COUNT(distinct post_id) FROM student_history where collection=1
 	</select>
 
 	<select id="selectJobSimpleList" parameterType="String"
 		resultMap="PostResult">
-		<include refid="selectPostVo" />
-		where
-		<if test="registrationId != null and registrationId != 0">
-			 p.registration_id = #{registrationId}
+		<include refid="selectPostVo" />	
+		<if test="registrationId != null and registrationId != '' ">
+			where p.registration_id = #{registrationId}
 		</if>
 	</select>
-
-
+	
+	<select id="selectOneHiredMsg" parameterType="String"
+		resultType="com.BYS.GWSystem.model.Post">
+		<include refid="selectPostVo" />
+		where
+			 p.post_id = #{postId}
+	</select>
+	<!-- father id 这里写完才发现写错了mapper算了...反正一样用兄弟取个type_Work的max值 -->
+	<select id="maxFid" resultType="int">
+		SELECT max(fatherTypeId) from type_work
+	</select>
+	
+	<!-- type id -->
+	<select id="maxTid" resultType="int">
+		SELECT max(type_id) from post
+	</select>
+	
+	<!-- 按照工种查询父类ID 这里写完才发现写错了mapper算了...反正一样用兄弟 -->
+	<select id="seletExeists" parameterType="String"  resultType="int">
+		SELECT fatherTypeId from type_work where profession = #{pro}
+	</select>
+	
+	<!-- 	按照岗位名称查询type_ID -->
+	<select id="seletTExeists" parameterType="String"  resultType="int">
+		SELECT type_id from post where postName = #{postNmae}
+	</select>
+	
 
 	<insert id="insertPost"
 		parameterType="com.BYS.GWSystem.model.Post">

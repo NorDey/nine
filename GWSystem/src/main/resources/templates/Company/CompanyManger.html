@@ -34,19 +34,25 @@
 					<img src="https://static.runoob.com/images/mix/img_avatar.png" class="media-object" style="width:80px">
 				</div>
 				<div class="media-body">
-					<a><h4 class="media-heading" th:text="${psotSimpleList.postName}">公司招聘岗位名称</h4>（点击查看详情）</a>
+					<h4 class="media-heading" th:text="${psotSimpleList.postName}">公司招聘岗位名称</h4>
 					<p th:text="${psotSimpleList.creationTime}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 					<p th:text="${psotSimpleList.demand}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 					<p th:text="${psotSimpleList.responsible}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 				</div>
-				<input name="change" id="change" type="button" value="修改" class="btn-s" />
-			    <input name="delete" id="delete" type="button" value="删除" class="btn-s" />
+				<a th:href="@{'/CHIC/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}}"><input name="change" id="change" type="button" value="修改" class="btn-s" /></a>
+			    <a th:href="@{'/CMDel/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}+'/'+${page}}"><input name="delete" id="delete" type="button" value="删除" class="btn-s" /></a>
 			</div>
 			<hr>
 			</div>
 			
-				<input type="button" value="上一页" class="btn-s" />
-			    <input type="button" value="下一页" class="btn-s" />
+				<a th:href="@{'/CM/'+${enterprises.registrationId}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<input type="button" disabled="disabled" th:value="${pages}" class="btn-s">
+				<a th:href="@{'/CM/'+${enterprises.registrationId}+'/'+${page+1}}"><input type="button" value="下一页" class="btn-s" /></a>
+				<form class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CM/'+${enterprises.registrationId}}" >
+				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
+				<input type="submit" value="跳转" class="btn-s" />
+				</form>
+			    
 					
 		</div>
 

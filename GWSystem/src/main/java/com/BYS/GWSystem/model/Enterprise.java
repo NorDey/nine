@@ -46,7 +46,7 @@ public class Enterprise implements Serializable {
     //企业是否上市(1已上市0未上市)
     private Integer beListed;
 
-    //是否通过审查(1通过0未通过)
+    //是否通过审查(1申请中,2通过,3未通过)
     private Integer examination;
 
 

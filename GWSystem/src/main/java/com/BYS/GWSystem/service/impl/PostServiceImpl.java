@@ -3,9 +3,11 @@ package com.BYS.GWSystem.service.impl;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.mapper.PostMapper;
 import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.service.IPostService;
@@ -38,6 +40,88 @@ public class PostServiceImpl implements IPostService {
 	public Page<Post> jobListPage(String registrationId) {
 		// TODO Auto-generated method stub
 		return (Page<Post>)postMapper.selectJobSimpleList(registrationId);
+	}
+	
+	// 删除工作岗位信息
+	@Override
+	public int deleteOneHired(String postId) {
+		Post posts = new Post();
+		posts.setPostId(postId);
+		return postMapper.deletePost(posts);
+	}
+	
+	//查询某一个工作岗位详细信息
+	@Override
+	public Post selectOneHiredMsg(String postId) {
+		// TODO Auto-generated method stub
+		
+		return postMapper.selectOneHiredMsg(postId);
+	}
+	//统计post的数量来设计postId
+	@Override
+	public int count() {
+		// TODO Auto-generated method stub
+		return postMapper.selectPostNumber();
+	}
+	
+	//是否存在这个fatherID存在这个fatherID是多少
+	@Override
+	public Integer seletExeists(String pro) {
+		// TODO Auto-generated method stub
+		return postMapper.seletExeists(pro);
+	}
+	//分配一个FID的最大值
+	@Override
+	public int seletMaxFID() {
+		// TODO Auto-generated method stub
+		return postMapper.maxFid();
+	}
+	//是否存在这个fatherID存在这个fatherID是多少//分配一个FID的最大值
+	@Override
+	public String toGetFid(String profession) {
+		// TODO Auto-generated method stub
+		int id = 0; 
+		if(seletExeists(profession)!=null)id=seletExeists(profession);//是否存在该工种
+		else {
+			id=(seletMaxFID()+1);//不存在该工种则新建这个工种
+		}
+		return id+"";
+	}
+	
+	
+	
+	//是否存在这个TID存在这个fatherID是多少
+	@Override
+	public Integer seletTExeists(String postNmae) {
+		// TODO Auto-generated method stub
+		return postMapper.seletTExeists(postNmae);
+	}
+	//分配一个TID的最大值
+	@Override
+	public int seletMaxTID() {
+		// TODO Auto-generated method stub
+		return postMapper.maxTid();
+	}
+	//是否存在这个TID存在这个fatherID是多少//分配一个TID的最大值
+	@Override
+	public Integer toGetTid(String postName) {
+		Integer id = null; 
+		if(seletTExeists(postName)!=null)id=seletTExeists(postName);//是否存在该岗位名称
+		else {
+			id=(seletMaxTID()+1);//不存在该工种则新建这个岗位名称
+		}
+		return id;
+	}
+
+	@Override
+	public List<PostDto> selectPostListByMore(PostDto postDto) {
+		return postMapper.selectPostListByMore(postDto);
+	}
+
+	@Override
+	public Page<PostDto> PagePostListByMore(PostDto postDto) {
+		// TODO Auto-generated method stub
+		return (Page<PostDto>) postMapper.selectPostListByMore(postDto);
 	}
 
 }

@@ -27,7 +27,7 @@
 											class="caret"></b>
 									</a>
 										<ul class="dropdown-menu in">
-											<li><a th:href="@{'/CM/'+${enterprises.registrationId}}">我的发布<span class="badge alert-danger">50</span>
+											<li><a th:href="@{'/CM/'+${enterprises.registrationId}+'/1'}">我的发布<span class="badge alert-danger">50</span>
 													<!--数字徽章-->
 											</a></li>
 											<li><a href="#">浏览历史<span class="badge alert-danger">10</span></a>
@@ -89,7 +89,7 @@
 					</form>
 				</div>
 				<div class="edit-eara fr">
-					<a href="#" class="btn-post">发布招聘信息</a>
+					<a th:href="@{'/CNH/'+${enterprises.registrationId}}" class="btn-post">发布招聘信息</a>
 					<a href="#" class="btn-change">修改/删除&nbsp;招聘信息</a>
 				</div>
 			</div>
