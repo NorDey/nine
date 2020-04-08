@@ -2,12 +2,13 @@ package com.BYS.GWSystem.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.BYS.GWSystem.mapper.GraduateMapper;
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.service.IGraduateService;
-import com.BYS.GWSystem.service.impl.GraduateServiceImpl;
+import com.BYS.GWSystem.service.IPostService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Controller
 @RequestMapping("/graduate")
@@ -31,6 +34,15 @@ public class GraduateController {
 
 	@Autowired
 	private IGraduateService iGraduateService;
+
+	@Autowired
+	private IPostService iPostService;
+
+	// 当前登录的毕业生对象
+	private Graduate graduate;
+
+	// 岗位查询条件
+	PostDto post = new PostDto();
 
 	// 头部毕业生名，跳转首页
 	@GetMapping("/home")
@@ -142,11 +154,111 @@ public class GraduateController {
 	}
 
 	// 保存个人信息
-	@PostMapping("/saveInfo/{studentId}")//通过表单路径传学生id过来
+	@PostMapping("/saveInfo/{studentId}") // 通过表单路径传学生id过来
 	public String saveInfo(@ModelAttribute Graduate graduate, Model model, @PathVariable String studentId) {
+		Graduate graduates = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		graduate.setAvatarPath(graduates.getAvatarPath());
 		int rest = iGraduateService.updateGraduate(graduate);
 		model.addAttribute("graduate", graduate);
 		return "graduate/GraduateHome";
 	}
 
+	// 头部导航点击搜索岗位
+	@GetMapping("/searchJobs")
+	public String search(Model model, HttpServletRequest request) {
+		String studentId = request.getParameter("studentId");// 获取学生的学号
+		graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		PostDto postDto = new PostDto();
+		model.addAttribute("postDto", postDto);
+		int page = 1;
+		PageHelper.startPage(page, 8);
+		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.selectPostListByMore(postDto));// 将原list转为page类型
+		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
+		model.addAttribute("listPages", listPages);
+		model.addAttribute("traversingList", psotSimpleList);
+		model.addAttribute("address", "graduate/Postpages");
+		return "graduate/SearchJobs";
+	}
+
+	// 超链接分页查询岗位
+	@GetMapping(value = { "/Postpages/{page}" })
+	public String Postpage(Model model, @PathVariable(name = "page") int page) {
+		model.addAttribute("graduate", graduate);
+		PageHelper.startPage(page, 8);
+		PostDto postDto = post;
+		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.selectPostListByMore(postDto));// 将原list转为page类型
+		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
+		model.addAttribute("postDto", post);
+		model.addAttribute("listPages", listPages);
+		model.addAttribute("traversingList", psotSimpleList);
+		model.addAttribute("address", "graduate/Postpages");
+		return "graduate/SearchJobs";
+	}
+
+	// 表单条件查询岗位列表
+	@PostMapping(value = { "/Postpages/{page}" })
+	public String Postpages(Model model, @PathVariable(name = "page") int page, @ModelAttribute PostDto postDto) {
+		model.addAttribute("graduate", graduate);
+		post = postDto;
+		PageHelper.startPage(page, 8);
+		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.selectPostListByMore(postDto));// 将原list转为page类型
+		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
+		model.addAttribute("postDto", post);
+		model.addAttribute("listPages", listPages);
+		model.addAttribute("traversingList", psotSimpleList);
+		model.addAttribute("address", "graduate/Postpages");
+		return "graduate/SearchJobs";
+	}
+
+	// 显示的可点击页数按钮
+	public List<Integer> calculateOptionalPages(int page, int pages) {
+		List<Integer> listPages = new ArrayList<Integer>();
+		listPages.add(page);
+		for (int i = 1; i <= 3; i++) {
+			if (page + i <= pages) {
+				listPages.add(page + i);
+			}
+			if (page - i > 0) {
+				listPages.add(page - i);
+			}
+		}
+		Collections.sort(listPages);
+		return listPages;
+	}
+
+	// 投递简历
+	@GetMapping("/sendCV")
+	public String sendCV(Model model, HttpServletRequest request) {
+
+		return "graduate/SearchJobs";
+	}
+
+	// 头部导航点击搜索毕业生信息
+	@GetMapping("/searchGraduateInfo")
+	public String searchGraduateInfo(Model model, HttpServletRequest request) {
+		String studentId = request.getParameter("studentId");// 获取学生的学号
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		return "graduate/SearchGraduateInfo";
+	}
+
+	// 表单条件查询岗位列表
+	@PostMapping(value = { "/searchGraduateInfos/{studentId}" })
+	public String searchGraduateInfos(@ModelAttribute Graduate graduate, Model model, @PathVariable String studentId) {
+		Graduate graduates = iGraduateService.queryStudentById(graduate.getStudentId());// 查询学生信息
+		graduate = iGraduateService.queryStudentById(studentId);// 查询当前登录毕业生信息
+		model.addAttribute("graduate", graduate);
+		model.addAttribute("graduates", graduates);
+		return "graduate/SearchGraduateInfo";
+	}
+
+	// 头部导航点击个人简历
+	@GetMapping("/resume")
+	public String resume(Model model, HttpServletRequest request) {
+		String studentId = request.getParameter("studentId");// 获取学生的学号
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		return "graduate/Resume";
+	}
 }
