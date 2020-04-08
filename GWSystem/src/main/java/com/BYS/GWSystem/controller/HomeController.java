@@ -453,7 +453,7 @@ public class HomeController {
 	
 
 	// 岗位列表
-	@GetMapping(value = { "/companyRecruitmentPosition/{page}/{registrationId}", "/companyRecruitmentPosition/{page}" })
+	@GetMapping(value = {"/companyRecruitmentPosition/{page}" })
 	public String CompanyRecruitmentPosition(Model model, @PathVariable(name = "page") int page,
 			@PathVariable(name = "registrationId", required = false) String registrationId) {
 		PageHelper.startPage(page, 8);
@@ -467,10 +467,23 @@ public class HomeController {
 		model.addAttribute("traversingList", psotSimpleList);
 		return "admin/Post";
 	}
+	
+	
+	
+	// 单个公司岗位列表
+		@GetMapping(value = {"/{registrationId}/{page}"})
+		public String RecruitmentPosition(Model model,@PathVariable(name = "page",required = false) int page,
+				@PathVariable(name = "registrationId", required = false) String registrationId) {			
+			PostDto postDto = post;
+			postDto.setRegistrationId(registrationId);
+			List<PostDto> psotSimpleList = iPostService.selectPostListByMore(postDto);
+			model.addAttribute("traversingList", psotSimpleList);
+			model.addAttribute("address", registrationId);
+			return "admin/CompanyPost";
+		}
 
 	// 岗位列表
-	@PostMapping(value = { "/companyRecruitmentPosition/{page}/{registrationId}",
-			"/companyRecruitmentPosition/{page}" })
+	@PostMapping(value = {"/companyRecruitmentPosition/{page}" })
 	public String CompanyRecruitmentPosition(Model model, @PathVariable(name = "page") int page,
 			@PathVariable(name = "registrationId", required = false) String registrationId,
 			@ModelAttribute PostDto postDto) {

@@ -25,11 +25,13 @@
 
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+				<a th:href="@{/admin/seEnterpriseList/1}"><span type="button"
+						class="glyphicon glyphicon-chevron-left"></span></a>
 		<h1>
-			<span class="label label-default"><img th:src="${enterprise.avatarPath}">公司介绍</span>
+			<span class="label label-default"><img th:src="@{/headportrait/}+${enterprise.avatarPath}">公司介绍</span>
 		</h1>
 		<table class="table table-striped">
-			<caption>公司信息</caption>
+			<caption th:text="${enterprise.enterpriseName}+'信息'">公司信息</caption>
 			<thead>
 				<tr>
 					<th>工商注册号</th>
@@ -62,6 +64,6 @@
 			</textarea>
 	</div>
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
-	<a th:href="@{'/admin/companyRecruitmentPosition/1/'+${enterprise.registrationId}}"><input name="Infochange" id="Infochange" type="button" value="在招岗位" class="btn-s Infochanges" /></a>
+	<a th:href="@{'/admin/'+${enterprise.registrationId}+'/1'}"><input name="Infochange" id="Infochange" type="button" value="在招岗位" class="btn-s Infochanges" /></a>
 </body>
 </html>

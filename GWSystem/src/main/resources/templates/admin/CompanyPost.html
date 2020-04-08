@@ -25,20 +25,8 @@
 
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-	<a href="/admin/home"><span type="button"
-						class="glyphicon glyphicon-chevron-left"></span></a>
-	<div th:if="${address} != 'seHotPosts'" >
-	<form class="navbar-form navbar-left" role="search" action='#' th:action="@{/admin/companyRecruitmentPosition/1}" 
-	method='post' th:object="${postDto}" th:if="${address} != 'seNewPostList'" >				
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="公司"  id="selectEnterprise" name="selectEnterprise"
-					 th:value="${postDto.enterpriseName}" th:field=*{enterpriseName}>
-					 <input type="text" class="form-control" placeholder="岗位"  id="selectEnterprise" name="selectEnterprise"
-					 th:value="${postDto.postName}" th:field=*{postName}>		 					 
-				</div>
-				<button type="submit" class="btn btn-default">条件搜索</button>
-	</form>
-	</div>	
+				<a th:href="@{'/admin/companyDetails/'+${address}}"><span type="button"
+						class="glyphicon glyphicon-chevron-left"></span></a>		
 		<table class="table table-striped">
 			<caption>招聘岗位</caption>
 			<thead>
@@ -58,7 +46,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="postDto :${traversingList.list}">
+				<tr th:each="postDto :${traversingList}">
 					<th th:text="${postDto.registrationId}">001</th>
 					<th th:text="${postDto.enterpriseName}">阿里巴巴</th>
 					<th th:text="${postDto.major}">软件开发</th>
@@ -84,10 +72,6 @@
 				</tr>
 			</tbody>
 		</table>
-		
-		<nav aria-label="Page navigation">
-			<header th:insert="~{admin/paging::page}"></header>
-		</nav>
 	</div>
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 
