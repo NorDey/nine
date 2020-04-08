@@ -23,7 +23,7 @@
 </head>
 
 <body>
-	<div id="header">
+	<!-- <div id="header">
 		<div class="header">
 			<div class="city">
 
@@ -47,7 +47,7 @@
 									data-toggle="dropdown"> 个人中心 <b class="caret"></b>
 								</a>
 									<ul class="dropdown-menu in">
-										<li><a href="#">个人信息 <!--数字徽章-->
+										<li><a href="#">个人信息 数字徽章
 										</a></li>
 										<li><a href="#">我的简历</a></li>
 										<li class="divider"></li>
@@ -75,7 +75,8 @@
 			<li><a href="#">搜索毕业生信息</a></li>
 			<li><a href="#">个人简历</a></li>
 		</ul>
-	</div>
+	</div> -->
+	<header th:insert="~{graduate/navigation::header}"></header>
 	<!--图标和搜索发帖按钮end-->
 	<div class="content">
 		<h1>
@@ -83,70 +84,86 @@
 				style="border: 3px solid red; width: 50px; height: 50px;"> <span
 				class="label label-default">修改个人信息</span>
 		</h1>
-		<form class="clearfix" name="search" method="post" action
-			onsubmit="return false">
+		<form class="clearfix" name="search" method="post" action="#" th:action="@{/graduate/saveInfo/}+${graduate.studentId}" th:object="${graduate}">
 			<table class="table table-striped">
 				<!-- <table class="formtable" style="width: 60%"> -->
-				<tr>
+				<!-- <tr>
 					<th>学号：</th>
-					<th><input type="text" name="student_id" maxlength="20" placeholder="请输入学号"
-						id="student_id" readonly="readonly" />
-						<span id="student_id_span" style="color: red"></span></th>
-				</tr>
+					<th><input type="text" name="student_id" maxlength="20"
+						placeholder="请输入学号" id="student_id" readonly="readonly"
+						th:value="${graduate.studentId}" /> <span id="student_id_span"
+						style="color: red"></span></th>
+				</tr> -->
 				<tr>
 					<th>姓名：</th>
 					<th><input type="text" name="studentName" maxlength="20"
-						id="studentName" placeholder="请输入真实姓名" onblur="checkName()" /> <span
-						id="studentName_span" style="color: red"></span></th>
+						id="studentName" placeholder="请输入真实姓名" onblur="checkName()"
+						th:value="${graduate.studentName}" /> <span id="studentName_span"
+						style="color: red"></span></th>
 				</tr>
 				<tr>
 					<th>性别：</th>
-					<th><input type="radio" name="sex" id="sex1" value="1" checked />男
-						<input type="radio" name="sex" id="sex2" value="0" />女
+					<th th:if="${graduate.sex} eq 1"><input type="radio"
+						name="sex" id="sex1" value="1" checked />男 <input type="radio"
+						name="sex" id="sex2" value="0" />女</th>
+					<th th:if="${graduate.sex} eq 0"><input type="radio"
+						name="sex" id="sex1" value="1" />男 <input type="radio" name="sex"
+						id="sex2" value="0" checked />女</th>
 				</tr>
 				<tr>
 					<th>联系电话：</th>
 					<th><input type="text" name="phonenumber" id="phonenumber"
-						maxlength="20" placeholder="请输入本人电话" onblur="checkphone()" /> <span
-						id="phonenumber_span" style="color: red"></span></th>
+						maxlength="20" placeholder="请输入本人电话" onblur="checkphone()"
+						th:value="${graduate.phonenumber}" /> <span id="phonenumber_span"
+						style="color: red"></span></th>
 				</tr>
 				<tr>
 					<th>家庭住址：</th>
 					<th><input type="text" name="homeAddress" id="homeAddress"
-						maxlength="20" placeholder="请输入常住地址" /></th>
+						maxlength="20" placeholder="请输入常住地址"
+						th:value="${graduate.homeAddress==null}?'请输入常住地址':${graduate.homeAddress}" /></th>
 				</tr>
 				<tr>
 					<th>毕业去向：</th>
 					<th><input type="text" name="whereabouts" id="whereabouts"
-						maxlength="20" placeholder="请输入毕业去向" /></th>
+						maxlength="20" placeholder="请输入毕业去向"
+						th:value="${graduate.whereabouts==null}?'请输入毕业去向':${graduate.whereabouts}" /></th>
 				</tr>
 				<tr>
 					<th>就业情况：</th>
-					<th><input type="radio" name="cause" id="cause1" value="1"
-						checked />已就业 <input type="radio" name="cause" id="cause2"
-						value="0" />未就业
+					<th th:if="${graduate.cause} eq 1"><input type="radio"
+						name="cause" id="cause1" value="1" checked />已就业 <input
+						type="radio" name="cause" id="cause2" value="0" />未就业</th>
+					<th th:if="${graduate.cause} eq 0"><input type="radio"
+						name="cause" id="cause1" value="1" />已就业 <input type="radio"
+						name="cause" id="cause2" value="0" checked />未就业</th>
 				</tr>
 				<tr>
 					<th>工作岗位：</th>
 					<th><input type="text" name="post" id="post" maxlength="20"
-						placeholder="请输入工作岗位" /> </span></th>
+						placeholder="请输入工作岗位"
+						th:value="${graduate.post==null}? '请输入工作岗位' : ${graduate.post}" />
+					</th>
 				</tr>
 				<tr>
 					<th>就业单位：</th>
 					<th><input type="text" name="company" id="company"
-						maxlength="20" placeholder="请输入就业单位" /></th>
+						maxlength="20" placeholder="请输入就业单位"
+						th:value="${graduate.company==null}?'请输入就业单位':${graduate.company}" /></th>
 				</tr>
 				<tr>
 					<th>密码：</th>
 					<th><input type="password" name="password" id="password"
-						maxlength="20" placeholder="请输入6位以上的密码" onblur="checkPwd()" /> <span
-						id="password_span" style="color: red"></span></th>
+						maxlength="20" placeholder="请输入6位以上的密码" onblur="checkPwd()"
+						th:value="${graduate.password}" /> <span id="password_span"
+						style="color: red"></span></th>
 				</tr>
 				<tr>
 					<th>确认密码：</th>
 					<th><input type="password" name="confirm" id="confirm"
-						maxlength="20" placeholder="请再次输入密码" onblur="checkconfirm()" /> <span
-						id="confirm_span" style="color: red"></span></th>
+						maxlength="20" placeholder="请再次输入密码" onblur="checkconfirm()"
+						th:value="${graduate.password}" /> <span id="confirm_span"
+						style="color: red"></span></th>
 				</tr>
 
 				<tr>
