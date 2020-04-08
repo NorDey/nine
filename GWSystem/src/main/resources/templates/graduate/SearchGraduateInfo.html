@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<title>搜索毕业生信息</title>
+</head>
+<body>
+	<header th:insert="~{graduate/navigation::Sheader}"></header>
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		<form class="navbar-form navbar-left" role="search" action='#'
+			th:action="@{/graduate/searchGraduateInfos/}+${graduate.studentId}"
+			method='post' th:object="${graduate}">
+			<div class="form-group">
+				请输入毕业生学号： <input type="text" class="form-control" placeholder="学号" id="studentId" name="studentId" th:field=*{studentId}>
+					
+				<!-- <input type="text" class="form-control" placeholder="姓名
+					id="studentName" name="studentName" th:value="${graduate.studentName}"
+					th:field=*{postName}> -->
+			</div>
+			<button type="submit" class="btn btn-default">条件搜索</button>
+		</form>
+		<table class="table table-striped" th:if="${graduates!=null}">
+			<tr>
+				<th>学号:</th>
+				<th th:text="${graduates.studentId}"></th>
+			</tr>
+			<tr>
+				<th>姓名:</th>
+				<th th:text="${graduates.studentName}"></th>
+			</tr>
+			<tr>
+				<th>性别:</th>
+
+				<th th:text="${graduates.sex=='1'}?'男':'女'"></th>
+			</tr>
+			<tr>
+				<th>联系方式:</th>
+
+				<th th:text="${graduates.phonenumber}"></th>
+			</tr>
+			<tr>
+				<th>家庭住址:</th>
+
+				<th th:text="${graduates.homeAddress}"></th>
+			</tr>
+			<tr>
+				<th>毕业去向:</th>
+
+				<th th:text="${graduates.whereabouts}"></th>
+			</tr>
+
+			<tr>
+				<th>就业情况:</th>
+
+				<th th:text="${graduates.cause=='1'}?'已就业':'未就业'"></th>
+			</tr>
+			<tr>
+				<th>工作岗位:</th>
+
+				<th th:text="${graduates.post}"></th>
+			</tr>
+			<tr>
+				<th>就业单位:</th>
+				<th th:text="${graduates.company}"></th>
+			</tr>
+		</table>
+	</div>
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+</body>
+</html>
