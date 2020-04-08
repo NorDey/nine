@@ -148,16 +148,15 @@
 		parameterType="com.BYS.GWSystem.model.Graduate">
 		update Graduate
 		<set>
-			<if test="studentName != null and studentName != ''">#{studentName},</if>
-			<if test="sex != null and sex != ''">#{sex},</if>
-			<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
-			<if test="homeAddress != null and homeAddress != ''">#{homeAddress},</if>
-			<if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
-			<if test="whereabouts != null and whereabouts != ''">whereabouts,</if>
-			<if test="cause != null and cause != ''">cause,</if>
-			<if test="post != null and post != ''">post,</if>
-			<if test="company != null and company != ''">company,</if>
-			<if test="password != null and password != ''">password</if>
+			<if test="studentName != null and studentName != ''">studentName=#{studentName},</if>
+			<if test="sex != null and sex != ''">sex=#{sex},</if>
+			<if test="phonenumber != null and phonenumber != ''">phonenumber=#{phonenumber},</if>
+			<if test="homeAddress != null and homeAddress != ''">homeAddress=#{homeAddress},</if>
+			<if test="whereabouts != null and whereabouts != ''">whereabouts=#{whereabouts},</if>
+			<if test="cause != null and cause != ''">cause=#{cause},</if>
+			<if test="post != null and post != ''">post=#{post},</if>
+			<if test="company != null and company != ''">company=#{company},</if>
+			<if test="password != null and password != ''">password=#{password}</if>
 		</set>
 		where student_id = #{studentId}
 	</update>
