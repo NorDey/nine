@@ -25,9 +25,9 @@
 
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-	<div th:if="${address} != 'admin/seHotPosts'" >
+	<div th:if="${address} != 'seHotPosts'" >
 	<form class="navbar-form navbar-left" role="search" action='#' th:action="@{/admin/companyRecruitmentPosition/1}" 
-	method='post' th:object="${postDto}" th:if="${address} != 'admin/seNewPostList'" >
+	method='post' th:object="${postDto}" th:if="${address} != 'seNewPostList'" >
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="公司"  id="selectEnterprise" name="selectEnterprise"
 					 th:value="${postDto.enterpriseName}" th:field=*{enterpriseName}>
@@ -52,6 +52,7 @@
 					<th class="wide3">相关要求</th>
 					<th class="wide1">发布时间</th>
 					<th class="wide1">热门</th>
+					<th class="wide1">设置热门</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -66,7 +67,18 @@
 					<th th:text="${postDto.salary}">8K-12K</th>
 					<th th:text="${postDto.demand}">本科,计算机相关专业,有过java开发相关经验3年以上</th>
 					<th th:text="${postDto.creationTime}">2020.3.25</th>
-					<th th:text="${postDto.popular}">否</th>
+					<th>
+					<span th:if="${postDto.popular}eq'1'">非热门</span> 
+					<span th:if="${postDto.popular}eq'2'">热门</span>
+					<span th:if="${postDto.popular}eq'3'">热门</span>
+					</th>
+					<th>
+					<span th:if="${postDto.popular}eq'1'"><a
+							th:href="@{'/admin/setUpPopular/3/'+${postDto.postId}+'/'+${address}}">设置</a></span> 
+					<span th:if="${postDto.popular}eq'2'">---</span>
+					<span th:if="${postDto.popular}eq'3'"><a
+							th:href="@{'/admin/setUpPopular/1/'+${postDto.postId}+'/'+${address}}">关闭</a></span>
+					</th>
 				</tr>
 			</tbody>
 		</table>
