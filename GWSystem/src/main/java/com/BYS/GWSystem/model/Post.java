@@ -58,7 +58,7 @@ public class Post implements Serializable {
     private LocalDateTime creationTime;
 
     /**
-     * 是否热门(1正常,2热门)
+     * 是否热门(1正常,2热门,3设置热门)
      */
     private Integer popular;
 

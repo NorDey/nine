@@ -115,7 +115,7 @@ public class HomeController {
 		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.PageNotFilled());
 		List<Integer> listPages = calculateOptionalPages(page, listGraduateDto.getPages());
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "notFilled");
+		model.addAttribute("address", "admin/notFilled");
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -527,4 +527,8 @@ public class HomeController {
 		return "admin/Post";
 	}
 
+	
+	
+	
+	
 }

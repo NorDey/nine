@@ -63,4 +63,10 @@ public interface PostMapper {
 	//条件查询岗位简要信息
 	public List<Post> jobListArrage(String postName);
 
+	//删除热门
+	public void deletePopularPost();
+	//实时设置热门岗位
+	public void setUpPopularPositions();
+	
+
 }

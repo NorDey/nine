@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.mapper.PostMapper;
@@ -168,6 +169,17 @@ public class PostServiceImpl implements IPostService {
 	public Page<Post> jobListArragePage(String postName) {
 		// TODO Auto-generated method stub
 		return (Page<Post>) postMapper.jobListArrage(postName);
+	}
+
+	//实时设置热门岗位
+	@Override
+	//添加事务管理
+	@Transactional
+	public void setUpPopularPositions() {		
+		//删除
+		postMapper.deletePopularPost();
+		//更新
+		postMapper.setUpPopularPositions();
 	}
 
 }

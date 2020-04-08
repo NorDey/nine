@@ -59,4 +59,7 @@ public interface IPostService {
 	// 条件查询岗位简要信息
 	public List<Post> jobListArrage(String postName);
 	public Page<Post> jobListArragePage(String postName);
+
+	//设置热门岗位
+	public void setUpPopularPositions();
 }
