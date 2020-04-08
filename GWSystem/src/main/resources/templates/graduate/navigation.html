@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<title>毕业生中心</title>
+</head>
+
+<body>
+	<header th:fragment="Sheader">
+		<div id="header">
+			<div class="header">
+				<div class="city">
+
+					</ul>
+					<a href="#" class="fc_city">武汉</a> <a href="#">[切换城市]</a>
+				</div>
+				<div class="weather">
+					<div class="weather_head">
+						<img class="w_ico"
+							src="//sta.ganjistatic1.com/src/image/v6/homepage/weather/m/阵雨.png"
+							alt=""> <span>天气&nbsp;</span> <span>&nbsp;温度
+							37℃&nbsp;</span> <span>&nbsp;污染指数 一级&nbsp;</span>
+					</div>
+				</div>
+				<div class="header_right">
+					<nav class="navbar" role="navigation">
+						<div class="container-fluid">
+							<div>
+								<ul class="nav navbar-nav">
+									<li class="dropdown"><a href="#"
+										class="dropdown-toggle in" data-toggle="dropdown"> 个人中心 <b
+											class="caret"></b>
+									</a>
+										<ul class="dropdown-menu in">
+											<li><a href="#">个人信息 <!--数字徽章-->
+											</a></li>
+											<li><a href="#">我的简历</a></li>
+											<li class="divider"></li>
+											<li><a href="#">投递记录</a></li>
+										</ul></li>
+									<li class="active"><a href="#">帮助中心</a></li>
+									<li><a href="#" data-toggle="collapse"
+										data-target="#guide">关于我们</a></li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+					<div class="userInfo">
+						<div class="reg_login">
+							<span class="clearfix"> 欢迎你： <a
+								th:href="@{'/graduate/home?studentId='+${graduate.studentId}}"
+								th:text="${graduate.studentName==null} ? '毕业生' : ${graduate.studentName}">毕业生</a>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div
+			style="width: 78%; height: 100px; margin: auto; text-align: center; padding-top: 30px;">
+			<ul class="nav nav-pills">
+				<li class="active"><a href="#">搜索岗位</a></li>
+				<li><a href="#">搜索毕业生信息</a></li>
+				<li><a href="#">个人简历</a></li>
+			</ul>
+		</div>
+	</header>
+</body>
+
+</html>
