@@ -32,14 +32,13 @@ public class GraduateController {
 	@Autowired
 	private IGraduateService iGraduateService;
 
-	@GetMapping("/home") // 毕业生主页
-	public String home() {
+	// 头部毕业生名，跳转首页
+	@GetMapping("/home")
+	public String home(HttpServletRequest request, Model model) {
+		String studentId = request.getParameter("studentId");// 获取学生的学号
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
 		return "graduate/GraduateHome";
-	}
-
-	@GetMapping("/updateInfo") // 修改信息
-	public String updateInfo() {
-		return "graduate/UpdateInfo";
 	}
 
 	// 毕业生登录
@@ -132,4 +131,22 @@ public class GraduateController {
 		model.addAttribute("graduate", graduates);
 		return "graduate/GraduateHome";
 	}
+
+	// 修改信息
+	@GetMapping("/updateInfo")
+	public String updateInfo(HttpServletRequest request, Model model) {
+		String studentId = request.getParameter("studentId");// 获取学生的学号
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		return "graduate/UpdateInfo";
+	}
+
+	// 保存个人信息
+	@PostMapping("/saveInfo/{studentId}")//通过表单路径传学生id过来
+	public String saveInfo(@ModelAttribute Graduate graduate, Model model, @PathVariable String studentId) {
+		int rest = iGraduateService.updateGraduate(graduate);
+		model.addAttribute("graduate", graduate);
+		return "graduate/GraduateHome";
+	}
+
 }
