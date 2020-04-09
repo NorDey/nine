@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.BYS.GWSystem.dto.CompanyHiredInfoDto;
+import com.BYS.GWSystem.dto.ResumeHiredDto;
 import com.BYS.GWSystem.dto.TypeWorkUJobs;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
@@ -23,6 +24,7 @@ import com.BYS.GWSystem.model.TypeWork;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IJobsUTypeWorkUPsotService;
 import com.BYS.GWSystem.service.IPostService;
+import com.BYS.GWSystem.service.IResumeService;
 import com.BYS.GWSystem.service.ITypeWorkService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -38,14 +40,28 @@ public class CompanyMainCtroller {
 	private IJobsUTypeWorkUPsotService ijobInfoService;
 	@Autowired
 	private ITypeWorkService itypeWork;
+	@Autowired
+	private IResumeService iresume;
 
 	@GetMapping("/CC") // 公司收藏--公司的简历收录
 	public String CC(Model model) {
 		return "Company/CompanyCollection";
 	}
 
-	@GetMapping("/CH") // 公司浏览简历的历史记录--改为简历投递的接收
-	public String CH(Model model) {
+	@GetMapping("/CH/{registrationId}/{page}") // 公司浏览简历的历史记录--改为简历投递的接收
+	public String CH(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+		if (page <= 0)
+			page = 1;
+		PageHelper.startPage(page, 3); // 第几页，每页几条
+		PageInfo<ResumeHiredDto> resumeHird = new PageInfo<>(iresume.selectResumeByErId(registrationId));// 将原list转为page类型
+		if (page >= resumeHird.getLastPage())
+			page = resumeHird.getLastPage();
+		PageHelper.startPage(page, 10);
+		
+		model.addAttribute("resumeHird", resumeHird);
+		System.out.println("-----------------"+resumeHird.toString());
 		return "Company/CompanyHistory";
 	}
 
@@ -97,10 +113,10 @@ public class CompanyMainCtroller {
 		if (greeting.getProfession() == null || greeting.getProfession() == "") {
 			greeting.setProfession("其他");
 		}
-		if (ijobInfoService.seletOne(greeting.getPostName()) != null
-				|| ijobInfoService.seletOne(greeting.getPostName()) != "") {// 不可重复添加同一个岗位
+		if (ijobInfoService.seletOne(greeting.getRegistrationId(),greeting.getPostName()) != null
+				|| ijobInfoService.seletOne(greeting.getRegistrationId(),greeting.getPostName()) != "") {// 不可重复添加同一个岗位
 			model.addAttribute("waringMSG", "无法重复添加同一招聘信息");
-			System.out.println(ijobInfoService.seletOne(greeting.getPostName()));
+			//System.out.println(ijobInfoService.seletOne(greeting.getRegistrationId(),greeting.getPostName()));
 			return "Company/CompanyNewHired";
 		}
 		System.out.println(greeting.toString() + "-----------------------");
@@ -128,19 +144,26 @@ public class CompanyMainCtroller {
 		return "Company/CompanyManger";
 	}
 
-	@GetMapping("/CHIQ/{postId}") // 公司招聘的详情（可给未登录看）
-	public String CHIQ(@PathVariable(name = "postId") String postId, Model model) {
+	
+	/*------------------------------查看内容---------------------------------*/
+	 
+	@GetMapping("/CHISEntLogQuality/{postId}/{registrationId}") // 公司招聘的详情（公司未登录看）
+	public String CHISEntLogQuality(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId, Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+		/*---------------------------------------------------------*/
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);// 招聘的详情
 		Post postMsg = iPostService.selectOneHiredMsg(postId);
-		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
-		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+		Enterprise enterpriseInfos = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
+		model.addAttribute("enterprisesInfo", enterpriseInfos);// Cheader头部的信息刷新
 		model.addAttribute("JobsInfo", JobsInfo);// 传入岗位信息
 		model.addAttribute("postMsg", postMsg);// 传入岗位简要信息
 		return "Company/CompanyHiredInfoQuality";
 	}
-
-	@GetMapping("/CHIS/{page}") // 公司招聘信息简要列表（可给未登录看）
-	public String CHIS(@PathVariable(name = "page") int page, Model model) {
+	@GetMapping("/CHISEntLog/{registrationId}/{page}") // 公司招聘信息简要列表（公司登录后看）
+	public String CHISEntLog(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "page") int page, Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		if (page <= 0)
 			page = 1;
 		PageHelper.startPage(page, 5); // 第几页，每页几条
@@ -154,8 +177,11 @@ public class CompanyMainCtroller {
 		return "Company/CompanyHiredInfoToShow";
 	}
 	
-	@GetMapping("/CHIS/{postnames}/{page}") // 公司招聘信息简要列表（可给未登录看）按照岗位分类后
-	public String CHISBypostnames(@PathVariable(name = "postnames") String postName,@PathVariable(name = "page") int page, Model model) {
+	@GetMapping("/CHISEntLog/{postnames}/{page}/{registrationId}") // 公司招聘信息简要列表（公司登录看）按照岗位分类后
+	public String CHISEntLogBypostnames(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postnames") String postName,@PathVariable(name = "page") int page, Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+		/*---------------------------------------------------------*/
 		if (page <= 0)
 			page = 1;
 		PageHelper.startPage(page, 5); // 第几页，每页几条
@@ -169,58 +195,67 @@ public class CompanyMainCtroller {
 		model.addAttribute("page", page);
 		return "Company/CompanyHiredInfoToShowArrage";
 	}
+	
+	
 	// form表单的页面输入式跳转
-	@PostMapping("/CHIS") // 公司招聘信息简要列表（可给未登录看）
-	public String CHISPageTurn(@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
-		// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
-		int page = pageMinx(pagesTurn);
-		PageHelper.startPage(page, 5); // 第几页，每页几条
-		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListAll());// 将原list转为page类型
-		if (page >= psotSimpleList.getLastPage())
-			page = psotSimpleList.getLastPage();
-		pageMax(page, psotSimpleList);
-		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
-		model.addAttribute("pros", Professions);
-		model.addAttribute("psotSimpleList", psotSimpleList);
-		model.addAttribute("pages", "第" + page + "页");
-		model.addAttribute("page", page);
-		return "Company/CompanyHiredInfoToShow";
-	}
-	// form表单的页面输入式跳转
-		@PostMapping("/CHIS/{postnames}") // 公司招聘信息简要列表（可给未登录看）分类后
-		public String CHISPageTurnArrage(@PathVariable(name = "postnames") String postName,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
+		@PostMapping("/CHISEntLogPage/{registrationId}") // 公司招聘信息简要列表（公司登录后看）
+		public String CHISEntLogPageTurn(@PathVariable(name = "registrationId") String registrationId,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
+			Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+			model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
-			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
+			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListAll());// 将原list转为page类型
 			if (page >= psotSimpleList.getLastPage())
 				page = psotSimpleList.getLastPage();
 			pageMax(page, psotSimpleList);
 			List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
-			model.addAttribute("postnamesArrage", postName);
 			model.addAttribute("pros", Professions);
 			model.addAttribute("psotSimpleList", psotSimpleList);
 			model.addAttribute("pages", "第" + page + "页");
 			model.addAttribute("page", page);
-			return "Company/CompanyHiredInfoToShowArrage";
+			return "Company/CompanyHiredInfoToShow";
 		}
+		// form表单的页面输入式跳转
+				@PostMapping("/CHISEntLogPageTurnArrage/{postnames}/{registrationId}") // 公司招聘信息简要列表（公司登录看）分类后
+				public String CHISEntLogPageTurnArrage(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postnames") String postName,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
+					Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+					/*---------------------------------------------------------*/
+					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+					int page = pageMinx(pagesTurn);
+					PageHelper.startPage(page, 5); // 第几页，每页几条
+					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
+					if (page >= psotSimpleList.getLastPage())
+						page = psotSimpleList.getLastPage();
+					pageMax(page, psotSimpleList);
+					List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+					model.addAttribute("postnamesArrage", postName);
+					model.addAttribute("pros", Professions);
+					model.addAttribute("psotSimpleList", psotSimpleList);
+					model.addAttribute("pages", "第" + page + "页");
+					model.addAttribute("page", page);
+					return "Company/CompanyHiredInfoToShowArrage";
+				}
+		
+	
+	/*-----------------------页面控制部分---------------------------*/
+				public int pageMinx(Integer pagesTurn) {
+					int page = 1;
+					if (pagesTurn >= 1 && pagesTurn != null)
+						page = pagesTurn;
+					if (page <= 0)
+						page = 1;
+					return page;
+				}
 
-	public int pageMinx(Integer pagesTurn) {
-		int page = 1;
-		if (pagesTurn >= 1 && pagesTurn != null)
-			page = pagesTurn;
-		if (page <= 0)
-			page = 1;
-		return page;
-	}
+				public int pageMax(int page, PageInfo<Post> psotSimpleList) {
 
-	public int pageMax(int page, PageInfo<Post> psotSimpleList) {
-
-		if (page >= psotSimpleList.getLastPage())
-			page = psotSimpleList.getLastPage();
-		return page;
-	}
-
+					if (page >= psotSimpleList.getLastPage())
+						page = psotSimpleList.getLastPage();
+					return page;
+				}
 	/*
 	 * @GetMapping("/CI") public String CI(Model model) { return
 	 * "Company/CompanyInfo"; }
@@ -260,6 +295,7 @@ public class CompanyMainCtroller {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("enterprises", enterpriseInfo);
 		return "Company/CompanyInfoToShow";
+		//th:href="@{'/CIS/'+${enterprisesInfo.registrationId}}"
 	}
 
 	@GetMapping("/CM/{registrationId}/{page}") // 公司招聘信息简要列表（可以修改）

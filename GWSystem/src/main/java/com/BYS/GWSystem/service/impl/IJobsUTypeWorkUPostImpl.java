@@ -1,5 +1,7 @@
 package com.BYS.GWSystem.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,9 +41,9 @@ public class IJobsUTypeWorkUPostImpl implements IJobsUTypeWorkUPsotService {
 
 	// 按名字查询 
 	@Override
-	public String seletOne(String postName) {
+	public String seletOne( String registrationId,String postName) {
 		// TODO Auto-generated method stub
-		return jobsMapper.selectOne(postName);
+		return jobsMapper.selectOne(registrationId,postName);
 	}
 	
 }

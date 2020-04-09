@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.BYS.GWSystem.dto.ResumeDto;
+import com.BYS.GWSystem.dto.ResumeHiredDto;
 import com.BYS.GWSystem.model.Resume;
 
 @Mapper
@@ -34,7 +35,8 @@ public interface ResumeMapper  {
 
 	//根据id查询简历详情
 	public ResumeDto selectResumeById(Long id);
-
+	//公司收到的投递的简历查询
+	public List<ResumeHiredDto> selectResumeByErId(@Param(value = "registrationId")String registrationId);
 
 	
 

@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id="selectOne" parameterType="String" resultType="String">
-		 select postName from post where postName = #{postName}
+		 select postName from post where postName = #{postName} and registration_id= #{registrationId}
 	</select>
 
 	<!--  UPDATE post,type_work SET post.number='40' ,type_work.major='设计专业' 
@@ -79,7 +79,8 @@
 			<if test="demand != null and demand !=''">post.demand,</if>
 			<if test="number != null and number != 0">post.number,</if>
 			<if test="arrived != null and arrived != 0">post.arrived,</if>
-			<if test="salary != null and salary != ''">post.salary</if>
+			<if test="salary != null and salary != ''">post.salary,</if>
+			creationTime
     	 )values(
     		<if test="postId != null and postId !=''">#{postId},</if>
     		<if test="registrationId != null and registrationId != ''">#{registrationId},</if>
@@ -89,7 +90,8 @@
 			<if test="demand != null and demand !=''">#{demand},</if>
 			<if test="number != null and number != 0">#{number},</if>
 			<if test="arrived != null and arrived != 0">#{arrived},</if>
-			<if test="salary != null and salary != ''">#{salary}</if>
+			<if test="salary != null and salary != ''">#{salary},</if>
+			now()
     	 )
     </insert>
      <insert id="insertNewJobs2" parameterType="com.BYS.GWSystem.dto.CompanyHiredInfoDto">
