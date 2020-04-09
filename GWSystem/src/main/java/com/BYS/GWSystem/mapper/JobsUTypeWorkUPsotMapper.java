@@ -1,5 +1,7 @@
 package com.BYS.GWSystem.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +20,5 @@ public interface JobsUTypeWorkUPsotMapper {
 	//统计数目
 	public String count();
 	//寻一个
-	public String selectOne(@Param(value="postName") String postName);
+	public String selectOne(@Param(value="registrationId") String registrationId,@Param(value="postName") String postName);
 }

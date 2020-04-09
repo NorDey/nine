@@ -19,81 +19,10 @@
 	</head>
 
 	<body>
-			<header th:fragment="header">
-		<div id="header">
-			<div class="header">
-				<div class="city">
-
-					</ul>
-					<a href="#" class="fc_city">武汉</a> <a href="#">[切换城市]</a>
-				</div>
-				<div class="weather">
-					<div class="weather_head">
-						<img class="w_ico"
-							src="//sta.ganjistatic1.com/src/image/v6/homepage/weather/m/阵雨.png"
-							alt=""> <span>天气&nbsp;</span> <span>&nbsp;温度&nbsp;</span> <span>&nbsp;污染指数&nbsp;</span>
-					</div>
-				</div>
-				<div class="header_right">
-					<nav class="navbar" role="navigation">
-						<div class="container-fluid">
-							<div>
-								<ul class="nav navbar-nav">
-									<li class="dropdown"><a href="#"
-										class="dropdown-toggle in" data-toggle="dropdown"> 个人中心 <b
-											class="caret"></b>
-									</a>
-										<ul class="dropdown-menu in">
-											<li><a href="#">我的发布<span class="badge alert-danger">50</span>
-													<!--数字徽章-->
-											</a></li>
-											<li><a href="#">我的求职<span class="badge alert-danger">10</span></a>
-											</li>
-											<li><a href="#">我的招聘<span class="badge alert-danger">20</span></a>
-											</li>
-											<li class="divider"></li>
-											<li><a href="#">我的收藏</a></li>
-											<li class="divider"></li>
-											<li><a href="#">个人信息</a></li>
-										</ul></li>
-									<li class="active"><a href="#">帮助中心</a></li>
-									<li><a href="#" data-toggle="collapse"
-										data-target="#guide">网页导航</a>
-										<nav id="guide"
-											class="collapse  col-lg-12 col-4 collapse  bg-light navtable">
-											<dl>
-												<dt>
-													<a>XX招聘XX</a>
-												</dt>
-												<dd>全职</dd>
-												<dd>兼职</dd>
-												<dd>高薪</dd>
-											</dl>
-											<dl>
-												<dt>
-													<a>XX求职XX</a>
-												</dt>
-												<dd>技能培训</dd>
-												<dd>职场技巧</dd>
-												<dd>职业培训</dd>
-												<dd>简历库</dd>
-											</dl>
-										</nav></li>
-
-								</ul>
-							</div>
-						</div>
-					</nav>
-					<div class="userInfo">
-						<div class="reg_login">
-							<span class="clearfix"> <a>登陆</a> <i>/</i> <a>注册</a>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-	</header>
-	<!--	头部结束-->
+		<header th:if="${enterprises}!=null" th:insert="~{Company/navigation::Cheader}"></header>
+		<header th:if="${graduate}!=null" th:insert="~{graduate/navigation::Sheader}"></header>
+		<header th:if="${enterprises}==null and ${graduate}==null" th:insert="~{Public/navigation::header}"></header>
+		<!--	头部结束-->
 		<!--search引用-->
 		
 		<!--图标和搜索发帖按钮end-->
@@ -104,7 +33,9 @@
 					<input type="button" class="btn-post dropdown-toggle" id="dropdownMenu1" th:value="${pros.pros}" data-toggle="dropdown"/>
 					<ul class="dropdown-menu pull-right dropdown" role="menu" aria-labelledby="dropdownMenu1" >
 						<li role="presentation" th:each="postnames :${pros.postName}">
-							<a role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHIS/'+${postnames}+'/1'}">Java</a>
+							<a th:if="${enterprises}==null and ${graduate}==null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHIS/'+${postnames}+'/1'}">Java</a>
+							<a th:if="${enterprises}!=null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHISEntLog/'+${postnames}+'/1'+'/'+${enterprises.registrationId}}">Java</a>
+							<a th:if="${graduate}!=null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHIS/'+${postnames}+'/1'}">Java</a>
 						</li>
 					</ul>
 				</div>
@@ -114,13 +45,28 @@
 		<div class="content arrageNvs fl" data-spy="scroll" data-target="#arrageNvs" data-offset="0">
 		<h1><span class="label label-default">公司岗位发布</span></h1>
 		<br>
-		<a th:href="@{'/CHIS/'+${postnamesArrage}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHIS/'+${postnamesArrage}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLog/'+${postnames}+'/'+${page-1}+'/'+${enterprises.registrationId}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<a th:if="${graduate}!=null" th:href="@{'/CHIS/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
 				<input type="button" disabled="disabled" th:value="${pages}" class="btn-s">
-				<a th:href="@{'/CHIS/'+${postnamesArrage}+'/'+${page+1}}"><input type="button" value="下一页" class="btn-s" /></a>
-				<form class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHIS/'+${postnames}}" >
+				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHIS/'+${postnamesArrage}+'/'+${page+1}}"><input type="button" value="下一页" class="btn-s" /></a>
+				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLog/'+${postnames}+'/'+${page+1}+'/'+${enterprises.registrationId}}"><input type="button" value="下一页" class="btn-s" /></a>
+				<a th:if="${graduate}!=null" th:href="@{'/CHIS/'+${page+1}}"><input type="button" value="下一页" class="btn-s" /></a>
+				
+				<!-- ---------页面跳转------------ -->
+				<form th:if="${enterprises}==null and ${graduate}==null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHIS/'+${postnames}}"  >
 				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
 				<input type="submit" value="跳转" class="btn-s" />
 				</form>
+				<form th:if="${enterprises}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHISEntLogPageTurnArrage/'+${postnames}+'/'+${enterprises.registrationId}}" >
+				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
+				<input type="submit" value="跳转" class="btn-s" />
+				</form>
+				<form th:if="${graduate}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHISEntLogPage/'+${enterprises.registrationId}}" >
+				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
+				<input type="submit" value="跳转" class="btn-s" />
+				</form>
+				
 			<!--多媒体对象可以设置头部、居中、底部对齐，对应的类分别是 "media-top"、 "media-middle" 、 "media-bottom":-->
 			
 			<br>

@@ -71,7 +71,7 @@ public class PostServiceImpl implements IPostService {
 
 	// 是否存在这个fatherID存在这个fatherID是多少
 	@Override
-	public Integer seletExeists(String pro) {
+	public List<Integer> seletExeists(String pro) {
 		// TODO Auto-generated method stub
 		return postMapper.seletExeists(pro);
 	}
@@ -89,7 +89,7 @@ public class PostServiceImpl implements IPostService {
 		// TODO Auto-generated method stub
 		int id = 0;
 		if (seletExeists(profession) != null)
-			id = seletExeists(profession);// 是否存在该工种
+			id = seletExeists(profession).get(1);// 是否存在该工种
 		else {
 			id = (seletMaxFID() + 1);// 不存在该工种则新建这个工种
 		}

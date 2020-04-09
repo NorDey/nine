@@ -21,6 +21,26 @@
 		<result column="creationTime" property="creationTime" />
 		<result column="student_id" property="studentId" />
 	</resultMap>
+	<!-- 简历的接收类型 -->
+	<resultMap type="com.BYS.GWSystem.dto.ResumeHiredDto" id="ResumeHiredDtoList">
+			<id column="resume_id" property="resumeId" />
+			<result column="birthday" property="birthday" />
+			<result column="nativePlace" property="nativePlace" />
+			<result column="name" property="name" />
+			<result column="phonenumber" property="phonenumber" />
+			<result column="mailbox" property="mailbox" />
+			<result column="currentResidence" property="currentResidence" />
+			<result column="education" property="education" />
+			<result column="graduateSchool" property="graduateSchool" />
+			<result column="intention" property="intention" />
+			<result column="speciality" property="speciality" />
+			<result column="experience" property="experience" />
+			<result column="selfEvaluation" property="selfEvaluation" />
+			<result column="creationTime" property="creationTime" />
+			<result column="student_id" property="studentId" />
+			<result column="time" property="time" />
+			<result column="collection" property="collection" />
+	</resultMap>
 
 	<!-- 通用查询结果列 -->
 	<sql id="selectResumeVo">
@@ -87,8 +107,10 @@
 		from graduate g INNER JOIN resume r on g.student_id=r.student_id AND
 		g.student_id=#{id}
 	</select>
-
-
+	<!-- //公司收到的投递的简历查询 -->
+	<select id="selectResumeByErId" parameterType="String" resultMap="ResumeHiredDtoList">
+	SELECT r.* ,s.time ,s.collection from resume r, (SELECT * from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 ) AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 )
+	</select>
 	<insert id="insertResume"
 		parameterType="com.BYS.GWSystem.model.Resume">
 		insert into Resume(
