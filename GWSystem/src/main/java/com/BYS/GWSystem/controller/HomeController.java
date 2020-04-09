@@ -552,6 +552,4 @@ public class HomeController {
 		modelAndView.setViewName("redirect:/admin/"+address+"/1");
 		return modelAndView;
 	}
-	
-	
 }
