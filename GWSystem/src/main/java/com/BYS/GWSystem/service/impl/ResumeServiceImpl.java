@@ -73,5 +73,23 @@ public class ResumeServiceImpl implements IResumeService {
 		return resumeMapper.selectResumeById(id);
 	}
 
+	@Override
+	public int updateResume(ResumeDto resume) {
+		int rest = resumeMapper.updateResume(resume);
+		return rest;
+	}
 
+	@Override
+	public int insertResume(ResumeDto resume) {
+		int rest = resumeMapper.insertResume(resume);
+		return rest;
+	}
+
+	@Override
+	public ResumeDto queryResumeById(String studentId) {
+		ResumeDto rest = resumeMapper.queryResumeById(studentId);
+		return rest;
+	}
+
+	
 }
