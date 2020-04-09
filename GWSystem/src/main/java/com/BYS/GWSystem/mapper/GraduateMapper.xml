@@ -9,6 +9,16 @@
 	<update id="updatePicByid" parameterType="com.BYS.GWSystem.model.Graduate">
 		UPDATE graduate SET avatarPath=#{avatarPath} WHERE student_id=#{studentId}
 	</update>
+	
+	<insert id="sendCV" parameterType="String">
+		INSERT INTO student_history(student_id,post_id,collection) VALUES(#{studentId},#{postId},'4');
+	</insert>
+	
+	<select id="selectCV" parameterType="String"  resultType="com.BYS.GWSystem.model.StudentHistory">
+		SELECT * FROM student_history WHERE student_id=#{studentId} AND post_id=#{postId};
+	</select>
+	
+	
 	<!-- 通用查询映射结果 -->
 	<resultMap id="GraduateResult"
 		type="com.BYS.GWSystem.model.Graduate">
@@ -166,5 +176,6 @@
 		delete from Graduate where student_id = #{studentId}
 	</delete>
 
+	
 
 </mapper>
