@@ -188,4 +188,17 @@ public class PostServiceImpl implements IPostService {
 		return postMapper.updatePost(post);
 	}
 
+	//模糊查询Post
+	@Override
+	public List<Post> jobListLike(String postNamesL) {
+		// TODO Auto-generated method stub
+		return postMapper.jobListLike(postNamesL);
+	}
+
+	@Override
+	public Page<Post> jobListLikePage(String postNamesL) {
+		// TODO Auto-generated method stub
+		return(Page<Post>)postMapper.jobListLike(postNamesL);
+	}
+
 }

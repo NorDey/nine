@@ -145,7 +145,62 @@ public class PublicController {
 			model.addAttribute("page", page);
 			return "Company/CompanyHiredInfoToShowArrage";
 		}
-
+		
+		@PostMapping("/CHISLikeSearch/{page}") // 公司招聘信息简要列表！模糊查询！
+		public String CHISLikeSearchs(@RequestParam(value = "search_keyword") String postNamesL,@PathVariable(name = "page") Integer pagesTurn, Model model) {
+			/*---------------------------------------------------------*/
+			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			int page = pageMinx(pagesTurn);
+			PageHelper.startPage(page, 5); // 第几页，每页几条
+			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
+			if (page >= psotSimpleList.getLastPage())
+				page = psotSimpleList.getLastPage();
+			pageMax(page, psotSimpleList);
+			List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+			model.addAttribute("postNamesL", postNamesL);
+			model.addAttribute("pros", Professions);
+			model.addAttribute("psotSimpleList", psotSimpleList);
+			model.addAttribute("pages", "第" + page + "页");
+			model.addAttribute("page", page);
+			return "Company/CompanyHiredInfoToShow2Like";
+		}
+		
+		@GetMapping("/CHISLikeSearchPageN/{page}/{postNamesL}") // 公司招聘信息简要列表！模糊查询！再分页
+		public String CHISLikeSearchPageN(@PathVariable(name = "postNamesL") String postNamesL,@PathVariable(name = "page") Integer pagesTurn, Model model) {
+			/*---------------------------------------------------------*/
+			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			int page = pageMinx(pagesTurn);
+			PageHelper.startPage(page, 5); // 第几页，每页几条
+			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
+			if (page >= psotSimpleList.getLastPage())
+				page = psotSimpleList.getLastPage();
+			pageMax(page, psotSimpleList);
+			List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+			model.addAttribute("pros", Professions);
+			model.addAttribute("psotSimpleList", psotSimpleList);
+			model.addAttribute("pages", "第" + page + "页");
+			model.addAttribute("page", page);
+			return "Company/CompanyHiredInfoToShow2Like";
+		}
+		@PostMapping("/CHISLikeSearchPageTurns/{postNamesL}") // 公司招聘信息简要列表！模糊查询！再分页Post跳转
+		public String CHISLikeSearchPageTurns(@PathVariable(name = "postNamesL") String postNamesL,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
+			
+			/*---------------------------------------------------------*/
+			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			int page = pageMinx(pagesTurn);
+			PageHelper.startPage(page, 5); // 第几页，每页几条
+			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
+			if (page >= psotSimpleList.getLastPage())
+				page = psotSimpleList.getLastPage();
+			pageMax(page, psotSimpleList);
+			List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+			model.addAttribute("pros", Professions);
+			model.addAttribute("psotSimpleList", psotSimpleList);
+			model.addAttribute("pages", "第" + page + "页");
+			model.addAttribute("page", page);
+			return "Company/CompanyHiredInfoToShow2Like";
+		}	
+		
 	/*-----------------------页码控制函数-----------------------------*/
 	public int pageMinx(Integer pagesTurn) {
 		int page = 1;

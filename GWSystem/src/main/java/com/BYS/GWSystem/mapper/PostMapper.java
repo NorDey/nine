@@ -67,6 +67,8 @@ public interface PostMapper {
 	public void deletePopularPost();
 	//实时设置热门岗位
 	public void setUpPopularPositions();
+	//模糊查询post
+	public List<Post> jobListLike(String postNamesL);
 	
 
 }
