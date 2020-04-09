@@ -81,6 +81,14 @@
 }
 
 .img-wh{
-	 width: 80px;
-    height: 80px;
+	 width: 100px;
+    height: 100px;
+}
+
+.UnderlineSolid{
+	 border-bottom: 1px solid; 
+	
+}
+.UnderlineDotted{
+	border-bottom:1px dotted #000;
 }
