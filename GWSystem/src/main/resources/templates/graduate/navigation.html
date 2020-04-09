@@ -49,9 +49,9 @@
 											class="caret"></b>
 									</a>
 										<ul class="dropdown-menu in">
-											<li><a href="#">个人信息 <!--数字徽章-->
+											<li><a th:href="@{'/graduate/home?studentId='+${graduate.studentId}}">个人信息 <!--数字徽章-->
 											</a></li>
-											<li><a href="#">我的简历</a></li>
+											<li><a th:href="@{'/graduate/resume?studentId='+${graduate.studentId}}">我的简历</a></li>
 											<li class="divider"></li>
 											<li><a href="#">投递记录</a></li>
 										</ul></li>
@@ -67,6 +67,9 @@
 							<span class="clearfix"> 欢迎你： <a
 								th:href="@{'/graduate/home?studentId='+${graduate.studentId}}"
 								th:text="${graduate.studentName==null} ? '毕业生' : ${graduate.studentName}">毕业生</a>
+								&nbsp;&nbsp;
+								<a
+								th:href="@{/switchLog}">注销</a>
 							</span>
 						</div>
 					</div>
