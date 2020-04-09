@@ -112,62 +112,67 @@
 	SELECT r.* ,s.time ,s.collection from resume r, (SELECT * from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 ) AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 )
 	</select>
 	<insert id="insertResume"
-		parameterType="com.BYS.GWSystem.model.Resume">
+		parameterType="com.BYS.GWSystem.dto.ResumeDto">
 		insert into Resume(
-		<if test="resumeId != null and resumeId != 0">resume_id,</if>
-		<if test="birthday != null and birthday != ''">birthday,</if>
+		<if test="resumeId != null and resumeId != ''">resume_id,</if>
+		<if test="birthday != null">birthday,</if>
 		<if test="nativePlace != null and nativePlace != ''">nativePlace,</if>
 		<if test="name != null and name != ''">name,</if>
-		<if test="phonenumber != null and phonenumber != 0">phonenumber,</if>
+		<if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
 		<if test="mailbox != null and mailbox != ''">mailbox,</if>
 		<if test="currentResidence != null and currentResidence != ''">currentResidence,</if>
 		<if test="education != null and education != ''">education,</if>
-		<if test="graduateSchool != null and graduateSchool != 0">graduateSchool,</if>
+		<if test="graduateSchool != null and graduateSchool != ''">graduateSchool,</if>
 		<if test="intention != null and intention != ''">intention,</if>
 		<if test="speciality != null and speciality != ''">speciality,</if>
 		<if test="experience != null and experience != ''">experience,</if>
-		<if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation</if>
+		<if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation,</if>
 		creationTime,
-		<if test="student_id != null and student_id != 0">studentId</if>
+		<if test="studentId != null and studentId != ''">student_id</if>
 
 		)values(
-		<if test="resumeId != null and resumeId != 0">#{resume_id},</if>
-		<if test="birthday != null and birthday != ''">#{birthday},</if>
+		<if test="resumeId != null and resumeId != ''">#{resumeId},</if>
+		<if test="birthday != null">#{birthday},</if>
 		<if test="nativePlace != null and nativePlace != ''">#{nativePlace},</if>
 		<if test="name != null and name != ''">#{name},</if>
-		<if test="phonenumber != null and phonenumber != 0">#{phonenumber},</if>
+		<if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
 		<if test="mailbox != null and mailbox != ''">#{mailbox},</if>
 		<if test="currentResidence != null and currentResidence != ''">#{currentResidence},</if>
 		<if test="education != null and education != ''">#{education},</if>
-		<if test="graduateSchool != null and graduateSchool != 0">#{graduateSchool},</if>
+		<if test="graduateSchool != null and graduateSchool !=''">#{graduateSchool},</if>
 		<if test="intention != null and intention != ''">#{intention},</if>
 		<if test="speciality != null and speciality != ''">#{speciality},</if>
 		<if test="experience != null and experience != ''">#{experience},</if>
-		<if test="selfEvaluation != null and selfEvaluation != ''">#{selfEvaluation}</if>
+		<if test="selfEvaluation != null and selfEvaluation != ''">#{selfEvaluation},</if>
 		sysdate(),
-		<if test="student_id != null and student_id != 0">#{studentId}</if>
+		<if test="studentId != null and studentId != ''">#{studentId}</if>
 		)
 	</insert>
 
 	<update id="updateResume"
-		parameterType="com.BYS.GWSystem.model.Resume">
+		parameterType="com.BYS.GWSystem.dto.ResumeDto">
 		update Resume
 		<set>
-			<if test="birthday != null and birthday != ''">birthday=#{birthday},</if>
+			<if test="birthday != null">birthday=#{birthday},</if>
 			<if test="nativePlace != null and nativePlace != ''">nativePlace=#{nativePlace},</if>
 			<if test="name != null and name != ''">name=#{name},</if>
-			<if test="phonenumber != null and phonenumber != 0">phonenumber=#{phonenumber},</if>
+			<if test="phonenumber != null and phonenumber != ''">phonenumber=#{phonenumber},</if>
 			<if test="mailbox != null and mailbox != ''">mailbox=#{mailbox},</if>
 			<if test="currentResidence != null and currentResidence != ''">currentResidence=#{currentResidence},</if>
 			<if test="education != null and education != ''">education=#{education},</if>
-			<if test="graduateSchool != null and graduateSchool != 0">graduateSchool=#{graduateSchool},</if>
+			<if test="graduateSchool != null and graduateSchool != ''">graduateSchool=#{graduateSchool},</if>
 			<if test="intention != null and intention != ''">intention=#{intention},</if>
 			<if test="speciality != null and speciality != ''">speciality=#{speciality},</if>
 			<if test="experience != null and experience != ''">experience=#{experience},</if>
 			<if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation=#{selfEvaluation}</if>
 		</set>
-		where resume_id = #{resumeId}
+		where student_id = #{studentId}
 	</update>
+	
+	<select id="queryResumeById"
+		parameterType="String" resultType="com.BYS.GWSystem.dto.ResumeDto">
+		select * from Resume where student_id = #{StudentId}
+	</select>
 
 	<delete id="deleteResume"
 		parameterType="com.BYS.GWSystem.model.Resume">

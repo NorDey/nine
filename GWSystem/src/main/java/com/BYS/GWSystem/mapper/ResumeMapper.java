@@ -10,34 +10,41 @@ import com.BYS.GWSystem.dto.ResumeHiredDto;
 import com.BYS.GWSystem.model.Resume;
 
 @Mapper
-public interface ResumeMapper  {
-	//查询岗位
+public interface ResumeMapper {
+	// 查询岗位
 	public List<Resume> selectResumeList();
+
+	// 更改
+	public int updateResume(ResumeDto resume);
+
+	// 添加
+	public int insertResume(ResumeDto resume);
 	
-	//更改
-	public int updateResume(Resume resume);
-	
-	//添加
-	public int insertResume(Resume resume);
-	
-	//删除
+	// 查询简历是否存在
+	public ResumeDto queryResumeById(String studentId);
+
+	// 删除
 	public int deleteResume(Resume resume);
 
-	//查询已编辑简历学生数量
+	// 查询已编辑简历学生数量
 	public Integer selectEditedResumeNumber();
-	
-	//简历数量
-	public Integer selectResumeNumber();
-	//被关注简历数量
-	public Integer selectFollowNumber();
-	//被关注数>a的数目
-	public Integer ConcernedAbout(@Param("large")Integer large,@Param("Small")Integer Small);
 
-	//根据id查询简历详情
+	// 简历数量
+	public Integer selectResumeNumber();
+
+	// 被关注简历数量
+	public Integer selectFollowNumber();
+
+	// 被关注数>a的数目
+	public Integer ConcernedAbout(@Param("large") Integer large, @Param("Small") Integer Small);
+
+	// 根据id查询简历详情
 	public ResumeDto selectResumeById(Long id);
+
 	//公司收到的投递的简历查询
 	public List<ResumeHiredDto> selectResumeByErId(@Param(value = "registrationId")String registrationId);
 
 	
+
 
 }
