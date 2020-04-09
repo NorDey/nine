@@ -23,6 +23,8 @@ import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
+import com.BYS.GWSystem.model.StudentHistory;
+import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IGraduateService;
 import com.BYS.GWSystem.service.IPostService;
 import com.github.pagehelper.PageHelper;
@@ -36,6 +38,9 @@ public class GraduateController {
 	private IGraduateService iGraduateService;
 
 	@Autowired
+	private IEnterpriseService iEnterpriseService;
+
+	@Autowired
 	private IPostService iPostService;
 
 	// 当前登录的毕业生对象
@@ -43,6 +48,9 @@ public class GraduateController {
 
 	// 岗位查询条件
 	PostDto post = new PostDto();
+
+	// 岗位编号
+	private String postId;
 
 	// 头部毕业生名，跳转首页
 	@GetMapping("/home")
@@ -227,11 +235,53 @@ public class GraduateController {
 		return listPages;
 	}
 
-	// 投递简历
-	@GetMapping("/sendCV")
-	public String sendCV(Model model, HttpServletRequest request) {
+	// 企业详情
+	@GetMapping("/enterpriseDetails/{registrationId}/{postId}")
+	public String showEnterpriseDetails(@PathVariable(name = "registrationId") String registrationId,
+			@PathVariable(name = "postId") String postId, Model model) {
+		//接收超链接传过来的岗位编号
+		this.postId = postId;
+		model.addAttribute("graduate", graduate);
+		Enterprise enterprise = iEnterpriseService.selectEnterprise(registrationId);
+		model.addAttribute("enterprise", enterprise);
+		//判断是否已经投过这个岗位
+		StudentHistory rest = iGraduateService.selectCV(graduate.getStudentId(), postId);
+		// 是否投递界面返回值
+		String posted = null;
+		if (rest != null) {
+			posted = "已投递";
+		}else {
+			posted = "投递简历";
+		}
+		model.addAttribute("posted", posted);
+		return "graduate/EnterpriseDetails";
+	}
 
-		return "graduate/SearchJobs";
+	// 投递简历
+	@GetMapping("/sendCV/{registrationId}")
+	public String sendCV(@PathVariable(name = "registrationId") String id, Model model) {
+		model.addAttribute("graduate", graduate);
+		Enterprise enterprise = iEnterpriseService.selectEnterprise(id);
+		model.addAttribute("enterprise", enterprise);
+		//判断是否已经投过这个岗位
+		StudentHistory rest = iGraduateService.selectCV(graduate.getStudentId(), postId);
+		// 是否投递界面返回值
+		String posted = null;
+		if (rest != null) {
+			posted = "已投递";
+		} else {
+			//判断学生是否填写简历
+			if(graduate.getResumeId()!=null) {
+				//没有投递过，则投递
+				int sendCV = iGraduateService.sendCV(graduate.getStudentId(), postId);
+				posted = "投递成功";
+			}else {
+				posted = "请先完成个人简历填写";
+			}
+			
+		}
+		model.addAttribute("posted", posted);
+		return "graduate/EnterpriseDetails";
 	}
 
 	// 头部导航点击搜索毕业生信息
@@ -247,6 +297,10 @@ public class GraduateController {
 	@PostMapping(value = { "/searchGraduateInfos/{studentId}" })
 	public String searchGraduateInfos(@ModelAttribute Graduate graduate, Model model, @PathVariable String studentId) {
 		Graduate graduates = iGraduateService.queryStudentById(graduate.getStudentId());// 查询学生信息
+		if (graduates == null) {
+			// 回传登录失败错误信息
+			model.addAttribute("errorInfo", "学号不存在");
+		}
 		graduate = iGraduateService.queryStudentById(studentId);// 查询当前登录毕业生信息
 		model.addAttribute("graduate", graduate);
 		model.addAttribute("graduates", graduates);
