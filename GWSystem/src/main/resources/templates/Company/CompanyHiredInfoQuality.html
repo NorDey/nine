@@ -1,113 +1,75 @@
 <!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<head>
-<link rel="stylesheet" href="/css/new_file.css" />
-<link rel="stylesheet"
-	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="/css/CM.css" />
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-<script
-	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<meta charset="UTF-8">
-<title>岗位信息详情</title>
-</head>
+	<head>
+		<link rel="stylesheet" href="/css/new_file.css" />
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+		<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<meta charset="UTF-8">
+		<title>岗位信息详情</title>
+	</head>
 
-<body>
-	<header th:if="${enterprises}!=null"
-		th:insert="~{Company/navigation::Cheader}"></header>
-	<header th:if="${graduate}!=null"
-		th:insert="~{graduate/navigation::Sheader}"></header>
-	<header th:if="${enterprises}==null and ${graduate}==null"
-		th:insert="~{Public/navigation::header}"></header>
-	<!--search引用-->
-	<!--图标和搜索发帖按钮end-->
-	<div id="content">
-		<div class="newHired">
-			<h1>
-				<span class="label label-default">岗位信息详情</span>
-			</h1>
-			<hr />
-			<h3>
-				<span class="label label-default"
-					th:text="${enterprisesInfo.enterpriseName}">此处显示公司名字</span> <span
-					class="label label-default" th:text="${postMsg.creationTime}">更新时间</span>
-			</h3>
-			<h3>
-				<span class="label label-default"
-					th:text="'联系电话:'+${enterprisesInfo.telephone}">此处显示岗位联系方式电话：</span>
-				<span class="label label-default"
-					th:text="'公司地址：'+${enterprisesInfo.address}">此处显示公司地址：</span>
-			</h3>
-			<br />
-			<div class="media">
-				<div class="media-left media-top">
-					<img src="https://static.runoob.com/images/mix/img_avatar.png"
-						class="media-object" style="width: 80px">
+	<body>
+		<header th:if="${enterprises}!=null" th:insert="~{Company/navigation::Cheader}"></header>
+		<header th:if="${graduate}!=null" th:insert="~{graduate/navigation::Sheader}"></header>
+		<header th:if="${enterprises}==null and ${graduate}==null" th:insert="~{Public/navigation::header}"></header>
+		<!--search引用-->
+		<!--图标和搜索发帖按钮end-->
+		<div id="content">
+			<div class="newHired">
+				<h1><span class="label label-default">岗位信息详情</span></h1>
+				<hr />
+				<h3><span class="label label-default" th:text="${enterprisesInfo.enterpriseName}">此处显示公司名字</span> <span class="label label-default" th:text="${postMsg.creationTime}">更新时间</span></h3>
+				<h3><span class="label label-default" th:text="'联系电话:'+${enterprisesInfo.telephone}">此处显示岗位联系方式电话：</span> <span class="label label-default" th:text="'公司地址：'+${enterprisesInfo.address}">此处显示公司地址：</span></h3>
+				<br />
+				<div class="media">
+					<div class="media-left media-top">
+						<img src="https://static.runoob.com/images/mix/img_avatar.png" class="media-object" style="width:80px">
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">公司信息</h4>
+						<p th:text="${enterprisesInfo.synopsis}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
+					</div>
 				</div>
-				<div class="media-body">
-					<h4 class="media-heading">公司信息</h4>
-					<p th:text="${enterprisesInfo.synopsis}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
-				</div>
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="招聘岗位名" class="btn-s alertB fl" />
+				<input name="postName" type="text" class="txt-HirdMSG qualityShowImText" id="postName" autocomplete="off" disabled="disabled" th:value="${JobsInfo.postName}"/>
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="岗位专业" class="btn-s alertB fl" />
+				<input name="major" type="text" class="txt-HirdMSG qualityShowImText" id="major" autocomplete="off" disabled="disabled" th:value="${JobsInfo.major}"/>
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="工种" class="btn-s alertB fl" />
+				<input name="profession" type="text" class="txt-HirdMSG qualityShowImText" id="profession" autocomplete="off" disabled="disabled" th:value="${JobsInfo.profession}"/>
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="负责事项" class="btn-s alertB fl qualityShow" />
+				<textarea name="responsible" type="text" class="txt-HirdMSG longText" id="responsible" autocomplete="off" disabled="disabled" th:text="${JobsInfo.responsible}"></textarea>
+				<br />
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="相关要求" class="btn-s alertB fl qualityShow" />
+				<textarea name="demand" type="text" class="txt-HirdMSG longText" id="demand" autocomplete="off" disabled="disabled" th:text="${JobsInfo.demand}"></textarea>
+				<br />
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="招聘人数" class="btn-s alertB fl qualityShow" />
+				<input name="number" type="number" class="txt-HirdMSG" id="number" autocomplete="off" disabled="disabled" th:value="${JobsInfo.number}"/>
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="已招人数" class="btn-s alertB fl qualityShow" />
+				<input name="arrived" type="number" class="txt-HirdMSG" id="arrived" autocomplete="off" disabled="disabled" th:value="${JobsInfo.arrived}"/>
+
+				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="薪资待遇" class="btn-s alertB fl qualityShow" />
+				<input name="salary" type="text" class="txt-HirdMSG" id="salary" autocomplete="off" disabled="disabled" th:value="${JobsInfo.salary}"/>
+
+				<br />
+				<input th:if="${enterprises}==null" name="Infochange" id="Infochange" type="button" th:value="${posted==null}?'投递简历':${posted}" class="btn-s Infochanges" />
+				<input th:if="${enterprises}!=null" name="Infochange" id="Infochange" type="button" value="返回" class="btn-s Infochanges" />
 			</div>
-
-			<input data-role="btn" name="search" id="search_button" type="button"
-				disabled="disabled" value="招聘岗位名" class="btn-s alertB fl" /> <input
-				name="postName" type="text" class="txt-HirdMSG qualityShowImText"
-				id="postName" autocomplete="off" disabled="disabled"
-				th:value="${JobsInfo.postName}" /> <input data-role="btn"
-				name="search" id="search_button" type="button" disabled="disabled"
-				value="岗位专业" class="btn-s alertB fl" /> <input name="major"
-				type="text" class="txt-HirdMSG qualityShowImText" id="major"
-				autocomplete="off" disabled="disabled" th:value="${JobsInfo.major}" />
-
-			<input data-role="btn" name="search" id="search_button" type="button"
-				disabled="disabled" value="工种" class="btn-s alertB fl" /> <input
-				name="profession" type="text" class="txt-HirdMSG qualityShowImText"
-				id="profession" autocomplete="off" disabled="disabled"
-				th:value="${JobsInfo.profession}" /> <input data-role="btn"
-				name="search" id="search_button" type="button" disabled="disabled"
-				value="负责事项" class="btn-s alertB fl qualityShow" />
-			<textarea name="responsible" type="text" class="txt-HirdMSG longText"
-				id="responsible" autocomplete="off" disabled="disabled"
-				th:text="${JobsInfo.responsible}"></textarea>
-			<br /> <input data-role="btn" name="search" id="search_button"
-				type="button" disabled="disabled" value="相关要求"
-				class="btn-s alertB fl qualityShow" />
-			<textarea name="demand" type="text" class="txt-HirdMSG longText"
-				id="demand" autocomplete="off" disabled="disabled"
-				th:text="${JobsInfo.demand}"></textarea>
-			<br /> <input data-role="btn" name="search" id="search_button"
-				type="button" disabled="disabled" value="招聘人数"
-				class="btn-s alertB fl qualityShow" /> <input name="number"
-				type="number" class="txt-HirdMSG" id="number" autocomplete="off"
-				disabled="disabled" th:value="${JobsInfo.number}" /> <input
-				data-role="btn" name="search" id="search_button" type="button"
-				disabled="disabled" value="已招人数" class="btn-s alertB fl qualityShow" />
-			<input name="arrived" type="number" class="txt-HirdMSG" id="arrived"
-				autocomplete="off" disabled="disabled"
-				th:value="${JobsInfo.arrived}" /> <input data-role="btn"
-				name="search" id="search_button" type="button" disabled="disabled"
-				value="薪资待遇" class="btn-s alertB fl qualityShow" /> <input
-				name="salary" type="text" class="txt-HirdMSG" id="salary"
-				autocomplete="off" disabled="disabled" th:value="${JobsInfo.salary}" />
-
-			<br /> <a
-				th:href="@{'/graduate/sendCV/'+${enterprises.registrationId}}"> <input
-				th:if="${enterprises}==null" name="Infochange" id="Infochange"
-				type="button" th:value="${posted==null}?'投递简历':${posted}"
-				class="btn-s Infochanges" />
-			</a> <input th:if="${enterprises}!=null" name="Infochange"
-				id="Infochange" type="button" value="返回" class="btn-s Infochanges" />
 		</div>
-	</div>
-</body>
+	</body>
 
 </html>

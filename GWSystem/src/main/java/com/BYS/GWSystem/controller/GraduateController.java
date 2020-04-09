@@ -539,8 +539,8 @@ public class GraduateController {
 		/*---------------------------------------------------------*/
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);// 招聘的详情
 		Post postMsg = iPostService.selectOneHiredMsg(postId);
-		Enterprise enterprises = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
-		model.addAttribute("enterprises", enterprises);// Cheader头部的信息刷新
+		Enterprise enterprisesInfo = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
+		model.addAttribute("enterprisesInfo", enterprisesInfo);// Cheader头部的信息刷新
 		model.addAttribute("JobsInfo", JobsInfo);// 传入岗位信息
 		model.addAttribute("postMsg", postMsg);// 传入岗位简要信息
 		return "Company/CompanyHiredInfoQuality";
