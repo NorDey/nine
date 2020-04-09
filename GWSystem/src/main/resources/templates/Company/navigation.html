@@ -7,16 +7,7 @@
 <body>
 	<header th:fragment="Cheader">
 			<div class="header">
-				<div class="city">
-					<a href="#" class="fc_city">武汉</a> <a href="#">[切换城市]</a>
-				</div>
-				<div class="weather">
-					<div class="weather_head">
-						<img class="w_ico"
-							src="//sta.ganjistatic1.com/src/image/v6/homepage/weather/m/阵雨.png"
-							alt=""> <span>天气&nbsp;</span> <span>&nbsp;温度&nbsp;</span> <span>&nbsp;污染指数&nbsp;</span>
-					</div>
-				</div>
+					<iframe width="460" scrolling="no" height="20" frameborder="0" allowtransparency="true" src="//i.tianqi.com/index.php?c=code&id=1&icon=1&wind=1&num=2&site=12"></iframe>
 				<div class="header_right">
 					<nav class="navbar" role="navigation">
 						<div class="container-fluid">
@@ -30,10 +21,10 @@
 											<li><a th:href="@{'/CM/'+${enterprises.registrationId}+'/1'}">我的发布<span class="badge alert-danger">50</span>
 													<!--数字徽章-->
 											</a></li>
-											<li><a href="#">浏览历史<span class="badge alert-danger">10</span></a>
+											<li><a href="#">已通过的简历<span class="badge alert-danger">10</span></a>
 											</li>
 											<li class="divider"></li>
-											<li><a href="#">简历收藏</a></li>
+											<li><a th:href="@{'/CH/'+${enterprises.registrationId}+'/1'}">简历收取</a></li>
 											<li class="divider"></li>
 											<li><a th:href="@{'/CRCI?registrationId='+${enterprises.registrationId}}">企业信息</a></li>
 										</ul></li>
@@ -54,6 +45,7 @@
 												<dt>
 													<a>XX求职XX</a>
 												</dt>
+												<dd><a th:href="@{'/CHISEntLog/'+${enterprises.registrationId}+'/1'}">岗位查询</a></dd>
 												<dd>技能培训</dd>
 												<dd>职场技巧</dd>
 												<dd>职业培训</dd>
@@ -79,7 +71,7 @@
 	<search th:fragment="CSearch">	
 		<div class="search">
 			<div class="clearfix searchWrap">
-				<img class="GWLogo" src="img/文字logo.JPG">
+				<img class="GWLogo" src="/img/文字logo.JPG">
 				<div class="search-div">
 					<form class="clearfix" name="search" method="post" action onsubmit="return false">
 						<i class="search-ico"></i>
@@ -90,7 +82,7 @@
 				</div>
 				<div class="edit-eara fr">
 					<a th:href="@{'/CNH/'+${enterprises.registrationId}}" class="btn-post">发布招聘信息</a>
-					<a href="#" class="btn-change">修改/删除&nbsp;招聘信息</a>
+					<a th:href="@{'/CM/'+${enterprises.registrationId}}+'/1'" class="btn-change">修改/删除&nbsp;招聘信息</a>
 				</div>
 			</div>
 		</div>

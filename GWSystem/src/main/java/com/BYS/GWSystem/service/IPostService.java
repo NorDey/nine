@@ -30,7 +30,7 @@ public interface IPostService {
 	public int count();
 
 	// 是否存在这个fatherID存在这个fatherID是多少
-	public Integer seletExeists(String pro);
+	public List<Integer> seletExeists(String pro);
 
 	// 分配一个FID的最大值
 	public int seletMaxFID();
@@ -65,4 +65,7 @@ public interface IPostService {
 
 	//更改岗位(热门)
 	public int updatePost(Post post);
+	// 模糊查询岗位简要信息
+	public List<Post> jobListLike(String postNamesL);
+	public Page<Post> jobListLikePage(String postNamesL);
 }

@@ -1,7 +1,10 @@
 package com.BYS.GWSystem.service;
 
+import java.util.List;
+
 import com.BYS.GWSystem.dto.ResumeDto;
-import com.BYS.GWSystem.model.Resume;
+import com.BYS.GWSystem.dto.ResumeHiredDto;
+import com.github.pagehelper.Page;
 
 public interface IResumeService {
 	// 简历关注率
@@ -21,6 +24,11 @@ public interface IResumeService {
 
 	// 更改
 	public int updateResume(ResumeDto resume);
+
+	// 公司收到的投递的简历查询
+	public List<ResumeHiredDto> selectResumeByErId(String registrationId);
+
+	public Page<ResumeHiredDto> selectResumeByErIdPage(String registrationId);
 
 	// 添加
 	public int insertResume(ResumeDto resume);
