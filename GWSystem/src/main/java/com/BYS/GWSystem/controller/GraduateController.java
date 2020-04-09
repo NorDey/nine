@@ -30,16 +30,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.BYS.GWSystem.dto.CompanyHiredInfoDto;
 import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.dto.ResumeDto;
+import com.BYS.GWSystem.dto.TypeWorkUJobs;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
 import com.BYS.GWSystem.model.Graduate;
+import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.model.StudentHistory;
 import com.BYS.GWSystem.service.IEnterpriseService;
 import com.BYS.GWSystem.service.IGraduateService;
+import com.BYS.GWSystem.service.IJobsUTypeWorkUPsotService;
 import com.BYS.GWSystem.service.IPostService;
 import com.BYS.GWSystem.service.IResumeService;
+import com.BYS.GWSystem.service.ITypeWorkService;
 import com.BYS.GWSystem.utils.GetPetAgeUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -59,6 +64,12 @@ public class GraduateController {
 
 	@Autowired
 	private IResumeService iResumeService;
+
+	@Autowired
+	private ITypeWorkService itypeWork;
+
+	@Autowired
+	private IJobsUTypeWorkUPsotService ijobInfoService;
 
 	// 当前登录的毕业生对象
 	private Graduate graduate;
@@ -197,7 +208,7 @@ public class GraduateController {
 		return "graduate/GraduateHome";
 	}
 
-	// 头部导航点击搜索岗位
+	// 头部导航点击搜索岗位（后台版）
 	@GetMapping("/searchJobs")
 	public String search(Model model, HttpServletRequest request) {
 		String studentId = request.getParameter("studentId");// 获取学生的学号
@@ -392,8 +403,8 @@ public class GraduateController {
 			int i = iResumeService.updateResume(resumeDto);
 		} else {
 			// 新增学生简历
-			long second = (long)LocalDateTime.now().getSecond();
-			second=new Random().nextInt(10000)%(10000-1000+1) + 1000+second;
+			long second = (long) LocalDateTime.now().getSecond();
+			second = new Random().nextInt(10000) % (10000 - 1000 + 1) + 1000 + second;
 			resumeDto.setResumeId(second);
 			int i = iResumeService.insertResume(resumeDto);
 		}
@@ -411,4 +422,189 @@ public class GraduateController {
 		return "graduate/Resume";
 	}
 
+	// 头部导航点击搜索岗位（学生版） 首页，上一页，下一页
+	@GetMapping("/searchJobs/{studentId}/{page}")
+	public String searchs(Model model, HttpServletRequest request, @PathVariable(name = "studentId") String studentId,
+			@PathVariable(name = "page") int page) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		if (page <= 0)
+			page = 1;
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListAll());// 将原list转为page类型
+		page = pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShow";
+	}
+
+	// form表单的页面输入式跳转，分页
+	@PostMapping("/entLogPage/{studentId}") // 公司招聘信息简要列表（公司登录后看）
+	public String entLogPageTurn(@PathVariable(name = "studentId") String studentId,
+			@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		if (pagesTurn == null) {
+			pagesTurn = 1;
+		}
+		int page = pageMinx(pagesTurn);
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListAll());// 将原list转为page类型
+		if (page >= psotSimpleList.getLastPage())
+			page = psotSimpleList.getLastPage();
+		pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShow";
+	}
+
+	@PostMapping("/entLogLikeSearchs/{studentId}/{page}") // 中间搜索框，模糊查询
+	public String entLogLikeSearchs(@RequestParam(value = "search_keyword") String postNamesL,
+			@PathVariable(name = "studentId") String studentId, @PathVariable(name = "page") Integer pagesTurn,
+			Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		/*---------------------------------------------------------*/
+		// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+		int page = pageMinx(pagesTurn);
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
+		if (page >= psotSimpleList.getLastPage())
+			page = psotSimpleList.getLastPage();
+		pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("postNamesL", postNamesL);
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShow2Like";
+	}
+
+	@GetMapping("/entLogLikeSearchPageN/{studentId}/{page}/{postNamesL}") // 中间搜索框，模糊查询，然后分页的，上一页，下一页
+	public String entLogLikeSearchPageN(@PathVariable(name = "postNamesL") String postNamesL,
+			@PathVariable(name = "studentId") String studentId, @PathVariable(name = "page") Integer pagesTurn,
+			Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		/*---------------------------------------------------------*/
+		// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+		int page = pageMinx(pagesTurn);
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
+		if (page >= psotSimpleList.getLastPage())
+			page = psotSimpleList.getLastPage();
+		pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShow2Like";
+	}
+
+	@PostMapping("/entLogLikeSearchPageTurns/{studentId}/{postNamesL}") // 中间搜索框，模糊查询，然后分页的，表单页面输入值跳转
+	public String entLogLikeSearchPageTurns(@PathVariable(name = "postNamesL") String postNamesL,
+			@PathVariable(name = "studentId") String studentId, @RequestParam(value = "pagesTurn") Integer pagesTurn,
+			Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		/*---------------------------------------------------------*/
+		// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+		int page = pageMinx(pagesTurn);
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
+		if (page >= psotSimpleList.getLastPage())
+			page = psotSimpleList.getLastPage();
+		pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShow2Like";
+	}
+
+	@GetMapping("/entLogQuality/{postId}/{studentId}") // 查看公司招聘的详情
+	public String entLogQuality(@PathVariable(name = "studentId") String studentId,
+			@PathVariable(name = "postId") String postId, Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		/*---------------------------------------------------------*/
+		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);// 招聘的详情
+		Post postMsg = iPostService.selectOneHiredMsg(postId);
+		Enterprise enterprises = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
+		model.addAttribute("enterprises", enterprises);// Cheader头部的信息刷新
+		model.addAttribute("JobsInfo", JobsInfo);// 传入岗位信息
+		model.addAttribute("postMsg", postMsg);// 传入岗位简要信息
+		return "Company/CompanyHiredInfoQuality";
+	}
+
+	@GetMapping("/entLog/{postnames}/{page}/{studentId}") // 左侧分类超链接，上一页，下一页
+	public String entLogBypostnames(@PathVariable(name = "studentId") String studentId,
+			@PathVariable(name = "postnames") String postName, @PathVariable(name = "page") int page, Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		/*---------------------------------------------------------*/
+		if (page <= 0)
+			page = 1;
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
+		page = pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("postnamesArrage",postName);
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShowArrage";
+	}
+
+	// form表单的页面输入式跳转
+	@PostMapping("/entLogPageTurnArrage/{postnames}/{studentId}") // 表单传值跳转
+	public String entLogPageTurnArrage(@PathVariable(name = "studentId") String studentId,
+			@PathVariable(name = "postnames") String postName, @RequestParam(value = "pagesTurn") Integer pagesTurn,
+			Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		/*---------------------------------------------------------*/
+		// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+		int page = pageMinx(pagesTurn);
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
+		if (page >= psotSimpleList.getLastPage())
+			page = psotSimpleList.getLastPage();
+		pageMax(page, psotSimpleList);
+		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
+		model.addAttribute("postnamesArrage", postName);
+		model.addAttribute("pros", Professions);
+		model.addAttribute("psotSimpleList", psotSimpleList);
+		model.addAttribute("pages", "第" + page + "页");
+		model.addAttribute("page", page);
+		return "Company/CompanyHiredInfoToShowArrage";
+	}
+
+	/*-----------------------页码控制函数-----------------------------*/
+	public int pageMinx(Integer pagesTurn) {
+		int page = 1;
+		if (pagesTurn >= 1 && pagesTurn != null)
+			page = pagesTurn;
+		if (page <= 0)
+			page = 1;
+		return page;
+	}
+
+	public int pageMax(int page, PageInfo<Post> psotSimpleList) {
+
+		if (page >= psotSimpleList.getLastPage())
+			page = psotSimpleList.getLastPage();
+		return page;
+	}
+	/*-----------------------页码控制函数-----------------------------*/
 }
