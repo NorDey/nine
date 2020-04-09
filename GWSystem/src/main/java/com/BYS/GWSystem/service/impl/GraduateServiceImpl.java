@@ -12,6 +12,7 @@ import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.mapper.GraduateMapper;
 import com.BYS.GWSystem.mapper.ResumeMapper;
 import com.BYS.GWSystem.model.Graduate;
+import com.BYS.GWSystem.model.StudentHistory;
 import com.BYS.GWSystem.service.IGraduateService;
 import com.github.pagehelper.Page;
 
@@ -100,6 +101,20 @@ public class GraduateServiceImpl implements IGraduateService {
 	@Override
 	public int updateGraduate(Graduate graduate) {
 		int rest = graduateMapper.updateGraduate(graduate);
+		return rest;
+	}
+
+	// 首次投递简历，insert
+	@Override
+	public int sendCV(String studentId, String postId) {
+		int rest = graduateMapper.sendCV(studentId, postId);
+		return rest;
+	}
+
+	// 查询此简历是否已投递在此
+	@Override
+	public StudentHistory selectCV(String studentId, String postId) {
+		StudentHistory rest = graduateMapper.selectCV(studentId, postId);
 		return rest;
 	}
 

@@ -28,7 +28,7 @@
 
 	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
 		<form class="navbar-form navbar-left" role="search" action='#'
-			th:action="@{/graduate/Postpages/1/}" method='post'
+			th:action="@{/graduate/Postpages/1}" method='post'
 			th:object="${postDto}">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="公司"
@@ -45,7 +45,7 @@
 			<caption>招聘岗位</caption>
 			<thead>
 				<tr>
-					<th class="wide">ID</th>
+					<!-- <th class="wide">ID</th> -->
 					<th class="wide1">招聘公司</th>
 					<th class="wide1">岗位类型</th>
 					<th class="wide1">岗位名</th>
@@ -55,12 +55,13 @@
 					<th class="wide1">薪资待遇</th>
 					<th class="wide3">相关要求</th>
 					<th class="wide1">发布时间</th>
-					<th class="wide1">投递简历</th>
+					<th class="wide1">公司详情</th>
+					<!-- <th class="wide1">投递简历</th> -->
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="postDto :${traversingList.list}">
-					<th th:text="${postDto.registrationId}">001</th>
+					<!-- <th th:text="${postDto.registrationId}">001</th> -->
 					<th th:text="${postDto.enterpriseName}">阿里巴巴</th>
 					<th th:text="${postDto.major}">软件开发</th>
 					<th th:text="${postDto.postName}">java开发工程师</th>
@@ -71,8 +72,11 @@
 					<th th:text="${postDto.demand}">本科,计算机相关专业,有过java开发相关经验3年以上</th>
 					<th th:text="${postDto.creationTime}">2020.3.25</th>
 					<th><a
-						th:href="@{'/graduate/home?studentId='+${graduate.studentId}}">投递简历</a>
+						th:href="@{'/graduate/enterpriseDetails/'+${postDto.registrationId}+'/'+${postDto.postId}}">点击查看</a>
 					</th>
+					<!-- <th><a
+						th:href="@{'/graduate/sendCV/'+${postDto.registrationId}}">投递简历</a>
+					</th> -->
 				</tr>
 			</tbody>
 		</table>

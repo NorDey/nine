@@ -29,11 +29,11 @@
 			th:action="@{/graduate/searchGraduateInfos/}+${graduate.studentId}"
 			method='post' th:object="${graduate}">
 			<div class="form-group">
-				请输入毕业生学号： <input type="text" class="form-control" placeholder="学号" id="studentId" name="studentId" th:field=*{studentId}>
-					
-				<!-- <input type="text" class="form-control" placeholder="姓名
-					id="studentName" name="studentName" th:value="${graduate.studentName}"
-					th:field=*{postName}> -->
+				请输入毕业生学号：
+				<input type="text" name="studentId" id="studentId"
+						 placeholder="请输入学号"
+						th:value="${graduates==null}?'':${graduates.studentId}" />
+				<span th:if="${errorInfo}!=null" class="help-block alert-danger" th:text="${errorInfo}"></span>
 			</div>
 			<button type="submit" class="btn btn-default">条件搜索</button>
 		</form>

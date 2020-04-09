@@ -4,9 +4,16 @@ import java.util.List;
 
 import com.BYS.GWSystem.dto.GraduateDto;
 import com.BYS.GWSystem.model.Graduate;
+import com.BYS.GWSystem.model.StudentHistory;
 import com.github.pagehelper.Page;
 
 public interface IGraduateService {
+
+	// 投递简历
+	public int sendCV(String studentId, String postId);
+
+	// 查询此简历是否已投递在此
+	public StudentHistory selectCV(String studentId, String postId);
 
 	// 根据学号查询学生信息
 	public Graduate queryStudentById(String id);
