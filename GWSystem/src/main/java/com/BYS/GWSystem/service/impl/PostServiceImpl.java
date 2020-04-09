@@ -88,17 +88,17 @@ public class PostServiceImpl implements IPostService {
 	public String toGetFid(String profession) {
 		// TODO Auto-generated method stub
 		int id = 0;
-		if (seletExeists(profession) != null)
-			id = seletExeists(profession).get(1);// 是否存在该工种
-		else {
+		if (seletExeists(profession).isEmpty())
 			id = (seletMaxFID() + 1);// 不存在该工种则新建这个工种
+		else {
+			id = seletExeists(profession).get(1);// 是否存在该工种
 		}
 		return id + "";
 	}
 
 	// 是否存在这个TID存在这个fatherID是多少
 	@Override
-	public Integer seletTExeists(String postNmae) {
+	public List<Integer> seletTExeists(String postNmae) {
 		// TODO Auto-generated method stub
 		return postMapper.seletTExeists(postNmae);
 	}
@@ -114,10 +114,10 @@ public class PostServiceImpl implements IPostService {
 	@Override
 	public Integer toGetTid(String postName) {
 		Integer id = null;
-		if (seletTExeists(postName) != null)
-			id = seletTExeists(postName);// 是否存在该岗位名称
-		else {
+		if (seletTExeists(postName).isEmpty())
 			id = (seletMaxTID() + 1);// 不存在该工种则新建这个岗位名称
+		else {
+			id = seletTExeists(postName).get(1);// 是否存在该岗位名称
 		}
 		return id;
 	}
