@@ -182,4 +182,10 @@ public class PostServiceImpl implements IPostService {
 		postMapper.setUpPopularPositions();
 	}
 
+	@Override
+	public int updatePost(Post post) {
+		// TODO Auto-generated method stub
+		return postMapper.updatePost(post);
+	}
+
 }

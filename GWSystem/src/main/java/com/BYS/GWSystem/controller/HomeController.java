@@ -115,7 +115,7 @@ public class HomeController {
 		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.PageNotFilled());
 		List<Integer> listPages = calculateOptionalPages(page, listGraduateDto.getPages());
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/notFilled");
+		model.addAttribute("address", "notFilled");
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -157,7 +157,7 @@ public class HomeController {
 		List<Integer> listPages = calculateOptionalPages(page, listGraduateDto.getPages());
 		model.addAttribute("listPages", listPages);
 		model.addAttribute("returnDisplay", lookup);
-		model.addAttribute("address", "admin/seStudentsList");
+		model.addAttribute("address", "seStudentsList");
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -169,7 +169,7 @@ public class HomeController {
 		List<Integer> listPages = calculateOptionalPages(page, listGraduateDto.getPages());
 		model.addAttribute("listPages", listPages);
 		model.addAttribute("returnDisplay", lookup);
-		model.addAttribute("address", "admin/seStudentsList");
+		model.addAttribute("address", "seStudentsList");
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -192,7 +192,7 @@ public class HomeController {
 		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.selectBestResumeStudents());
 		List<Integer> listPages = calculateOptionalPages(1, listGraduateDto.getPages());
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/CheckingStudents");
+		model.addAttribute("address", "CheckingStudents");
 		model.addAttribute("traversingList", listGraduateDto);
 		return "admin/SeeStudent";
 	}
@@ -222,7 +222,7 @@ public class HomeController {
 		PageHelper.startPage(page, 10);
 		PageInfo<Enterprise> enterprises = null;
 		if (post != null && post != " ") {
-			model.addAttribute("address", "admin/seEnterpriseList/1");
+			model.addAttribute("address", "seEnterpriseList/1");
 			if (lookup == null || lookup.length() <= 0) {
 				enterprises = new PageInfo<>(iEnterpriseService.selectPostEnterpriseListByMore(enterprise));
 			} else {
@@ -230,7 +230,7 @@ public class HomeController {
 				enterprises = new PageInfo<>(iEnterpriseService.selectPostEnterpriseListByMore(enterprise));
 			}
 		} else {
-			model.addAttribute("address", "admin/seEnterpriseList");
+			model.addAttribute("address", "seEnterpriseList");
 			if (lookup == null || lookup.length() <= 0) {
 				enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));
 			} else {
@@ -254,7 +254,7 @@ public class HomeController {
 		PageHelper.startPage(page, 10);
 		PageInfo<Enterprise> enterprises = null;
 		if (post != null && post != " ") {
-			model.addAttribute("address", "admin/seEnterpriseList/1");
+			model.addAttribute("address", "seEnterpriseList/1");
 			if (lookup == null || lookup.length() <= 0) {
 				enterprises = new PageInfo<>(iEnterpriseService.selectPostEnterpriseListByMore(enterprise));
 			} else {
@@ -262,7 +262,7 @@ public class HomeController {
 				enterprises = new PageInfo<>(iEnterpriseService.selectPostEnterpriseListByMore(enterprise));
 			}
 		} else {
-			model.addAttribute("address", "admin/seEnterpriseList");
+			model.addAttribute("address", "seEnterpriseList");
 			if (lookup == null || lookup.length() <= 0) {
 				enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));
 			} else {
@@ -415,7 +415,7 @@ public class HomeController {
 		PageInfo<Enterprise> enterprises = new PageInfo<>(iEnterpriseService.selectEnterpriseListByMore(enterprise));
 		List<Integer> listPages = calculateOptionalPages(page, enterprises.getPages());
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/companyApplicationList");
+		model.addAttribute("address", "companyApplicationList");
 		model.addAttribute("traversingList", enterprises);
 		return "admin/CompanyApproval";
 	}
@@ -453,7 +453,7 @@ public class HomeController {
 	
 
 	// 岗位列表
-	@GetMapping(value = { "/companyRecruitmentPosition/{page}/{registrationId}", "/companyRecruitmentPosition/{page}" })
+	@GetMapping(value = {"/companyRecruitmentPosition/{page}" })
 	public String CompanyRecruitmentPosition(Model model, @PathVariable(name = "page") int page,
 			@PathVariable(name = "registrationId", required = false) String registrationId) {
 		PageHelper.startPage(page, 8);
@@ -463,14 +463,27 @@ public class HomeController {
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("postDto", post);
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/companyRecruitmentPosition");
+		model.addAttribute("address", "companyRecruitmentPosition");
 		model.addAttribute("traversingList", psotSimpleList);
 		return "admin/Post";
 	}
+	
+	
+	
+	// 单个公司岗位列表
+		@GetMapping(value = {"/{registrationId}/{page}"})
+		public String RecruitmentPosition(Model model,@PathVariable(name = "page",required = false) int page,
+				@PathVariable(name = "registrationId", required = false) String registrationId) {			
+			PostDto postDto = post;
+			postDto.setRegistrationId(registrationId);
+			List<PostDto> psotSimpleList = iPostService.selectPostListByMore(postDto);
+			model.addAttribute("traversingList", psotSimpleList);
+			model.addAttribute("address", registrationId);
+			return "admin/CompanyPost";
+		}
 
 	// 岗位列表
-	@PostMapping(value = { "/companyRecruitmentPosition/{page}/{registrationId}",
-			"/companyRecruitmentPosition/{page}" })
+	@PostMapping(value = {"/companyRecruitmentPosition/{page}" })
 	public String CompanyRecruitmentPosition(Model model, @PathVariable(name = "page") int page,
 			@PathVariable(name = "registrationId", required = false) String registrationId,
 			@ModelAttribute PostDto postDto) {
@@ -481,7 +494,7 @@ public class HomeController {
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("postDto", post);
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/companyRecruitmentPosition");
+		model.addAttribute("address", "companyRecruitmentPosition");
 		model.addAttribute("traversingList", psotSimpleList);
 		return "admin/Post";
 	}
@@ -496,7 +509,7 @@ public class HomeController {
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("postDto", post);
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/companyRecruitmentPosition");
+		model.addAttribute("address", "companyRecruitmentPosition");
 		model.addAttribute("traversingList", psotSimpleList);
 		return "admin/Post";
 	}
@@ -508,7 +521,7 @@ public class HomeController {
 		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.doNewPostList());
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/seNewPostList");
+		model.addAttribute("address", "seNewPostList");
 		model.addAttribute("traversingList", psotSimpleList);
 		return "admin/Post";
 	}
@@ -522,12 +535,23 @@ public class HomeController {
 		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.selectPostListByMore(postDto));
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "admin/seHotPosts");
+		model.addAttribute("address", "seHotPosts");
 		model.addAttribute("traversingList", psotSimpleList);
 		return "admin/Post";
 	}
 
-	
+	@GetMapping("/setUpPopular/{popular}/{postId}/{address}")
+	public ModelAndView setUpPopular(@PathVariable(name = "popular") int popular,
+			@PathVariable(name = "postId") String postId,
+			@PathVariable(name = "address") String address) {
+		ModelAndView modelAndView=new ModelAndView();
+		Post post=new Post();
+		post.setPopular(popular);
+		post.setPostId(postId);
+		int a=iPostService.updatePost(post);
+		modelAndView.setViewName("redirect:/admin/"+address+"/1");
+		return modelAndView;
+	}
 	
 	
 	

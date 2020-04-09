@@ -62,4 +62,7 @@ public interface IPostService {
 
 	//设置热门岗位
 	public void setUpPopularPositions();
+
+	//更改岗位(热门)
+	public int updatePost(Post post);
 }

@@ -18,7 +18,9 @@ public class SaticScheduleTask {
 	
     //3.添加定时任务
     //或直接指定时间间隔，例如：10秒
-    @Scheduled(fixedRate=10000)
+    //@Scheduled(fixedRate=10000)
+	//间隔一分钟
+    @Scheduled(cron = "0 */1 * * * ?")
     private void configureTasks() {
        // System.err.println("执行静态定时任务时间: " + LocalDateTime.now());
     	

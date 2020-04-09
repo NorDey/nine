@@ -60,7 +60,7 @@
 		and	 e.enterpriseName like concat('%', #{enterpriseName}, '%')
 		</if>
 		<if test="popular != null and popular != ''">
-		and	 p.popular = #{popular}
+		and	 p.popular in (2,3)
 		</if>
 	</select>
 	
