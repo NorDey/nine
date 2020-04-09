@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/popup.js"></script>
+<meta charset="UTF-8">
+<title>企业详情</title>
+
+</head>
+<body>
+	<div class="col-md-12">
+		<header th:insert="~{graduate/navigation::Sheader}"></header>
+	</div>
+
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		<h1>
+			<span class="label label-default"><!-- <img th:src="@{/headportrait/}+${enterprise.avatarPath}"> -->公司介绍</span>
+		</h1>
+		<table class="table table-striped">
+			<caption th:text="${enterprise.enterpriseName}+'信息'">公司信息</caption>
+			<thead>
+				<tr>
+					<th>工商注册号</th>
+					<th>企业全名</th>
+					<th>联系方式</th>
+					<th>企业人数</th>
+					<th>所在地</th>
+					<th>注册资本</th>
+					<th>是否上市</th>
+				</tr>
+			</thead>
+			<tbody >
+				<tr th:each="enterprise :${enterprise}">
+					<td th:text="${enterprise.registrationId}"></td>
+					<td th:text="${enterprise.enterpriseName}"></td>
+					<td th:text="${enterprise.telephone}"></td>
+					<td th:text="${enterprise.number}"></td>
+					<td th:text="${enterprise.address}"></td>
+					<td th:text="${enterprise.registeredCapital}"></td>
+					<td><span th:if="${enterprise.beListed}eq'1'">已上市</span> <span
+						th:if="${enterprise.beListed}eq'0'">暂未上市</span></td>
+				</tr>
+			</tbody>
+		</table>
+		<h3>
+			<span class="label label-default">公司简介</span>
+		</h3>
+		<textarea class="introduce center-block text-danger"
+			readonly="readonly" rows="15" cols="180" th:text="${enterprise.synopsis}">	
+			</textarea>
+	</div>
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+		
+	</div>
+	<a th:href="@{'/graduate/sendCV/'+${enterprise.registrationId}}">
+	<input name="Infochange" id="Infochange" type="button" th:value="${posted==null}?'投递简历':${posted}" class="btn-s Infochanges" />
+	</a>
+</body>
+</html>
