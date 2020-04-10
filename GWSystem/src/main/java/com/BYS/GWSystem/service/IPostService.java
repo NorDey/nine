@@ -56,16 +56,23 @@ public interface IPostService {
 	public List<PostDto> doNewPostList();
 
 	public Page<PostDto> PageNewPostList();
+
 	// 条件查询岗位简要信息
 	public List<Post> jobListArrage(String postName);
+
 	public Page<Post> jobListArragePage(String postName);
 
-	//设置热门岗位
+	// 设置热门岗位
 	public void setUpPopularPositions();
 
-	//更改岗位(热门)
+	// 更改岗位(热门)
 	public int updatePost(Post post);
+
 	// 模糊查询岗位简要信息
 	public List<Post> jobListLike(String postNamesL);
+
 	public Page<Post> jobListLikePage(String postNamesL);
+
+	// 通过岗位编号查询岗位详细信息
+	public PostDto selectPostListById(String postId);
 }

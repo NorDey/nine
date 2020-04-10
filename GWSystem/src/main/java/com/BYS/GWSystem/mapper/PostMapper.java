@@ -40,35 +40,39 @@ public interface PostMapper {
 	public Post selectOneHiredMsg(String postId);
 
 	// 是否存在这个fatherID存在这个fatherID是多少
-	public List<Integer> seletExeists(@Param(value ="pro")String pro);
+	public List<Integer> seletExeists(@Param(value = "pro") String pro);
 
 	// 分配一个FID的最大值
 	public int maxFid();
-	
+
 	// 是否存在这个TID存在这个TID是多少
-	public List<Integer> seletTExeists(@Param(value ="postNmae")String postNmae);
-	
+	public List<Integer> seletTExeists(@Param(value = "postNmae") String postNmae);
+
 	// 分配一个TID的最大值
 	public int maxTid();
 
-	//条件查询岗位详细信息
+	// 条件查询岗位详细信息
 	public List<PostDto> selectPostListByMore(PostDto postDto);
-	
+
+	// 通过岗位编号查询岗位详细信息
+	public PostDto selectPostListById(String postId);
+
 	// 查询工作岗位简要信息(全查)
 	public List<Post> jobListAll();
 
-	//新增加的岗位(七天)
+	// 新增加的岗位(七天)
 	public List<PostDto> doNewPostList();
-	
-	//条件查询岗位简要信息
+
+	// 条件查询岗位简要信息
 	public List<Post> jobListArrage(String postName);
 
-	//删除热门
+	// 删除热门
 	public void deletePopularPost();
-	//实时设置热门岗位
+
+	// 实时设置热门岗位
 	public void setUpPopularPositions();
-	//模糊查询post
+
+	// 模糊查询post
 	public List<Post> jobListLike(String postNamesL);
-	
 
 }

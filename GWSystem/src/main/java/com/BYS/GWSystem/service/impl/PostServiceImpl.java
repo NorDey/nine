@@ -51,7 +51,7 @@ public class PostServiceImpl implements IPostService {
 	public int deleteOneHired(String postId) {
 		Post posts = new Post();
 		posts.setPostId(postId);
-		return postMapper.deletePost(posts)+typeWorkMapper.deletePost(posts);
+		return postMapper.deletePost(posts) + typeWorkMapper.deletePost(posts);
 	}
 
 	// 查询某一个工作岗位详细信息
@@ -171,14 +171,14 @@ public class PostServiceImpl implements IPostService {
 		return (Page<Post>) postMapper.jobListArrage(postName);
 	}
 
-	//实时设置热门岗位
+	// 实时设置热门岗位
 	@Override
-	//添加事务管理
+	// 添加事务管理
 	@Transactional
-	public void setUpPopularPositions() {		
-		//删除
+	public void setUpPopularPositions() {
+		// 删除
 		postMapper.deletePopularPost();
-		//更新
+		// 更新
 		postMapper.setUpPopularPositions();
 	}
 
@@ -188,7 +188,7 @@ public class PostServiceImpl implements IPostService {
 		return postMapper.updatePost(post);
 	}
 
-	//模糊查询Post
+	// 模糊查询Post
 	@Override
 	public List<Post> jobListLike(String postNamesL) {
 		// TODO Auto-generated method stub
@@ -198,7 +198,13 @@ public class PostServiceImpl implements IPostService {
 	@Override
 	public Page<Post> jobListLikePage(String postNamesL) {
 		// TODO Auto-generated method stub
-		return(Page<Post>)postMapper.jobListLike(postNamesL);
+		return (Page<Post>) postMapper.jobListLike(postNamesL);
+	}
+
+	@Override
+	public PostDto selectPostListById(String postId) {
+		PostDto post = postMapper.selectPostListById(postId);
+		return post;
 	}
 
 }
