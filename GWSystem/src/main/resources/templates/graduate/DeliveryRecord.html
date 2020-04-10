@@ -60,10 +60,10 @@
 					<th><a
 						th:href="@{'/graduate/enterpriseDetails/'+${postDto.registrationId}+'/'+${postDto.postId}}">点击查看</a>
 					</th>
-					<th th:if="${postDto.Popular} eq '1'">未通过</th>
-					<th th:if="${postDto.Popular} eq '2'">已录用</th>
-					<th th:if="${postDto.Popular} eq '3'">感兴趣</th>
-					<th th:if="${postDto.Popular} eq '4'">未审核</th>
+					<th th:if="${postDto.collection} eq '1'">未通过</th>
+					<th th:if="${postDto.collection} eq '2'">已录用</th>
+					<th th:if="${postDto.collection} eq '3'">感兴趣</th>
+					<th th:if="${postDto.collection} eq '4'">未审核</th>
 					<!-- <th><a
 						th:href="@{'/graduate/sendCV/'+${postDto.registrationId}}">投递简历</a>
 					</th> -->
