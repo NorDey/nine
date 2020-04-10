@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<title>搜索岗位</title>
+</head>
+
+<body>
+	<header th:insert="~{graduate/navigation::Sheader}"></header>
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+
+	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		<table class="table table-striped">
+			<caption>招聘岗位</caption>
+			<thead>
+				<tr>
+					<!-- <th class="wide">ID</th> -->
+					<th class="wide3">招聘公司</th>
+					<th class="wide1">岗位类型</th>
+					<th class="wide1">岗位名</th>
+					<th class="wide1">工作地点</th>
+					<th class="wide1">招聘人数</th>
+					<th class="wide3">负责事项</th>
+					<th class="wide1">薪资待遇</th>
+					<th class="wide3">相关要求</th>
+					<th class="wide1">发布时间</th>
+					<th class="wide1">公司详情</th>
+					<th class="wide1">投递状态</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="postDto :${traversingList.list}">
+					<!-- <th th:text="${postDto.registrationId}">001</th> -->
+					<th th:text="${postDto.enterpriseName}">阿里巴巴</th>
+					<th th:text="${postDto.major}">软件开发</th>
+					<th th:text="${postDto.postName}">java开发工程师</th>
+					<th th:text="${postDto.address}">上海</th>
+					<th th:text="${postDto.number}">5</th>
+					<th th:text="${postDto.responsible}">web后端开发与调试,数据库设计以优化</th>
+					<th th:text="${postDto.salary}">8K-12K</th>
+					<th th:text="${postDto.demand}">本科,计算机相关专业,有过java开发相关经验3年以上</th>
+					<th th:text="${postDto.creationTime}">2020.3.25</th>
+					<th><a
+						th:href="@{'/graduate/enterpriseDetails/'+${postDto.registrationId}+'/'+${postDto.postId}}">点击查看</a>
+					</th>
+					<th th:if="${postDto.Popular} eq '1'">未通过</th>
+					<th th:if="${postDto.Popular} eq '2'">已录用</th>
+					<th th:if="${postDto.Popular} eq '3'">感兴趣</th>
+					<th th:if="${postDto.Popular} eq '4'">未审核</th>
+					<!-- <th><a
+						th:href="@{'/graduate/sendCV/'+${postDto.registrationId}}">投递简历</a>
+					</th> -->
+				</tr>
+			</tbody>
+		</table>
+
+		<nav aria-label="Page navigation">
+			<header th:insert="~{graduate/paging::page}"></header>
+		</nav>
+	</div>
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+</body>
+
+</html>
