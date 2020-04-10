@@ -73,6 +73,6 @@ public interface IPostService {
 
 	public Page<Post> jobListLikePage(String postNamesL);
 
-	// 通过岗位编号查询岗位详细信息
-	public PostDto selectPostListById(String postId);
+	// 通过学生编号查询所有已投递岗位的详细信息
+	public List<PostDto> selectPostListByStudentId(String studentId);
 }

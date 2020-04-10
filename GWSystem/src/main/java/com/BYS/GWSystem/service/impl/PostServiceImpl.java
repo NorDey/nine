@@ -202,9 +202,9 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public PostDto selectPostListById(String postId) {
-		PostDto post = postMapper.selectPostListById(postId);
-		return post;
+	public List<PostDto> selectPostListByStudentId(String studentId) {
+		List<PostDto> list = postMapper.selectPostListByStudentId(studentId);
+		return list;
 	}
 
 }
