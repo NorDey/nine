@@ -131,10 +131,10 @@
 				</tr>
 				<tr>
 					<th>就业情况：</th>
-					<th th:if="${graduate.cause} eq 1"><input type="radio"
+					<th th:if="${graduate.cause} eq '1'"><input type="radio"
 						name="cause" id="cause1" value="1" checked />已就业 <input
 						type="radio" name="cause" id="cause2" value="0" />未就业</th>
-					<th th:if="${graduate.cause} eq 0"><input type="radio"
+					<th th:if="${graduate.cause} eq '0'"><input type="radio"
 						name="cause" id="cause1" value="1" />已就业 <input type="radio"
 						name="cause" id="cause2" value="0" checked />未就业</th>
 				</tr>
