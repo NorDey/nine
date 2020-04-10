@@ -24,7 +24,7 @@
 		<search th:insert="~{Company/navigation::CSearch}"></search>
 		<!--图标和搜索发帖按钮end-->
 		<div class="content">
-			<h1><span class="label label-default">公司岗位发布</span></h1>
+			<h1><span class="label label-default">公司岗位发布</span><span th:if="${UpdateMsg}!=null" class="label label-warning" th:text="${UpdateMsg}">公司岗位发布</span></h1>
 			<!--多媒体对象可以设置头部、居中、底部对齐，对应的类分别是 "media-top"、 "media-middle" 、 "media-bottom":-->
 			<br>
 			
@@ -40,10 +40,30 @@
 					<p th:text="${psotSimpleList.responsible}">这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。这是一些示例文本。</p>
 				</div>
 				<a th:href="@{'/CHIC/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}}"><input name="change" id="change" type="button" value="修改" class="btn-s" /></a>
-			    <a th:href="@{'/CMDel/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}+'/'+${page}}"><input name="delete" id="delete" type="button" value="删除" class="btn-s" /></a>
+			   <input name="delete" id="delete" type="button" value="删除" class="btn-s" data-toggle="modal" data-target="#myModal"/>
 			</div>
 			<hr>
-			</div>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title  text-danger" id="myModalLabel">确认删除吗</h4>
+							</div>
+							<div class="modal-body text-danger"><span class="text-warning" th:text="'即将删除：'+${psotSimpleList.postName}"></span>--确认删除请点击提交更改，更改将无法撤回</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								 <a th:href="@{'/CMDel/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}+'/'+${page}}"><button type="button" class="btn btn-s">提交更改</button></a>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+		</div>
 			
 				<a th:href="@{'/CM/'+${enterprises.registrationId}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
 				<input type="button" disabled="disabled" th:value="${pages}" class="btn-s">

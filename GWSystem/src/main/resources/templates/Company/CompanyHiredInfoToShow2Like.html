@@ -19,10 +19,34 @@
 	</head>
 
 	<body>
-		<header th:if="${enterprises}!=null" th:insert="~{Company/navigation::Cheader}"></header>
-		<header th:if="${graduate}!=null" th:insert="~{graduate/navigation::Sheader}"></header>
-		<header th:if="${enterprises}==null and ${graduate}==null" th:insert="~{Public/navigation::header}"></header>
-		<!--	头部结束-->
+	<header th:if="${enterprises}!=null" th:insert="~{Company/navigation::Cheader}"></header>
+	<header th:if="${graduate}!=null" th:insert="~{graduate/navigation::Sheader}"></header>
+	<header th:if="${enterprises}==null and ${graduate}==null" th:insert="~{Public/navigation::header}"></header>
+	<!--	头部结束-->
+	<div class="clearfix searchWrap">
+		<img class="GWLogo" src="/img/文字logo.JPG">
+			<div class="search-div">
+				<form th:if="${enterprises}==null and ${graduate}==null" class="clearfix" name="search" method="post" action="#" th:action="@{'/CHISLikeSearch/1'}">
+					<i class="search-ico"></i>
+					<input name="search_keyword" type="text" class="txt-search" id="search_keyword" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="搜索岗位" />
+					<!--x-webkit-speech x-webkit-grammar语音输入支持-->
+					<input data-role="btn" name="search" id="search_button" type="submit" value="搜 索" class="btn-s" />
+				</form>
+				<form th:if="${enterprises}!=null"  class="clearfix" name="search" method="post" action="#" th:action="@{'/CHISEntLogLikeSearch/'+${enterprises.registrationId}+'/1'}">
+					<i class="search-ico"></i>
+					<input name="search_keyword" type="text" class="txt-search" id="search_keyword" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="搜索岗位" />
+					<!--x-webkit-speech x-webkit-grammar语音输入支持-->
+					<input data-role="btn" name="search" id="search_button" type="submit" value="搜 索" class="btn-s" />
+				</form>
+				
+				<form th:if="${graduate}!=null" class="clearfix" name="search" method="post" action="#" th:action="@{'/graduate/entLogLikeSearchs/'+${graduate.studentId}+'/1'}">
+					<i class="search-ico"></i>
+					<input name="search_keyword" type="text" class="txt-search" id="search_keyword" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="搜索岗位" />
+					<!--x-webkit-speech x-webkit-grammar语音输入支持-->
+					<input data-role="btn" name="search" id="search_button" type="submit" value="搜 索" class="btn-s" />
+				</form>
+			</div>
+	</div>
 		<!--search引用-->
 		<!--图标和搜索发帖按钮end-->
 			<div class="arrageNv fl" id="arrageNvs" role="navingation">
@@ -34,39 +58,38 @@
 						<li role="presentation" th:each="postnames :${pros.postName}">
 							<a th:if="${enterprises}==null and ${graduate}==null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHIS/'+${postnames}+'/1'}">Java</a>
 							<a th:if="${enterprises}!=null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHISEntLog/'+${postnames}+'/1'+'/'+${enterprises.registrationId}}">Java</a>
+							
 							<a th:if="${graduate}!=null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/graduate/entLog/'+${postnames}+'/1'+'/'+${graduate.studentId}}">Java</a>
 						</li>
 					</ul>
 				</div>
 			</div>
-			
 		</div>
 		<!-- ---------左侧分类导航栏---------- -->
 		<div class="content arrageNvs fl" data-spy="scroll" data-target="#arrageNvs" data-offset="0">
 		<h1><span class="label label-default">公司岗位发布</span></h1>
 		<br>
-				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHIS/'+${postnamesArrage}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
-				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLog/'+${postnames}+'/'+${page-1}+'/'+${enterprises.registrationId}}"><input type="button" value="上一页" class="btn-s" /></a>
-				<a th:if="${graduate}!=null" th:href="@{'/graduate/entLog/'+${postnames}+'/'+${page-1}+'/'+${graduate.studentId}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHISLikeSearchPageN/'+${page-1}+'/'+${postNamesL}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLogLikeSearchPageN/'+${enterprises.registrationId}+'/'+${page-1}+'/'+${postNamesL}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<a th:if="${graduate}!=null" th:href="@{'/graduate/entLogLikeSearchPageN/'+${graduate.studentId}+'/'+${page-1}+'/'+${postNamesL}}"><input type="button" value="上一页" class="btn-s" /></a>
 				<input type="button" disabled="disabled" th:value="${pages}" class="btn-s">
-				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHIS/'+${postnamesArrage}+'/'+${page+1}}"><input type="button" value="下一页" class="btn-s" /></a>
-				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLog/'+${postnames}+'/'+${page+1}+'/'+${enterprises.registrationId}}"><input type="button" value="下一页" class="btn-s" /></a>
-				<a th:if="${graduate}!=null" th:href="@{'/graduate/entLog/'+${postnames}+'/'+${page+1}+'/'+${graduate.studentId}}"><input type="button" value="下一页" class="btn-s" /></a>
+				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHISLikeSearchPageN/'+${page+1}+'/'+${postNamesL}}"><input type="button" value="下一页" class="btn-s" /></a>
+				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLogLikeSearchPageN/'+${enterprises.registrationId}+'/'+${page+1}}+'/'+${postNamesL}"><input type="button" value="下一页" class="btn-s" /></a>
+				<a th:if="${graduate}!=null" th:href="@{'/graduate/entLogLikeSearchPageN/'+${graduate.studentId}+'/'+${page+1}}+'/'+${postNamesL}"><input type="button" value="下一页" class="btn-s" /></a>
 				
 				<!-- ---------页面跳转------------ -->
-				<form th:if="${enterprises}==null and ${graduate}==null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHIS/'+${postnames}}"  >
+				<form th:if="${enterprises}==null and ${graduate}==null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHISLikeSearchPageTurns/'+${postNamesL}}"  >
 				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
 				<input type="submit" value="跳转" class="btn-s" />
 				</form>
-				<form th:if="${enterprises}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHISEntLogPageTurnArrage/'+${postnames}+'/'+${enterprises.registrationId}}" >
+				<form th:if="${enterprises}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHISEntLogLikeSearchPageTurns/'+${enterprises.registrationId}+'/'+${postNamesL}}" >
 				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
 				<input type="submit" value="跳转" class="btn-s" />
 				</form>
-				<form th:if="${graduate}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/graduate/entLogPageTurnArrage/'+${postnames}+'/'+${graduate.studentId}}" >
+				<form th:if="${graduate}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/graduate/entLogLikeSearchPageTurns/'+${graduate.studentId}+'/'+${postNamesL}}" >
 				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
 				<input type="submit" value="跳转" class="btn-s" />
 				</form>
-				
 			<!--多媒体对象可以设置头部、居中、底部对齐，对应的类分别是 "media-top"、 "media-middle" 、 "media-bottom":-->
 			
 			<br>

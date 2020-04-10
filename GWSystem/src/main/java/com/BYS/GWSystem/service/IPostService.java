@@ -39,7 +39,7 @@ public interface IPostService {
 	public String toGetFid(String profession);
 
 	// 是否存在这个TID存在这个TID是多少
-	public Integer seletTExeists(String postNmae);
+	public List<Integer> seletTExeists(String postNmae);
 
 	// 分配一个TID的最大值
 	public int seletMaxTID();
@@ -65,4 +65,7 @@ public interface IPostService {
 
 	//更改岗位(热门)
 	public int updatePost(Post post);
+	// 模糊查询岗位简要信息
+	public List<Post> jobListLike(String postNamesL);
+	public Page<Post> jobListLikePage(String postNamesL);
 }

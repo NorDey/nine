@@ -72,6 +72,12 @@ public class ResumeServiceImpl implements IResumeService {
 		return resumeMapper.selectResumeById(id);
 	}
 
+
+	@Override
+	public int updateResume(ResumeDto resume) {
+		int rest = resumeMapper.updateResume(resume);
+		return rest;
+	}
 	// 公司收到的投递的简历查询
 	@Override
 	public java.util.List<ResumeHiredDto> selectResumeByErId(String registrationId) {
@@ -83,6 +89,20 @@ public class ResumeServiceImpl implements IResumeService {
 	public Page<ResumeHiredDto> selectResumeByErIdPage(String registrationId) {
 		// TODO Auto-generated method stub
 		return (Page<ResumeHiredDto>) resumeMapper.selectResumeByErId(registrationId);
+
 	}
 
+	@Override
+	public int insertResume(ResumeDto resume) {
+		int rest = resumeMapper.insertResume(resume);
+		return rest;
+	}
+
+	@Override
+	public ResumeDto queryResumeById(String studentId) {
+		ResumeDto rest = resumeMapper.queryResumeById(studentId);
+		return rest;
+	}
+
+	
 }

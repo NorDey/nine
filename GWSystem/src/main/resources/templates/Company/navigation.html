@@ -24,7 +24,7 @@
 											<li><a href="#">已通过的简历<span class="badge alert-danger">10</span></a>
 											</li>
 											<li class="divider"></li>
-											<li><a th:href="@{'/CH/'+${enterprises.registrationId}+'/1'}">简历收取</a></li>
+											<li><a th:href="@{'/CH/'+${enterprises.registrationId}+'/1'}">简历收取<span class="badge alert-danger">10</span></a></li>
 											<li class="divider"></li>
 											<li><a th:href="@{'/CRCI?registrationId='+${enterprises.registrationId}}">企业信息</a></li>
 										</ul></li>
@@ -71,7 +71,7 @@
 	<search th:fragment="CSearch">	
 		<div class="search">
 			<div class="clearfix searchWrap">
-				<img class="GWLogo" src="img/文字logo.JPG">
+				<img class="GWLogo" src="/img/文字logo.JPG">
 				<div class="search-div">
 					<form class="clearfix" name="search" method="post" action onsubmit="return false">
 						<i class="search-ico"></i>

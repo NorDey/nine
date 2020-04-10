@@ -18,9 +18,10 @@
 	</head>
 
 	<body>
-		<header th:insert="~{Company/navigation::Cheader}"></header>
+		<header th:if="${enterprises}!=null" th:insert="~{Company/navigation::Cheader}"></header>
+		<header th:if="${graduate}!=null" th:insert="~{graduate/navigation::Sheader}"></header>
+		<header th:if="${enterprises}==null and ${graduate}==null" th:insert="~{Public/navigation::header}"></header>
 		<!--search引用-->
-		<search th:insert="~{Company/navigation::CSearch}"></search>
 		<!--图标和搜索发帖按钮end-->
 		<div class="content">
 			<h1><span class="label label-default">公司介绍</span></h1>
@@ -63,8 +64,8 @@
 				[8]  2019年8月22日，2019中国民营企业500强发布，华为投资控股有限公司以7212亿营收排名第一。
 				[9]  2019年12月15日，华为获得了首批2019中国品牌强国盛典年度荣耀品牌的殊荣。
 			</textarea>
-		</div>
 			<input name="backup" id="backup" type="button" value="返回" class="btn-s Infochanges" />
+		</div>
 	</body>
 
 </html>

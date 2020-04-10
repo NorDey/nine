@@ -46,7 +46,7 @@ public interface PostMapper {
 	public int maxFid();
 	
 	// 是否存在这个TID存在这个TID是多少
-	public Integer seletTExeists(@Param(value ="postNmae")String postNmae);
+	public List<Integer> seletTExeists(@Param(value ="postNmae")String postNmae);
 	
 	// 分配一个TID的最大值
 	public int maxTid();
@@ -67,6 +67,8 @@ public interface PostMapper {
 	public void deletePopularPost();
 	//实时设置热门岗位
 	public void setUpPopularPositions();
+	//模糊查询post
+	public List<Post> jobListLike(String postNamesL);
 	
 
 }

@@ -126,6 +126,11 @@
 	<select id="jobListArrage" parameterType="String" resultMap="PostResult">
 		select * from post where postName = #{postNmae}
 	</select>
+	<!-- 根据postName模糊查询 -->
+	<select id="jobListLike" parameterType="String" resultMap="PostResult" >
+	select * from post where postName like concat('%', #{postNamesL}, '%')
+	</select>
+	
 	<insert id="insertPost"
 		parameterType="com.BYS.GWSystem.model.Post">
 		insert into Post(

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/popup.js"></script>
+<meta charset="UTF-8">
+<title>修改个人简历</title>
+
+</head>
+<body>
+	<div class="col-md-12">
+		<header th:insert="~{graduate/navigation::Sheader}"></header>
+	</div>
+
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+		<form class="clearfix" name="search" method="post" action="#"
+			th:action="@{/graduate/saveResumeInfo/}+${graduate.studentId}"
+			th:object="${resumeDto}">
+			<table class="table table-striped">
+				<tr>
+					<th>姓名：</th>
+					<th><input type="text" name="name" maxlength="20" id="name"
+						th:value="${resumeDto.name}" required/></th>
+				</tr>
+				<tr>
+					<th>联系电话：</th>
+					<th><input type="text" name="phonenumber" id="phonenumber"
+						maxlength="20" th:value="${resumeDto.phonenumber}" required/></th>
+				</tr>
+				<tr>
+					<th>生日：</th>
+					<th><input type="datetime-local"  name="sex" id="sex"
+						maxlength="20" th:value="${resumeDto.birthday}" required max="2002-12-30T00:00"/></th>
+				</tr>
+				<tr>
+					<th>籍贯：</th>
+					<th><input type="text" name="nativePlace" id="nativePlace"
+						maxlength="20" th:value="${resumeDto.nativePlace}" required/></th>
+				</tr>
+				<tr>
+					<th>地址：</th>
+					<th><input type="text" name="currentResidence" id="currentResidence"
+						maxlength="20" th:value="${resumeDto.currentResidence}" required/></th>
+				</tr>
+				<tr>
+					<th>邮箱：</th>
+					<th><input type="text" name="mailbox" id="mailbox"
+						maxlength="20" th:value="${resumeDto.mailbox}" required /></th>
+				</tr>
+				<tr>
+					<th>学历：</th>
+					<th><input type="text" name="education" id="education" maxlength="20"
+						th:value="${resumeDto.education} " required/></th>
+				</tr>
+				<tr>
+					<th>毕业院校：</th>
+					<th><input type="text" name="graduateSchool" id="graduateSchool" maxlength="20"
+						th:value="${resumeDto.graduateSchool} " required/></th>
+				</tr>
+				<tr>
+					<th>求职意向：</th>
+					<th><input type="text" name="intention" id="intention"
+						maxlength="20" th:value="${resumeDto.intention} "  required /></th>
+				</tr>
+				<tr>
+					<th>个人技能：</th>
+					<!-- <th><input type="text" name="speciality" id="speciality"
+						maxlength="20" th:value="${resumeDto.speciality}" /></th> -->
+					<th><textarea name="speciality" id="speciality"
+							th:placeholder ="${resumeDto.speciality}"
+							style="width: 400px; height: 50px; resize: none;" required ></textarea></th>
+				</tr>
+				<tr>
+					<th>历练经历：</th>
+					<!-- <th><input type="text" name="experience" id="experience"
+						maxlength="20" th:value="${resumeDto.experience}" /></th> -->
+					<th><textarea name="experience" id="experience"
+							th:placeholder ="${resumeDto.experience}"
+							style="width: 400px; height: 50px; resize: none;" required ></textarea></th>
+				</tr>
+				<tr>
+					<th>自我评价：</th>
+					<!-- <th><input type="text" name="selfEvaluation" id="selfEvaluation"
+						maxlength="20" 
+						th:value="${resumeDto.selfEvaluation}" /></th> -->
+					<th><textarea name="selfEvaluation" id="selfEvaluation"
+							th:placeholder ="${resumeDto.selfEvaluation}"
+							style="width: 400px; height: 50px; resize: none;" required ></textarea></th>
+				</tr>
+				<tr>
+					<th><input type="submit" id="sbmt" value="保存"
+						 class="btn-post" /></th>
+					<th><input type="reset" value="重置" class="btn-post" /></th>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
+	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
+
+</body>
+</html>
