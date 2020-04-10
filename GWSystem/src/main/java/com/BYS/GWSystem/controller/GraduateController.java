@@ -537,7 +537,7 @@ public class GraduateController {
 		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息// 传入公司信息
 		model.addAttribute("graduate", graduate);
 		/*---------------------------------------------------------*/
-		this.postId=postId;
+		this.postId = postId;
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);// 招聘的详情
 		Post postMsg = iPostService.selectOneHiredMsg(postId);
 		Enterprise enterprisesInfo = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
@@ -649,21 +649,17 @@ public class GraduateController {
 		graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
 		model.addAttribute("graduate", graduate);
 		// 查询当前用户投递的所有简历，并获取postId
-		List<StudentHistory> allCV = iGraduateService.selectAllCV(studentId);
-		List<PostDto> posts = new ArrayList<PostDto>();
-		if (allCV.size() != 0) {
-			for (StudentHistory cv : allCV) {
-				// 查询岗位信息
-				PostDto post = iPostService.selectPostListById(cv.getPostId());// 获取postId,cv.getPostId()
-				// 借用字段popular来暂存collection,简历投递结果，
-				// 1表示被打回去,2表示录用,3表示备选
-				post.setPopular(Integer.parseInt(cv.getCollection()));
-				posts.add(post);
-			}
-		}
+		/*
+		 * List<StudentHistory> allCV = iGraduateService.selectAllCV(studentId);
+		 * List<PostDto> posts = new ArrayList<PostDto>(); if (allCV.size() != 0) { for
+		 * (StudentHistory cv : allCV) { // 查询岗位信息 PostDto post =
+		 * iPostService.selectPostListById(cv.getPostId());// 获取postId,cv.getPostId() //
+		 * 借用字段popular来暂存collection,简历投递结果， // 1表示被打回去,2表示录用,3表示备选
+		 * post.setPopular(Integer.parseInt(cv.getCollection())); posts.add(post); } }
+		 */
 		int page = 1;
 		PageHelper.startPage(page, 8);
-		PageInfo<PostDto> psotSimpleList = new PageInfo<>(posts);// 将原list转为page类型
+		PageInfo<PostDto> psotSimpleList = new PageInfo<PostDto>(iPostService.selectPostListByStudentId(studentId));// 将原list转为page类型
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("listPages", listPages);
 		model.addAttribute("traversingList", psotSimpleList);
@@ -676,20 +672,18 @@ public class GraduateController {
 	public String deliveryRecords(Model model, @PathVariable(name = "page") int page) {
 		model.addAttribute("graduate", graduate);
 		// 查询当前用户投递的所有简历，并获取postId
-		List<StudentHistory> allCV = iGraduateService.selectAllCV(graduate.getStudentId());
-		List<PostDto> posts = new ArrayList<PostDto>();
-		if (allCV.size() != 0) {
-			for (StudentHistory cv : allCV) {
-				// 查询岗位信息
-				PostDto post = iPostService.selectPostListById(cv.getPostId());// 获取postId,cv.getPostId()
-				// 借用字段popular来暂存collection,简历投递结果，
-				// 1表示被打回去,2表示录用,3表示备选
-				post.setPopular(Integer.parseInt(cv.getCollection()));
-				posts.add(post);
-			}
-		}
+		/*
+		 * List<StudentHistory> allCV =
+		 * iGraduateService.selectAllCV(graduate.getStudentId()); List<PostDto> posts =
+		 * new ArrayList<PostDto>(); if (allCV.size() != 0) { for (StudentHistory cv :
+		 * allCV) { // 查询岗位信息 PostDto post =
+		 * iPostService.selectPostListById(cv.getPostId());// 获取postId,cv.getPostId() //
+		 * 借用字段popular来暂存collection,简历投递结果， // 1表示被打回去,2表示录用,3表示备选
+		 * post.setPopular(Integer.parseInt(cv.getCollection())); posts.add(post); } }
+		 */
 		PageHelper.startPage(page, 8);
-		PageInfo<PostDto> psotSimpleList = new PageInfo<>(posts);// 将原list转为page类型
+		PageInfo<PostDto> psotSimpleList = new PageInfo<PostDto>(
+				iPostService.selectPostListByStudentId(graduate.getStudentId()));// 将原list转为page类型
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("listPages", listPages);
 		model.addAttribute("traversingList", psotSimpleList);
