@@ -118,4 +118,10 @@ public class GraduateServiceImpl implements IGraduateService {
 		return rest;
 	}
 
+	@Override
+	public List<StudentHistory> selectAllCV(String studentId) {
+		List<StudentHistory> list = graduateMapper.selectAllCV(studentId);
+		return list;
+	}
+
 }
