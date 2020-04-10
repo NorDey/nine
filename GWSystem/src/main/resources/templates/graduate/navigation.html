@@ -81,7 +81,8 @@
 		<div
 			style="width: 78%; height: 100px; margin: auto; text-align: center; padding-top: 30px;">
 			<ul class="nav nav-pills">
-				<li class="active"><a th:href="@{'/graduate/searchJobs?studentId='+${graduate.studentId}}">搜索岗位</a></li>
+				<!-- <li class="active"><a th:href="@{'/graduate/searchJobs?studentId='+${graduate.studentId}}">搜索岗位</a></li> -->
+				<li class="active"><a th:href="@{'/graduate/searchJobs/'+${graduate.studentId}+'/1'}">搜索岗位</a></li>
 				<li><a th:href="@{'/graduate/searchGraduateInfo?studentId='+${graduate.studentId}}">搜索毕业生信息</a></li>
 				<li><a th:href="@{'/graduate/resume?studentId='+${graduate.studentId}}">个人简历</a></li>
 			</ul>

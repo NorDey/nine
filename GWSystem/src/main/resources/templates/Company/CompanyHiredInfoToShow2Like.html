@@ -39,7 +39,7 @@
 					<input data-role="btn" name="search" id="search_button" type="submit" value="搜 索" class="btn-s" />
 				</form>
 				
-				<form th:if="${graduate}!=null" class="clearfix" name="search" method="post" action="#" th:action="@{'/CHISEntLogLikeSearch/'+${enterprises.registrationId}+'/1'}">
+				<form th:if="${graduate}!=null" class="clearfix" name="search" method="post" action="#" th:action="@{'/graduate/entLogLikeSearchs/'+${graduate.studentId}+'/1'}">
 					<i class="search-ico"></i>
 					<input name="search_keyword" type="text" class="txt-search" id="search_keyword" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="搜索岗位" />
 					<!--x-webkit-speech x-webkit-grammar语音输入支持-->
@@ -59,7 +59,7 @@
 							<a th:if="${enterprises}==null and ${graduate}==null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHIS/'+${postnames}+'/1'}">Java</a>
 							<a th:if="${enterprises}!=null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHISEntLog/'+${postnames}+'/1'+'/'+${enterprises.registrationId}}">Java</a>
 							
-							<a th:if="${graduate}!=null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/CHIS/'+${postnames}+'/1'}">Java</a>
+							<a th:if="${graduate}!=null" role="menuitem" tabindex="-1" th:text="${postnames}" th:href="@{'/graduate/entLog/'+${postnames}+'/1'+'/'+${graduate.studentId}}">Java</a>
 						</li>
 					</ul>
 				</div>
@@ -71,11 +71,11 @@
 		<br>
 				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHISLikeSearchPageN/'+${page-1}+'/'+${postNamesL}}"><input type="button" value="上一页" class="btn-s" /></a>
 				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLogLikeSearchPageN/'+${enterprises.registrationId}+'/'+${page-1}+'/'+${postNamesL}}"><input type="button" value="上一页" class="btn-s" /></a>
-				<a th:if="${graduate}!=null" th:href="@{'/CHIS/'+${page-1}}"><input type="button" value="上一页" class="btn-s" /></a>
+				<a th:if="${graduate}!=null" th:href="@{'/graduate/entLogLikeSearchPageN/'+${graduate.studentId}+'/'+${page-1}+'/'+${postNamesL}}"><input type="button" value="上一页" class="btn-s" /></a>
 				<input type="button" disabled="disabled" th:value="${pages}" class="btn-s">
 				<a th:if="${enterprises}==null and ${graduate}==null" th:href="@{'/CHISLikeSearchPageN/'+${page+1}+'/'+${postNamesL}}"><input type="button" value="下一页" class="btn-s" /></a>
 				<a th:if="${enterprises}!=null" th:href="@{'/CHISEntLogLikeSearchPageN/'+${enterprises.registrationId}+'/'+${page+1}}+'/'+${postNamesL}"><input type="button" value="下一页" class="btn-s" /></a>
-				<a th:if="${graduate}!=null" th:href="@{'/CHIS/'+${page+1}}"><input type="button" value="下一页" class="btn-s" /></a>
+				<a th:if="${graduate}!=null" th:href="@{'/graduate/entLogLikeSearchPageN/'+${graduate.studentId}+'/'+${page+1}}+'/'+${postNamesL}"><input type="button" value="下一页" class="btn-s" /></a>
 				
 				<!-- ---------页面跳转------------ -->
 				<form th:if="${enterprises}==null and ${graduate}==null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHISLikeSearchPageTurns/'+${postNamesL}}"  >
@@ -86,7 +86,7 @@
 				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
 				<input type="submit" value="跳转" class="btn-s" />
 				</form>
-				<form th:if="${graduate}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/CHISEntLogPage/'+${enterprises.registrationId}}" >
+				<form th:if="${graduate}!=null" class="clearfix" name="pagestoTurn" method="post" action="#" th:action="@{'/graduate/entLogLikeSearchPageTurns/'+${graduate.studentId}+'/'+${postNamesL}}" >
 				<input type="text" placeholder="输入跳转页码" class="btn-s" name="pagesTurn" />
 				<input type="submit" value="跳转" class="btn-s" />
 				</form>
@@ -106,7 +106,7 @@
 				</div>
 				<a th:if="${enterprises}==null and ${graduate}==null" name="quality" id="quality" th:href="@{'/CHIQ/'+${psotSimpleList.postId}}">查看详情</a>
 				<a th:if="${enterprises}!=null" name="quality" id="quality" th:href="@{'/CHISEntLogQuality/'+${psotSimpleList.postId}+'/'+${enterprises.registrationId}}">查看详情</a>
-				<a th:if="${graduate}!=null" name="quality" id="quality" th:href="@{'/CHIQ/'+${psotSimpleList.postId}}">查看详情</a>
+				<a th:if="${graduate}!=null" name="quality" id="quality" th:href="@{'/graduate/entLogQuality/'+${psotSimpleList.postId}+'/'+${graduate.studentId}}">查看详情</a>
 			</div>
 			<hr>
 			</div>
