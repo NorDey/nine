@@ -166,9 +166,13 @@ public class GraduateController {
 		String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\headportrait";
 		// 获得上传的图片名字
 		String name = file.getOriginalFilename();
+		String suffix = name.substring(name.lastIndexOf("."), name.length());// 文件后缀名
 		// 如果未选择文件，则赋值为初始头像
 		if (name.equals("")) {
 			name = "cs.jpg";
+		} else {
+			long resumeId = new Random().nextInt(100000000) % (100000000 - 1000000 + 1) + 1000000;
+			name = resumeId + suffix;
 		}
 		// 添加新的头像的文件名
 		graduate.setAvatarPath(name);
@@ -390,6 +394,7 @@ public class GraduateController {
 		Graduate graduates = iGraduateService.queryStudentById(studentId);// 查询学生信息
 		model.addAttribute("graduate", graduates);
 		ResumeDto dto = iResumeService.queryResumeById(studentId);
+		// 前端界面借用sex字段回传birthday时间，因为LocalDateTime类型直接接受String类型报错
 		String sex = resumeDto.getSex();
 		sex = sex.replace("T", " ");
 		/* sex = sex.substring(0, 13); */
@@ -402,10 +407,9 @@ public class GraduateController {
 			// 修改学生简历
 			int i = iResumeService.updateResume(resumeDto);
 		} else {
-			// 新增学生简历
-			long second = (long) LocalDateTime.now().getSecond();
-			second = new Random().nextInt(10000) % (10000 - 1000 + 1) + 1000 + second;
-			resumeDto.setResumeId(second);
+			// 新增学生简历,简历Id为8位数随机数
+			long resumeId = new Random().nextInt(100000000) % (100000000 - 1000000 + 1) + 1000000;
+			resumeDto.setResumeId(resumeId);
 			int i = iResumeService.insertResume(resumeDto);
 		}
 
