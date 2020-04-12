@@ -9,6 +9,9 @@ import com.github.pagehelper.Page;
 
 public interface IGraduateService {
 
+	// 查询学生投递的所有简历
+	public List<StudentHistory> selectAllCV(String studentId);
+
 	// 投递简历
 	public int sendCV(String studentId, String postId);
 
