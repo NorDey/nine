@@ -540,6 +540,7 @@ public class HomeController {
 		return "admin/Post";
 	}
 
+	//热门修改
 	@GetMapping("/setUpPopular/{popular}/{postId}/{address}")
 	public ModelAndView setUpPopular(@PathVariable(name = "popular") int popular,
 			@PathVariable(name = "postId") String postId,
@@ -552,4 +553,40 @@ public class HomeController {
 		modelAndView.setViewName("redirect:/admin/"+address+"/1");
 		return modelAndView;
 	}
+	
+	//密码修改
+	@GetMapping("/changePassword")
+	public String changePassword() {
+		return "admin/ChangePassword";
+	}
+	
+	
+	//密码修改
+		@PostMapping("/changePassword")
+		public String changePassword(@RequestParam(value = "exampleInputPassword", required = false) String Password,
+				@RequestParam(value = "exampleInputPassword1", required = false) String Password1,
+				@RequestParam(value = "exampleInputPassword2", required = false) String Password2,
+			HttpSession session,Model model) {
+			
+			if(Password1 == null || Password1.length() <= 0) {
+				model.addAttribute("error", "密码为空,请输入密码");
+				return "admin/ChangePassword";
+			}
+			//获取当前登录用户
+			Admin admin=(Admin) session.getAttribute("adminUser");
+			if (Password1.equals(Password2)||Password1==Password2) {
+				if (admin.getPassword().equals(Password)||admin.getPassword()==(Password)) {
+					admin.setPassword(Password1);
+					iAdminService.updateAdmin(admin);
+					session.removeAttribute("adminUser");
+				}else {
+					model.addAttribute("error", "原密码错误");
+					return "admin/ChangePassword";
+				}
+			}else {
+				model.addAttribute("error", "两次输入密码不一");
+				return "admin/ChangePassword";
+			}		
+			return "redirect:/admin/switchLog";
+		}
 }
