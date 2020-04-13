@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="/css/new_file.css" />
+<link rel="stylesheet" type="text/css" href="/css/CM.css" />
+<link rel="stylesheet"
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/popup.js"></script>
+<meta charset="UTF-8">
+<title>个人简历</title>
+
+</head>
+<body>
+	<div class="col-md-12" >
+		<!-- <header th:insert="~{graduate/navigation::Sheader}" th:if="${graduate}!=null"></header> -->
+		<header th:insert="~{Company/navigation::Cheader}" ></header>
+		<!--search引用-->
+		<!-- <search th:insert="~{Company/navigation::CSearch}" th:if="${enterprise}!=null"></search> -->
+	</div>
+	
+	<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12"></div>
+	<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="row">
+					<p class="col-sm-1"></p>
+					<p class="UnderlineSolid col-sm-10"></p>
+					<p class="col-sm-1"></p>
+				</div>
+				<div class="row">
+					<div class="col-sm-2">
+						<p class="form-control-static">
+							<img th:src="@{/headportrait/}+${resumeDto.avatarPath}"
+								class="media-object img-thumbnail img-wh">
+						</p>
+					</div>
+					<div class="col-sm-10">
+						<div class="row">
+							<label class="col-sm-1 control-label text-danger">姓名:</label>
+							<div class="col-sm-2">
+								<p class="form-control-static" th:text="${resumeDto.name}">周元帅</p>
+							</div>
+							<label class="col-sm-2 control-label text-danger">性别:</label>
+							<div class="col-sm-3">
+								<p class="form-control-static">
+									<span th:if="${resumeDto.sex}eq'1'">男</span> <span
+										th:if="${resumeDto.sex}eq'0'">女</span>
+								</p>
+							</div>
+							<label class="col-sm-1 control-label text-danger">年龄:</label>
+							<div class="col-sm-2">
+								<p class="form-control-static">
+									<span th:if="${resumeDto.age}" th:text="${resumeDto.age}+'岁'">男</span>
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-1 control-label text-danger">电话:</label>
+							<div class="col-sm-2">
+								<p class="form-control-static"
+									th:text="${resumeDto.phonenumber}">13545698832</p>
+							</div>
+							<label class="col-sm-2 control-label text-danger">邮箱:</label>
+							<div class="col-sm-3">
+								<p class="form-control-static" th:text="${resumeDto.mailbox}">1393424504@qq.com</p>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-1 control-label text-danger">籍贯:</label>
+							<div class="col-sm-2">
+								<p class="form-control-static"
+									th:text="${resumeDto.nativePlace}">湖北荆州</p>
+							</div>
+							<label class="col-sm-2 control-label text-danger">地址:</label>
+							<div class="col-sm-3">
+								<p class="form-control-static"
+									th:text="${resumeDto.currentResidence}">湖北省荆州市松滋市陈店镇</p>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<p class="col-sm-1"></p>
+					<p class="UnderlineDotted col-sm-10"></p>
+					<p class="col-sm-1"></p>
+				</div>
+				<div class="row">
+					<label class="col-sm-2 control-label text-danger">毕业学校:</label>
+					<div class="col-sm-3">
+						<p class="form-control-static"
+							th:text="${resumeDto.graduateSchool}">湖北工业大学工程技术学院</p>
+					</div>
+					<label class="col-sm-1 control-label text-danger">学历:</label>
+					<div class="col-sm-2">
+						<p class="form-control-static" th:text="${resumeDto.education}">本科</p>
+					</div>
+					<label class="col-sm-1 control-label text-danger">学号:</label>
+					<div class="col-sm-3">
+						<p class="form-control-static" th:text="${resumeDto.studentId}">201610272113</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<p class="col-sm-1"></p>
+					<p class="UnderlineDotted col-sm-10"></p>
+					<p class="col-sm-1"></p>
+				</div>
+
+				<div class="row">
+					<label class="col-sm-2 control-label text-danger">求职意向:</label>
+					<div class="col-sm-3">
+						<p class="form-control-static" th:text="${resumeDto.intention}">
+							java开发工程师</p>
+					</div>
+				</div>
+				<div class="row">
+					<p class="col-sm-1"></p>
+					<p class="UnderlineDotted col-sm-10"></p>
+					<p class="col-sm-1"></p>
+				</div>
+
+				<div class="row">
+					<label class="col-sm-2 control-label text-danger">个人技能:</label>
+					<div class="col-sm-10">
+						<p class="form-control-static" th:text="${resumeDto.speciality}">java,mysql,oracle,ssm,等</p>
+					</div>
+				</div>
+				<div class="row">
+					<p class="col-sm-1"></p>
+					<p class="UnderlineDotted col-sm-10"></p>
+					<p class="col-sm-1"></p>
+				</div>
+
+				<div class="row">
+					<label class="col-sm-2 control-label text-danger">历练经历</label>
+					<div class="col-sm-10">
+						<p class="form-control-static" th:text="${resumeDto.experience}">巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴
+							拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉 巴拉巴拉巴拉巴拉巴拉巴拉 巴拉巴拉巴拉巴拉巴拉巴拉 巴拉巴拉巴拉巴拉巴拉巴拉</p>
+					</div>
+				</div>
+				<div class="row">
+					<p class="col-sm-1"></p>
+					<p class="UnderlineDotted col-sm-10"></p>
+					<p class="col-sm-1"></p>
+				</div>
+				<div class="row">
+					<label class="col-sm-2 control-label text-danger">自我评价</label>
+					<div class="col-sm-10">
+						<p class="form-control-static"
+							th:text="${resumeDto.selfEvaluation}">无敌是多么寂寞</p>
+					</div>
+				</div>
+			</div>
+		</form>
+		<ul class="nav nav-pills" th:if="${graduate}!=null">
+		</ul>
+	</div>
+
+
+	<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12"></div>
+
+</body>
+</html>

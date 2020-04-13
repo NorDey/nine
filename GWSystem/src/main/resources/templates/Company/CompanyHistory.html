@@ -39,7 +39,7 @@
 				<tbody th:each="resumes :${resumeHird.list}">
 				
 					<tr th:if="${resumes.collection}==1"  class="danger">
-						<td><a th:href="@{'/graduate/resume?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
 						<td th:text="${resumes.birthday}"></td>
 						<td th:text="${resumes.phonenumber}">12345678901234</td>
 						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>
@@ -50,7 +50,7 @@
 						<td><a th:href="@{'/CH/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/4'}"><input type="button" value="取消撤回" class="btn-ss" /></a></td>
 					</tr>
 					<tr th:if="${resumes.collection}==4" class="warning">
-						<td><a th:href="@{'/graduate/resume?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
 						<td th:text="${resumes.birthday}"></td>
 						<td th:text="${resumes.phonenumber}">12345678901234</td>
 						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>

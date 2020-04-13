@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.BYS.GWSystem.dto.CompanyHiredInfoDto;
+import com.BYS.GWSystem.dto.ResumeDto;
 import com.BYS.GWSystem.dto.ResumeHiredDto;
 import com.BYS.GWSystem.dto.TypeWorkUJobs;
 import com.BYS.GWSystem.model.Admin;
@@ -22,10 +23,12 @@ import com.BYS.GWSystem.model.Graduate;
 import com.BYS.GWSystem.model.Post;
 import com.BYS.GWSystem.model.TypeWork;
 import com.BYS.GWSystem.service.IEnterpriseService;
+import com.BYS.GWSystem.service.IGraduateService;
 import com.BYS.GWSystem.service.IJobsUTypeWorkUPsotService;
 import com.BYS.GWSystem.service.IPostService;
 import com.BYS.GWSystem.service.IResumeService;
 import com.BYS.GWSystem.service.ITypeWorkService;
+import com.BYS.GWSystem.utils.GetPetAgeUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -42,6 +45,9 @@ public class CompanyMainCtroller {
 	private ITypeWorkService itypeWork;
 	@Autowired
 	private IResumeService iresume;
+	@Autowired
+	private IGraduateService iGraduateService;
+
 
 	@GetMapping("/CC/{registrationId}/{page}") // 公司收藏--公司的简历收录
 	public String CC(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
@@ -527,5 +533,25 @@ public class CompanyMainCtroller {
 		model.addAttribute("enterprises", enterpriseInfo);
 		return "Company/CompanyInfo";
 	}
+	
+	// 查询个人简历
+		@GetMapping("/CTVR/{registrationId}")
+		public String resume(@PathVariable(name = "registrationId") String registrationId,Model model, HttpServletRequest request) {
+			Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+			model.addAttribute("ResumeCount", iresume.ResumeCount(enterpriseInfo.getRegistrationId()));// Cheader头部的信息刷新
+			model.addAttribute("ResumePassCount", iresume.ResumePassCount(enterpriseInfo.getRegistrationId()));// Cheader头部的信息刷新
+			model.addAttribute("enterprises", enterpriseInfo);
+			
+			String studentId = request.getParameter("studentId");// 获取学生的学号
+			Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+			model.addAttribute("graduate", graduate);
+			ResumeDto resumeDto = iresume.selectResumeById(Long.parseLong(studentId));
+				if (resumeDto.getBirthday() != null) {
+					resumeDto.setAge(GetPetAgeUtils.getAgeByBirth(resumeDto.getBirthday()));// 生日转年龄
+				}
+			model.addAttribute("resumeDto", resumeDto);
+			return "Company/CompanyToVrifResume";
+		}
+
 
 }

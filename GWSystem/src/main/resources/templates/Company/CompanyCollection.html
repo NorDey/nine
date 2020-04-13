@@ -39,7 +39,7 @@
 				<tbody th:each="resumes :${resumeHird.list}">
 				
 					<tr th:if="${resumes.collection}==3"  class="default">
-						<td><a th:href="@{'/graduate/resume?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
 						<td th:text="${resumes.birthday}"></td>
 						<td th:text="${resumes.phonenumber}">12345678901234</td>
 						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>
@@ -50,7 +50,7 @@
 						<td><a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/2'}"><input type="button" value="简历录用" class="btn-ss" /></a></td>
 					</tr>
 					<tr th:if="${resumes.collection}==2" class="success">
-						<td><a th:href="@{'/graduate/resume?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
 						<td th:text="${resumes.birthday}"></td>
 						<td th:text="${resumes.phonenumber}">12345678901234</td>
 						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>
