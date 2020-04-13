@@ -19,7 +19,7 @@ public interface ResumeMapper {
 
 	// 添加
 	public int insertResume(ResumeDto resume);
-	
+
 	// 查询简历是否存在
 	public ResumeDto queryResumeById(String studentId);
 
@@ -41,10 +41,17 @@ public interface ResumeMapper {
 	// 根据id查询简历详情
 	public ResumeDto selectResumeById(Long id);
 
-	//公司收到的投递的简历查询
-	public List<ResumeHiredDto> selectResumeByErId(@Param(value = "registrationId")String registrationId);
+	// 公司收到的投递的简历查询
+	public List<ResumeHiredDto> selectResumeByErId(@Param(value = "registrationId") String registrationId);
 
-	
+	// 通过前两个ID确认是哪个简历并更新该简历(1被打回去2录用3表示备选4投递)
+	public int updateHiredCollectionMsg(@Param(value = "studentId") String studentId,
+			@Param(value = "postId") String postId, @Param(value = "updateCode") int updateCode);
 
+	// 计算投递的简历数量，collection=4
+	public Integer ResumeCount(@Param(value = "registrationId") String registrationId);
+
+	// 计算通过的简历数量，collection=3
+	public Integer ResumePassCount(@Param(value = "registrationId") String registrationId);
 
 }

@@ -103,6 +103,24 @@ public class ResumeServiceImpl implements IResumeService {
 		ResumeDto rest = resumeMapper.queryResumeById(studentId);
 		return rest;
 	}
+	//通过前两个ID确认是哪个简历并更新该简历(1被打回去2录用3表示备选4投递)
+	@Override
+	public int updateHiredCollectionMsg(String studentId, String postId, int updateCode) {
+		// TODO Auto-generated method stub
+		return resumeMapper.updateHiredCollectionMsg(studentId,postId,updateCode);
+	}
+	//计算投递的简历数量，collection=4
+	@Override
+	public Integer ResumeCount(String registrationId) {
+		// TODO Auto-generated method stub
+		return resumeMapper.ResumeCount(registrationId);
+	}
+
+	@Override
+	public Integer ResumePassCount(String registrationId) {
+		// TODO Auto-generated method stub
+		return resumeMapper.ResumePassCount(registrationId);
+	}
 
 	
 }

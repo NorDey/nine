@@ -35,4 +35,13 @@ public interface IResumeService {
 
 	// 查询简历是否存在
 	public ResumeDto queryResumeById(String studentId);
+
+	// 通过前两个ID确认是哪个简历并更新该简历(1被打回去2录用3表示备选4投递)
+	public int updateHiredCollectionMsg(String studentId, String postId, int updateCode);
+
+	// 计算投递的简历数量，collection=4
+	public Integer ResumeCount(String registrationId);
+
+	// 计算通过的简历数量，collection=3
+	public Integer ResumePassCount(String registrationId);
 }

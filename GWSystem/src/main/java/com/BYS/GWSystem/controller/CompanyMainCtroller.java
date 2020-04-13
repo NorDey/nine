@@ -43,32 +43,87 @@ public class CompanyMainCtroller {
 	@Autowired
 	private IResumeService iresume;
 
-	@GetMapping("/CC") // 公司收藏--公司的简历收录
-	public String CC(Model model) {
-		return "Company/CompanyCollection";
-	}
-
-	@GetMapping("/CH/{registrationId}/{page}") // 公司浏览简历的历史记录--改为简历投递的接收
-	public String CH(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
+	@GetMapping("/CC/{registrationId}/{page}") // 公司收藏--公司的简历收录
+	public String CC(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		if (page <= 0)
 			page = 1;
-		PageHelper.startPage(page, 3); // 第几页，每页几条
+		PageHelper.startPage(page, 5); // 第几页，每页几条
 		PageInfo<ResumeHiredDto> resumeHird = new PageInfo<>(iresume.selectResumeByErId(registrationId));// 将原list转为page类型
 		if (page >= resumeHird.getLastPage())
 			page = resumeHird.getLastPage();
-		PageHelper.startPage(page, 10);
-		
+		model.addAttribute("pages", page);
+		model.addAttribute("resumeHird", resumeHird);
+		System.out.println("-----------------"+resumeHird.toString());
+		return "Company/CompanyCollection";
+	}
+	
+	@GetMapping("/CC/{registrationId}/{page}/{studentId}/{postId}/{updateCode}") // 公司收藏--公司的简历收录(修改录用状态)
+	public String CCupdate(@PathVariable(name = "updateCode") int updateCode,@PathVariable(name = "postId") String postId,@PathVariable(name = "studentId") String studentId,@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+		if (page <= 0)
+			page = 1;
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<ResumeHiredDto> resumeHird = new PageInfo<>(iresume.selectResumeByErId(registrationId));// 将原list转为page类型
+		iresume.updateHiredCollectionMsg(studentId,postId,updateCode);//通过前两个ID确认是哪个简历并更新该简历(1被打回去2录用3表示备选4投递)
+		if (page >= resumeHird.getLastPage())
+			page = resumeHird.getLastPage();
+		model.addAttribute("pages", page);
+		model.addAttribute("resumeHird", resumeHird);
+		System.out.println("-----------------"+resumeHird.toString());
+		return "Company/CompanyCollection";
+	}
+	
+	@GetMapping("/CH/{registrationId}/{page}") // 公司浏览简历的历史记录--改为简历投递的接收
+	public String CH(@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+		if (page <= 0)
+			page = 1;
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<ResumeHiredDto> resumeHird = new PageInfo<>(iresume.selectResumeByErId(registrationId));// 将原list转为page类型
+		if (page >= resumeHird.getLastPage())
+			page = resumeHird.getLastPage();
+		model.addAttribute("pages", page);
 		model.addAttribute("resumeHird", resumeHird);
 		System.out.println("-----------------"+resumeHird.toString());
 		return "Company/CompanyHistory";
 	}
+	
+	@GetMapping("/CH/{registrationId}/{page}/{studentId}/{postId}/{updateCode}") // 公司浏览简历的历史记录--改为简历投递的接收(修改录用状态)
+	public String CHupdate(@PathVariable(name = "updateCode") int updateCode,@PathVariable(name = "postId") String postId,@PathVariable(name = "studentId") String studentId,@PathVariable(name = "page") int page,@PathVariable(name = "registrationId") String registrationId,Model model) {
+		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
+		if (page <= 0)
+			page = 1;
+		PageHelper.startPage(page, 5); // 第几页，每页几条
+		PageInfo<ResumeHiredDto> resumeHird = new PageInfo<>(iresume.selectResumeByErId(registrationId));// 将原list转为page类型
+		iresume.updateHiredCollectionMsg(studentId,postId,updateCode);//通过前两个ID确认是哪个简历并更新该简历(1被打回去2录用3表示备选4投递)
+		if (page >= resumeHird.getLastPage())
+			page = resumeHird.getLastPage();
+		model.addAttribute("pages", page);
+		model.addAttribute("resumeHird", resumeHird);
+		System.out.println("-----------------"+resumeHird.toString());
+		return "Company/CompanyHistory";
+	}
+	
 
 	@GetMapping("/CHIC/{postId}/{registrationId}") // 公司修改招聘信息
 	public String CHIC(@PathVariable(name = "registrationId") String registrationId,
 			@PathVariable(name = "postId") String postId, Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);
 		model.addAttribute("JobsInfo", JobsInfo);// 传入正在修改的岗位信息
@@ -80,6 +135,8 @@ public class CompanyMainCtroller {
 			@PathVariable(name = "registrationId") String registrationId, @PathVariable(name = "postId") String postId,
 			Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		greeting.setPostId(postId);
 		greeting.setRegistrationId(registrationId);
@@ -100,6 +157,8 @@ public class CompanyMainCtroller {
 	@GetMapping("/CNH/{registrationId}") // 公司新建招聘信息
 	public String CNH(@PathVariable(name = "registrationId") String registrationId, Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		model.addAttribute("JobsInfo", new CompanyHiredInfoDto());
 		model.addAttribute("waringMSG", "务必确认无误！");
@@ -110,6 +169,8 @@ public class CompanyMainCtroller {
 	public String CNHinsert(@ModelAttribute CompanyHiredInfoDto greeting,
 			@PathVariable(name = "registrationId") String registrationId, Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		model.addAttribute("JobsInfo", greeting);
 		greeting.setFatherTypeId(iPostService.toGetFid(greeting.getProfession()));// 系统安排一个fatherTypeID，父类ID
@@ -136,6 +197,8 @@ public class CompanyMainCtroller {
 			@PathVariable(name = "registrationId") String registrationId, @PathVariable(name = "postId") String postId,
 			Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		if (page <= 0)
 			page = 1;
@@ -157,6 +220,8 @@ public class CompanyMainCtroller {
 	@GetMapping("/CHISEntLogQuality/{postId}/{registrationId}") // 公司招聘的详情（公司未登录看）
 	public String CHISEntLogQuality(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postId") String postId, Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		/*---------------------------------------------------------*/
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);// 招聘的详情
@@ -170,6 +235,8 @@ public class CompanyMainCtroller {
 	@GetMapping("/CHISEntLog/{registrationId}/{page}") // 公司招聘信息简要列表（公司登录后看）
 	public String CHISEntLog(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "page") int page, Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		if (page <= 0)
 			page = 1;
@@ -187,6 +254,8 @@ public class CompanyMainCtroller {
 	@GetMapping("/CHISEntLog/{postnames}/{page}/{registrationId}") // 公司招聘信息简要列表（公司登录看）按照岗位分类后
 	public String CHISEntLogBypostnames(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postnames") String postName,@PathVariable(name = "page") int page, Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		/*---------------------------------------------------------*/
 		if (page <= 0)
@@ -208,6 +277,8 @@ public class CompanyMainCtroller {
 		@PostMapping("/CHISEntLogPage/{registrationId}") // 公司招聘信息简要列表（公司登录后看）
 		public String CHISEntLogPageTurn(@PathVariable(name = "registrationId") String registrationId,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
 			Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+			model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+			model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 			model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
@@ -231,6 +302,8 @@ public class CompanyMainCtroller {
 				@PostMapping("/CHISEntLogPageTurnArrage/{postnames}/{registrationId}") // 公司招聘信息简要列表（公司登录看）分类后
 				public String CHISEntLogPageTurnArrage(@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "postnames") String postName,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
 					Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+					model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+					model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
@@ -253,6 +326,8 @@ public class CompanyMainCtroller {
 				@PostMapping("/CHISEntLogLikeSearch/{registrationId}/{page}") // 公司招聘信息简要列表！模糊查询！（公司登录后看）
 				public String CHISEntLogLikeSearchs(@RequestParam(value = "search_keyword") String postNamesL,@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "page") Integer pagesTurn, Model model) {
 					Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+					model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+					model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
@@ -275,6 +350,8 @@ public class CompanyMainCtroller {
 				@GetMapping("/CHISEntLogLikeSearchPageN/{registrationId}/{page}/{postNamesL}") // 公司招聘信息简要列表！模糊查询！（公司登录后看）再分页
 				public String CHISEntLogLikeSearchPageN(@PathVariable(name = "postNamesL") String postNamesL,@PathVariable(name = "registrationId") String registrationId,@PathVariable(name = "page") Integer pagesTurn, Model model) {
 					Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+					model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+					model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
@@ -297,6 +374,8 @@ public class CompanyMainCtroller {
 				@PostMapping("/CHISEntLogLikeSearchPageTurns/{registrationId}/{postNamesL}") // 公司招聘信息简要列表！模糊查询！（公司登录后看）再分页再分页Post跳转
 				public String CHISEntLogLikeSearchPageTurns(@PathVariable(name = "postNamesL") String postNamesL,@PathVariable(name = "registrationId") String registrationId,@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
 					Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+					model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+					model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
@@ -359,6 +438,8 @@ public class CompanyMainCtroller {
 		}
 		if (enterpriseInfo.getPassword().equals(greeting.getPassword())) {
 			model.addAttribute("enterprises", enterpriseInfo);
+			model.addAttribute("ResumeCount", iresume.ResumeCount(enterpriseInfo.getRegistrationId()));// Cheader头部的信息刷新
+			model.addAttribute("ResumePassCount", iresume.ResumePassCount(enterpriseInfo.getRegistrationId()));// Cheader头部的信息刷新
 			return "Company/CompanyInfo";// 提交表单后跳转的页面
 		}
 		model.addAttribute("wrongCodePWD", "密码错误");
@@ -379,6 +460,8 @@ public class CompanyMainCtroller {
 	public String CM(@PathVariable(name = "registrationId") String registrationId,
 			@PathVariable(name = "page") int page, Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		if (page <= 0)
 			page = 1;
@@ -402,6 +485,8 @@ public class CompanyMainCtroller {
 			page = pagesTurn;
 		System.out.println("=======================" + pagesTurn);
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 		if (page <= 0)
 			page = 1;
@@ -426,6 +511,8 @@ public class CompanyMainCtroller {
 	public String CRCIs(Model model, HttpServletRequest request) {
 		String registrationId = request.getParameter("registrationId");// 获取公司的注册ID
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
+		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(registrationId));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);
 		return "Company/CompanyRebuildCompanyInfo";
 	}
@@ -435,6 +522,8 @@ public class CompanyMainCtroller {
 		//System.out.println(greeting.toString());
 		System.out.println(iEnterpriseService.updateCInfo(greeting));
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(greeting.getRegistrationId());
+		model.addAttribute("ResumeCount", iresume.ResumeCount(enterpriseInfo.getRegistrationId()));// Cheader头部的信息刷新
+		model.addAttribute("ResumePassCount", iresume.ResumePassCount(enterpriseInfo.getRegistrationId()));// Cheader头部的信息刷新
 		model.addAttribute("enterprises", enterpriseInfo);
 		return "Company/CompanyInfo";
 	}

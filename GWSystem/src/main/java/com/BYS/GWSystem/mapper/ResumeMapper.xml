@@ -40,6 +40,7 @@
 			<result column="student_id" property="studentId" />
 			<result column="time" property="time" />
 			<result column="collection" property="collection" />
+			<result column="post_id" property="postId" />
 	</resultMap>
 
 	<!-- 通用查询结果列 -->
@@ -74,7 +75,15 @@
 			AND r.speciality like concat('%', #{speciality}, '%')
 		</if>
 	</select>
-
+	<select id="ResumeCount" parameterType="String" resultType="Integer">
+		select count(*) from (SELECT r.* ,s.time ,s.post_id,s.collection from resume r, (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))  AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs ))AS RES where RES.collection = 4 
+	</select>
+	
+	<select id="ResumePassCount" parameterType="String" resultType="Integer">
+		select count(*) from (SELECT r.* ,s.time ,s.post_id,s.collection from resume r, (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))  AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs ))AS RES where RES.collection = 3 
+	</select>
+	
+	
 	<select id="selectEditedResumeNumber" resultType="Integer">
 		SELECT
 		COUNT(distinct student_id) FROM resume;
@@ -108,9 +117,13 @@
 		g.student_id=#{id}
 	</select>
 	<!-- //公司收到的投递的简历查询 -->
+	<!-- <select id="selectResumeByErId" parameterType="String" resultMap="ResumeHiredDtoList">
+	SELECT r.* ,s.post_id,s.time ,s.collection from resume r, (SELECT * from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 ) AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 )
+	</select> -->
 	<select id="selectResumeByErId" parameterType="String" resultMap="ResumeHiredDtoList">
-	SELECT r.* ,s.time ,s.collection from resume r, (SELECT * from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 ) AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 )
+	SELECT r.* ,s.time ,s.post_id,s.collection from resume r, (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))  AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs )
 	</select>
+	<!-- //公司收到的投递的简历查询 -->
 	<insert id="insertResume"
 		parameterType="com.BYS.GWSystem.dto.ResumeDto">
 		insert into Resume(
@@ -167,6 +180,15 @@
 			<if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation=#{selfEvaluation}</if>
 		</set>
 		where student_id = #{studentId}
+	</update>
+	
+	<!-- 更新公司收取简历的状态 -->
+	<update id="updateHiredCollectionMsg">
+		update student_history
+		<set>
+			collection=#{updateCode}
+		</set>
+		where student_id = #{studentId} AND  post_id = #{postId}
 	</update>
 	
 	<select id="queryResumeById"
