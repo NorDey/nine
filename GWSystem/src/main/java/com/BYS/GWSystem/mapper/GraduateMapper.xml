@@ -13,6 +13,10 @@
 		UPDATE graduate SET avatarPath=#{avatarPath} WHERE
 		student_id=#{studentId}
 	</update>
+	
+	<update id="insertResumeId">
+		UPDATE graduate SET resume_id=#{resumeId} WHERE student_Id=#{StudentId}
+	</update>
 
 	<insert id="sendCV" parameterType="String">
 		INSERT INTO

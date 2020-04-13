@@ -9,6 +9,9 @@ import com.github.pagehelper.Page;
 
 public interface IGraduateService {
 
+	// 新增简历时，将简历Id插入学生表
+	public int insertResumeId(String StudentId, long resumeId);
+
 	// 查询学生投递的所有简历
 	public List<StudentHistory> selectAllCV(String studentId);
 

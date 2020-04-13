@@ -124,4 +124,11 @@ public class GraduateServiceImpl implements IGraduateService {
 		return list;
 	}
 
+	@Override
+	public int insertResumeId(String StudentId, long resumeId) {
+		int rest = graduateMapper.insertResumeId(StudentId, resumeId);
+		return rest;
+	}
+
+	
 }
