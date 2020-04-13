@@ -186,9 +186,8 @@ public class CompanyMainCtroller {
 		if (greeting.getProfession() == null || greeting.getProfession() == "") {
 			greeting.setProfession("其他");
 		}
-		if (ijobInfoService.seletOne(greeting.getRegistrationId(),greeting.getPostName()) != null
-				|| ijobInfoService.seletOne(greeting.getRegistrationId(),greeting.getPostName()) != "") {// 不可重复添加同一个岗位
-			model.addAttribute("waringMSG", "无法重复添加同一招聘信息");
+		if (!ijobInfoService.seletOne(greeting.getRegistrationId(),greeting.getPostName()).isEmpty()) {// 不可重复添加同一个岗位
+			model.addAttribute("waringMSG", "不要重复添加！！！！！");
 			//System.out.println(ijobInfoService.seletOne(greeting.getRegistrationId(),greeting.getPostName()));
 			return "Company/CompanyNewHired";
 		}

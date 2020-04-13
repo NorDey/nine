@@ -91,7 +91,7 @@ public class PostServiceImpl implements IPostService {
 		if (seletExeists(profession).isEmpty())
 			id = (seletMaxFID() + 1);// 不存在该工种则新建这个工种
 		else {
-			id = seletExeists(profession).get(1);// 是否存在该工种
+			id = seletExeists(profession).get(0);// 是否存在该工种
 		}
 		return id + "";
 	}
@@ -117,7 +117,7 @@ public class PostServiceImpl implements IPostService {
 		if (seletTExeists(postName).isEmpty())
 			id = (seletMaxTID() + 1);// 不存在该工种则新建这个岗位名称
 		else {
-			id = seletTExeists(postName).get(1);// 是否存在该岗位名称
+			id = seletTExeists(postName).get(0);// 是否存在该岗位名称
 		}
 		return id;
 	}

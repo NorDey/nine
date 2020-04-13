@@ -20,5 +20,5 @@ public interface JobsUTypeWorkUPsotMapper {
 	//统计数目
 	public String count();
 	//寻一个
-	public String selectOne(@Param(value="registrationId") String registrationId,@Param(value="postName") String postName);
+	public List<String> selectOne(@Param(value="registrationId") String registrationId,@Param(value="postName") String postName);
 }
