@@ -11,6 +11,8 @@ import com.BYS.GWSystem.model.StudentHistory;
 
 @Mapper
 public interface GraduateMapper {
+	// 查询学生投递的所有简历
+	public List<StudentHistory> selectAllCV(String studentId);
 
 	// 首次投递简历，insert
 	public int sendCV(String studentId, String postId);

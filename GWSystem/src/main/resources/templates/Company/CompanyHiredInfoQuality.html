@@ -65,9 +65,13 @@
 				<input data-role="btn" name="search" id="search_button" type="button" disabled="disabled" value="薪资待遇" class="btn-s alertB fl qualityShow" />
 				<input name="salary" type="text" class="txt-HirdMSG" id="salary" autocomplete="off" disabled="disabled" th:value="${JobsInfo.salary}"/>
 
-				<br />
-				<input th:if="${enterprises}==null" name="Infochange" id="Infochange" type="button" th:value="${posted==null}?'投递简历':${posted}" class="btn-s Infochanges" />
-				<input th:if="${enterprises}!=null" name="Infochange" id="Infochange" type="button" value="返回" class="btn-s Infochanges" />
+				<br /> 
+				<a th:href="@{'/graduate/sendCVs/'+${graduate.studentId}}"> 
+				<input name="Infochange" id="Infochange" type="button" th:if="${graduate}!=null" th:value="${posted==null}?'投递简历':${posted}"
+				class="btn-s Infochanges" />
+				</a>
+			<!-- <input th:if="${enterprises}==null" name="Infochange" id="Infochange" type="button" th:value="${posted==null}?'投递简历':${posted}" class="btn-s Infochanges" /> -->
+			<input th:if="${enterprises}!=null" name="Infochange" id="Infochange" type="button" value="返回" class="btn-s Infochanges" />
 			</div>
 		</div>
 	</body>

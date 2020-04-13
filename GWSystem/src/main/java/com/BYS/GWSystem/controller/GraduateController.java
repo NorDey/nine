@@ -166,9 +166,13 @@ public class GraduateController {
 		String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\headportrait";
 		// 获得上传的图片名字
 		String name = file.getOriginalFilename();
+		String suffix = name.substring(name.lastIndexOf("."), name.length());// 文件后缀名
 		// 如果未选择文件，则赋值为初始头像
 		if (name.equals("")) {
 			name = "cs.jpg";
+		} else {
+			long resumeId = new Random().nextInt(100000000) % (100000000 - 1000000 + 1) + 1000000;
+			name = resumeId + suffix;
 		}
 		// 添加新的头像的文件名
 		graduate.setAvatarPath(name);
@@ -294,7 +298,7 @@ public class GraduateController {
 		return "graduate/EnterpriseDetails";
 	}
 
-	// 投递简历
+	// 投递简历（老版）
 	@GetMapping("/sendCV/{registrationId}")
 	public String sendCV(@PathVariable(name = "registrationId") String id, Model model) {
 		model.addAttribute("graduate", graduate);
@@ -390,6 +394,7 @@ public class GraduateController {
 		Graduate graduates = iGraduateService.queryStudentById(studentId);// 查询学生信息
 		model.addAttribute("graduate", graduates);
 		ResumeDto dto = iResumeService.queryResumeById(studentId);
+		// 前端界面借用sex字段回传birthday时间，因为LocalDateTime类型直接接受String类型报错
 		String sex = resumeDto.getSex();
 		sex = sex.replace("T", " ");
 		/* sex = sex.substring(0, 13); */
@@ -402,10 +407,9 @@ public class GraduateController {
 			// 修改学生简历
 			int i = iResumeService.updateResume(resumeDto);
 		} else {
-			// 新增学生简历
-			long second = (long) LocalDateTime.now().getSecond();
-			second = new Random().nextInt(10000) % (10000 - 1000 + 1) + 1000 + second;
-			resumeDto.setResumeId(second);
+			// 新增学生简历,简历Id为8位数随机数
+			long resumeId = new Random().nextInt(100000000) % (100000000 - 1000000 + 1) + 1000000;
+			resumeDto.setResumeId(resumeId);
 			int i = iResumeService.insertResume(resumeDto);
 		}
 
@@ -534,15 +538,49 @@ public class GraduateController {
 	@GetMapping("/entLogQuality/{postId}/{studentId}") // 查看公司招聘的详情
 	public String entLogQuality(@PathVariable(name = "studentId") String studentId,
 			@PathVariable(name = "postId") String postId, Model model) {
-		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息// 传入公司信息
 		model.addAttribute("graduate", graduate);
 		/*---------------------------------------------------------*/
+		this.postId = postId;
 		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);// 招聘的详情
 		Post postMsg = iPostService.selectOneHiredMsg(postId);
 		Enterprise enterprisesInfo = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
-		model.addAttribute("enterprisesInfo", enterprisesInfo);// Cheader头部的信息刷新
+		model.addAttribute("enterprisesInfo", enterprisesInfo);// 传入公司信息
 		model.addAttribute("JobsInfo", JobsInfo);// 传入岗位信息
 		model.addAttribute("postMsg", postMsg);// 传入岗位简要信息
+		return "Company/CompanyHiredInfoQuality";
+	}
+
+	@GetMapping("/sendCVs/{studentId}") // 投递简历(学生版)
+	public String sendCVs(@PathVariable(name = "studentId") String studentId, Model model) {
+		Graduate graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息,头部显示
+		model.addAttribute("graduate", graduate);
+		/*---------------------------------------------------------*/
+		CompanyHiredInfoDto JobsInfo = ijobInfoService.searchOne(postId);// 招聘的详情，
+		Post postMsg = iPostService.selectOneHiredMsg(postId);
+		Enterprise enterprisesInfo = iEnterpriseService.selectEnterpriseOne(postMsg.getRegistrationId().toString());
+		model.addAttribute("enterprisesInfo", enterprisesInfo);// 传入公司信息
+		model.addAttribute("JobsInfo", JobsInfo);// 传入岗位信息
+		model.addAttribute("postMsg", postMsg);// 传入岗位简要信息
+		// 判断是否已经投过这个岗位
+		StudentHistory rest = iGraduateService.selectCV(graduate.getStudentId(), postId);
+		// 是否投递界面返回值
+		String posted = null;
+		if (rest != null) {
+			posted = "已投递";
+		} else {
+			// 判断学生是否填写简历
+			if (graduate.getResumeId() != null) {
+				// 没有投递过，则投递
+				int sendCV = iGraduateService.sendCV(graduate.getStudentId(), postId);
+				posted = "投递成功";
+			} else {
+				posted = "请先完成个人简历填写";
+			}
+
+		}
+		model.addAttribute("posted", posted);
+
 		return "Company/CompanyHiredInfoQuality";
 	}
 
@@ -558,7 +596,7 @@ public class GraduateController {
 		PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
 		page = pageMax(page, psotSimpleList);
 		List<TypeWorkUJobs> Professions = (itypeWork.AllPros());// 取出所有的岗位父类与所有的根据父岗位查询的岗位名称
-		model.addAttribute("postnamesArrage",postName);
+		model.addAttribute("postnamesArrage", postName);
 		model.addAttribute("pros", Professions);
 		model.addAttribute("psotSimpleList", psotSimpleList);
 		model.addAttribute("pages", "第" + page + "页");
@@ -607,4 +645,53 @@ public class GraduateController {
 		return page;
 	}
 	/*-----------------------页码控制函数-----------------------------*/
+
+	// 查看投递记录
+	@GetMapping("/deliveryRecord")
+	public String deliveryRecord(Model model, HttpServletRequest request) {
+		String studentId = request.getParameter("studentId");// 获取学生的学号
+		graduate = iGraduateService.queryStudentById(studentId);// 查询学生信息
+		model.addAttribute("graduate", graduate);
+		// 查询当前用户投递的所有简历，并获取postId
+		/*
+		 * List<StudentHistory> allCV = iGraduateService.selectAllCV(studentId);
+		 * List<PostDto> posts = new ArrayList<PostDto>(); if (allCV.size() != 0) { for
+		 * (StudentHistory cv : allCV) { // 查询岗位信息 PostDto post =
+		 * iPostService.selectPostListById(cv.getPostId());// 获取postId,cv.getPostId() //
+		 * 借用字段popular来暂存collection,简历投递结果， // 1表示被打回去,2表示录用,3表示备选
+		 * post.setPopular(Integer.parseInt(cv.getCollection())); posts.add(post); } }
+		 */
+		int page = 1;
+		PageHelper.startPage(page, 8);
+		PageInfo<PostDto> psotSimpleList = new PageInfo<PostDto>(iPostService.selectPostListByStudentId(studentId));// 将原list转为page类型
+		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
+		model.addAttribute("listPages", listPages);
+		model.addAttribute("traversingList", psotSimpleList);
+		model.addAttribute("address", "graduate/deliveryRecords");
+		return "graduate/DeliveryRecord";
+	}
+
+	// 超链接分页查询岗位
+	@GetMapping(value = { "/deliveryRecords/{page}" })
+	public String deliveryRecords(Model model, @PathVariable(name = "page") int page) {
+		model.addAttribute("graduate", graduate);
+		// 查询当前用户投递的所有简历，并获取postId
+		/*
+		 * List<StudentHistory> allCV =
+		 * iGraduateService.selectAllCV(graduate.getStudentId()); List<PostDto> posts =
+		 * new ArrayList<PostDto>(); if (allCV.size() != 0) { for (StudentHistory cv :
+		 * allCV) { // 查询岗位信息 PostDto post =
+		 * iPostService.selectPostListById(cv.getPostId());// 获取postId,cv.getPostId() //
+		 * 借用字段popular来暂存collection,简历投递结果， // 1表示被打回去,2表示录用,3表示备选
+		 * post.setPopular(Integer.parseInt(cv.getCollection())); posts.add(post); } }
+		 */
+		PageHelper.startPage(page, 8);
+		PageInfo<PostDto> psotSimpleList = new PageInfo<PostDto>(
+				iPostService.selectPostListByStudentId(graduate.getStudentId()));// 将原list转为page类型
+		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
+		model.addAttribute("listPages", listPages);
+		model.addAttribute("traversingList", psotSimpleList);
+		model.addAttribute("address", "graduate/deliveryRecords");
+		return "graduate/DeliveryRecord";
+	}
 }

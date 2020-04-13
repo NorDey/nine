@@ -18,8 +18,10 @@
 
 	<!-- 通用查询结果列 -->
 	<sql id="selectPostVo">
-		select p.post_id, p.registration_id, p.responsible, p.type_id, p.postName,
-		p.number, p.salary, p.demand, p.creationTime, p.popular
+		select p.post_id, p.registration_id, p.responsible,
+		p.type_id, p.postName,
+		p.number, p.salary, p.demand, p.creationTime,
+		p.popular
 		from post p
 	</sql>
 
@@ -45,92 +47,128 @@
 	</select>
 
 
-<select id="selectPostListByMore"
-		parameterType="com.BYS.GWSystem.dto.PostDto" resultType="com.BYS.GWSystem.dto.PostDto">
-		SELECT e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
-		from enterprise e LEFT JOIN post p on e.registration_id=p.registration_id LEFT JOIN type_work t on t.post_id=p.post_id
+	<select id="selectPostListByMore"
+		parameterType="com.BYS.GWSystem.dto.PostDto"
+		resultType="com.BYS.GWSystem.dto.PostDto">
+		SELECT
+		e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
+		from enterprise e LEFT JOIN post p on
+		e.registration_id=p.registration_id LEFT JOIN type_work t on
+		t.post_id=p.post_id
 		where p.number>0
 		<if test="registrationId != null and registrationId != ''">
-		and	 e.registration_id = #{registrationId}
+			and e.registration_id = #{registrationId}
 		</if>
 		<if test="postName != null and postName != ''">
-		and	 (t.postName like concat('%', #{postName}, '%') or t.major like concat('%', #{postName}, '%'))
+			and (t.postName like concat('%', #{postName}, '%') or
+			t.major like
+			concat('%', #{postName}, '%'))
 		</if>
 		<if test="enterpriseName != null and enterpriseName != ''">
-		and	 e.enterpriseName like concat('%', #{enterpriseName}, '%')
+			and e.enterpriseName like concat('%', #{enterpriseName},
+			'%')
 		</if>
 		<if test="popular != null and popular != ''">
-		and	 p.popular in (2,3)
+			and p.popular in (2,3)
 		</if>
 	</select>
-	
-	<select id="doNewPostList" resultType="com.BYS.GWSystem.dto.PostDto">
-		SELECT e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
-		from enterprise e LEFT JOIN post p on e.registration_id=p.registration_id LEFT JOIN type_work t on t.post_id=p.post_id
-		where p.number > 0 and date_sub(CURDATE(), interval 7 day) &lt;= date(p.creationTime)
+	<select id="selectPostListByStudentId" parameterType="String"
+		resultType="com.BYS.GWSystem.dto.PostDto">
+		SELECT
+		e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular,s.collection
+		FROM enterprise e LEFT JOIN post p ON
+		e.registration_id=p.registration_id
+		LEFT JOIN type_work t ON
+		t.post_id=p.post_id LEFT JOIN student_history s
+		ON s.post_id=p.post_id
+		WHERE s.student_id=#{studentId}
+
+	</select>
+
+	<select id="doNewPostList"
+		resultType="com.BYS.GWSystem.dto.PostDto">
+		SELECT
+		e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
+		from enterprise e LEFT JOIN post p on
+		e.registration_id=p.registration_id LEFT JOIN type_work t on
+		t.post_id=p.post_id
+		where p.number > 0 and date_sub(CURDATE(), interval
+		7 day) &lt;= date(p.creationTime)
 	</select>
 
 
 
 	<select id="selectRecruitmentCompaniesNumber" resultType="int">
-		SELECT COUNT(distinct registration_id) FROM post p WHERE p.registration_id in (SELECT distinct registration_id from enterprise e WHERE e.examination=2)
+		SELECT
+		COUNT(distinct registration_id) FROM post p WHERE p.registration_id in
+		(SELECT distinct registration_id from enterprise e WHERE
+		e.examination=2)
 	</select>
 
 
 	<select id="selectPostNumber" resultType="int">
-		SELECT COUNT(*) FROM post
+		SELECT COUNT(*) FROM
+		post
 	</select>
-	
+
 	<select id="selectFollowNumber" resultType="int">
-		SELECT COUNT(distinct post_id) FROM student_history where collection=1
+		SELECT COUNT(distinct
+		post_id) FROM student_history where collection=1
 	</select>
 
 	<select id="selectJobSimpleList" parameterType="String"
 		resultMap="PostResult">
-		<include refid="selectPostVo" />	
+		<include refid="selectPostVo" />
 		<if test="registrationId != null and registrationId != '' ">
 			where p.registration_id = #{registrationId}
 		</if>
 	</select>
-	
+
 	<select id="selectOneHiredMsg" parameterType="String"
 		resultType="com.BYS.GWSystem.model.Post">
 		<include refid="selectPostVo" />
 		where
-			 p.post_id = #{postId}
+		p.post_id = #{postId}
 	</select>
 	<!-- father id 这里写完才发现写错了mapper算了...反正一样用兄弟取个type_Work的max值 -->
 	<select id="maxFid" resultType="int">
-		SELECT max(fatherTypeId) from type_work
+		SELECT max(fatherTypeId) from
+		type_work
 	</select>
-	
+
 	<!-- type id -->
 	<select id="maxTid" resultType="int">
 		SELECT max(type_id) from post
 	</select>
-	
+
 	<!-- 按照工种查询父类ID 这里写完才发现写错了mapper算了...反正一样用兄弟 -->
-	<select id="seletExeists" parameterType="String"  resultType="int">
-		SELECT fatherTypeId from type_work where profession = #{pro}
+	<select id="seletExeists" parameterType="String"
+		resultType="int">
+		SELECT fatherTypeId from type_work where profession =
+		#{pro}
 	</select>
-	
-	<!-- 	按照岗位名称查询type_ID -->
-	<select id="seletTExeists" parameterType="String"  resultType="int">
+
+	<!-- 按照岗位名称查询type_ID -->
+	<select id="seletTExeists" parameterType="String"
+		resultType="int">
 		SELECT type_id from post where postName = #{postNmae}
 	</select>
-	<!--  查询工作岗位简要信息(全查) -->
+	<!-- 查询工作岗位简要信息(全查) -->
 	<select id="jobListAll" resultMap="PostResult">
 		select * from post
 	</select>
 	<!-- //条件查询岗位简要信息 -->
-	<select id="jobListArrage" parameterType="String" resultMap="PostResult">
+	<select id="jobListArrage" parameterType="String"
+		resultMap="PostResult">
 		select * from post where postName = #{postNmae}
 	</select>
 	<!-- 根据postName模糊查询 -->
-	<select id="jobListLike" parameterType="String" resultMap="PostResult" >
-	select * from post where postName like concat('%', #{postNamesL}, '%')
+	<select id="jobListLike" parameterType="String"
+		resultMap="PostResult">
+		select * from post where postName like concat('%',
+		#{postNamesL}, '%')
 	</select>
-	
+
 	<insert id="insertPost"
 		parameterType="com.BYS.GWSystem.model.Post">
 		insert into Post(
@@ -173,16 +211,18 @@
 		</set>
 		where post_id = #{postId}
 	</update>
-	
-	
-	
-<update id="setUpPopularPositions">
-		update Post SET  popular=2
-		where post_id in (SELECT * from (SELECT s.post_id from student_history  s GROUP  BY s.post_id ORDER BY  COUNT(*) DESC LIMIT 5) as t)
+
+
+
+	<update id="setUpPopularPositions">
+		update Post SET popular=2
+		where post_id in (SELECT *
+		from (SELECT s.post_id from student_history s GROUP BY s.post_id ORDER
+		BY COUNT(*) DESC LIMIT 5) as t)
 	</update>
-<update id="deletePopularPost">
-		update Post SET  popular=1
-		where popular=2 
+	<update id="deletePopularPost">
+		update Post SET popular=1
+		where popular=2
 	</update>
 
 

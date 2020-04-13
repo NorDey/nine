@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 
 public class PostDto {
 
-	  /**
-     * 工商注册号
-     */
-    private String registrationId;
-    
-    public String getAddress() {
+	/**
+	 * 工商注册号
+	 */
+	private String registrationId;
+
+	public String getAddress() {
 		return address;
 	}
 
@@ -18,71 +18,81 @@ public class PostDto {
 	}
 
 	/**
-     * 企业全名
-     */
-    private String enterpriseName;
-    
-    /**
-     *
-     * 岗位id
-     */
-    private String postId;   
+	 * 企业全名
+	 */
+	private String enterpriseName;
 
-    /**
-     * 岗位类型名
-     */
-    private String postName;
-    
-    /**
-     * 工种
-     */
-    private String profession;
+	/**
+	 *
+	 * 岗位id
+	 */
+	private String postId;
 
-    /**
-     * 岗位专业
-     */
-    private String major;
-    
-    /**
-     * 负责事项
-     */
-    private String responsible;
+	/**
+	 * 岗位类型名
+	 */
+	private String postName;
 
-    /**
-     * 岗位类型id
-     */
-    private String typeId;
+	/**
+	 * 工种
+	 */
+	private String profession;
 
+	/**
+	 * 岗位专业
+	 */
+	private String major;
 
-    /**
-     * 招聘人数
-     */
-    private String number;
+	/**
+	 * 负责事项
+	 */
+	private String responsible;
 
-    /**
-     * 薪资待遇(*k)
-     */
-    private String salary;
+	/**
+	 * 岗位类型id
+	 */
+	private String typeId;
 
-    /**
-     * 相关要求
-     */
-    private String demand;
-    
-    /**
-     * 企业地址
-     */
-    private String address;
-    
-    /**
-     * 发布时间
-     */
-    private LocalDateTime creationTime;
+	/**
+	 * 招聘人数
+	 */
+	private String number;
 
-    /**
-     * 是否热门(1正常,2热门)
-     */
-    private Integer popular;
+	/**
+	 * 薪资待遇(*k)
+	 */
+	private String salary;
+
+	/**
+	 * 相关要求
+	 */
+	private String demand;
+
+	/**
+	 * 企业地址
+	 */
+	private String address;
+
+	/**
+	 * 发布时间
+	 */
+	private LocalDateTime creationTime;
+
+	/**
+	 * 是否热门(1正常,2热门)
+	 */
+	private Integer popular;
+
+	//简历投递状态
+	private String collection;
+
+	public String getCollection() {
+		return collection;
+	}
+
+	public void setCollection(String collection) {
+		this.collection = collection;
+	}
 
 	public String getRegistrationId() {
 		return registrationId;
@@ -192,7 +202,5 @@ public class PostDto {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-    
-    
-	
+
 }

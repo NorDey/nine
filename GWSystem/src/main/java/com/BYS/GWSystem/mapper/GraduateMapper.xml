@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.BYS.GWSystem.mapper.GraduateMapper">
-	
-	<select id="queryStudentById" resultType="com.BYS.GWSystem.model.Graduate" parameterType="String">
-		SELECT * FROM graduate WHERE student_id=#{id}
+
+	<select id="queryStudentById"
+		resultType="com.BYS.GWSystem.model.Graduate" parameterType="String">
+		SELECT *
+		FROM graduate WHERE student_id=#{id}
 	</select>
-	
-	<update id="updatePicByid" parameterType="com.BYS.GWSystem.model.Graduate">
-		UPDATE graduate SET avatarPath=#{avatarPath} WHERE student_id=#{studentId}
+
+	<update id="updatePicByid"
+		parameterType="com.BYS.GWSystem.model.Graduate">
+		UPDATE graduate SET avatarPath=#{avatarPath} WHERE
+		student_id=#{studentId}
 	</update>
-	
+
 	<insert id="sendCV" parameterType="String">
-		INSERT INTO student_history(student_id,post_id,collection) VALUES(#{studentId},#{postId},'4');
+		INSERT INTO
+		student_history(student_id,post_id,collection)
+		VALUES(#{studentId},#{postId},'4');
 	</insert>
-	
-	<select id="selectCV" parameterType="String"  resultType="com.BYS.GWSystem.model.StudentHistory">
-		SELECT * FROM student_history WHERE student_id=#{studentId} AND post_id=#{postId};
+
+	<select id="selectCV" parameterType="String"
+		resultType="com.BYS.GWSystem.model.StudentHistory">
+		SELECT * FROM student_history WHERE student_id=#{studentId}
+		AND post_id=#{postId};
 	</select>
-	
-	
+
+	<select id="selectAllCV"
+		resultType="com.BYS.GWSystem.model.StudentHistory" parameterType="String">
+		SELECT *
+		FROM student_history WHERE student_id=#{studentId}
+	</select>
+
 	<!-- 通用查询映射结果 -->
 	<resultMap id="GraduateResult"
 		type="com.BYS.GWSystem.model.Graduate">
@@ -98,26 +111,34 @@
 		g.student_id=r.student_id
 	</select>
 
-<select id="selectGraduateListByMore"
+	<select id="selectGraduateListByMore"
 		resultType="com.BYS.GWSystem.dto.GraduateDto" parameterType="String">
 		select g.student_id, g.studentName, g.sex, g.phonenumber,
 		g.homeAddress,
 		g.avatarPath, g.whereabouts, g.cause, g.post, g.company,
 		r.resume_id
-		from (SELECT * from graduate g 
+		from (SELECT * from graduate g
 		<if test="lookup != null and lookup != ''">
-		WHERE g.studentName like concat('%', #{lookup}, '%') or g.student_id like concat('%', #{lookup}, '%')
+			WHERE g.studentName like concat('%', #{lookup}, '%') or g.student_id like
+			concat('%', #{lookup}, '%')
 		</if>
-		) g   LEFT JOIN  resume r on
-		g.student_id=r.student_id 
+		) g LEFT JOIN resume r on
+		g.student_id=r.student_id
 	</select>
 
 
-	<select id="selectNotFilledStudent" resultType="com.BYS.GWSystem.dto.GraduateDto">
-		SELECT e.student_id, e.studentName,e.sex, e.phonenumber, e.homeAddress, e.avatarPath, e.whereabouts, e.cause, e.post, e.company,r.resume_id
-		FROM (select g.student_id, g.studentName, g.sex, g.phonenumber,g.homeAddress,g.avatarPath, g.whereabouts, g.cause, g.post, g.company
-		from graduate g where g.student_id not IN(SELECT distinct student_id
-		FROM resume ))as e Left JOIN resume r on r.student_id=e.student_id
+	<select id="selectNotFilledStudent"
+		resultType="com.BYS.GWSystem.dto.GraduateDto">
+		SELECT e.student_id, e.studentName,e.sex, e.phonenumber,
+		e.homeAddress, e.avatarPath, e.whereabouts, e.cause, e.post,
+		e.company,r.resume_id
+		FROM (select g.student_id, g.studentName, g.sex,
+		g.phonenumber,g.homeAddress,g.avatarPath, g.whereabouts, g.cause,
+		g.post, g.company
+		from graduate g where g.student_id not IN(SELECT
+		distinct student_id
+		FROM resume ))as e Left JOIN resume r on
+		r.student_id=e.student_id
 	</select>
 
 
@@ -176,6 +197,6 @@
 		delete from Graduate where student_id = #{studentId}
 	</delete>
 
-	
+
 
 </mapper>

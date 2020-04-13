@@ -19,5 +19,12 @@
 	<select id="selectAdmin" resultType="int" parameterType="com.BYS.GWSystem.model.Admin">
     SELECT COUNT(*) FROM `admin` a WHERE a.number=#{number} and a.`password`=#{password}
     </select>
+    
+    
+	<update id="updateAdmin" parameterType="com.BYS.GWSystem.model.Admin">
+        update `admin` a set a.`password`=#{password} 
+        where a.number=#{number}
+    </update>
+	
 	
 </mapper>
