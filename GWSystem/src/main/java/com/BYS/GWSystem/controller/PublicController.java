@@ -153,6 +153,7 @@ public class PublicController {
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
 			if(pagesTurn == null)pagesTurn=1;
+			if(postNamesL==null||postNamesL=="")postNamesL="a";
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
 			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -172,6 +173,8 @@ public class PublicController {
 		public String CHISLikeSearchPageN(@PathVariable(name = "postNamesL") String postNamesL,@PathVariable(name = "page") Integer pagesTurn, Model model) {
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			if(pagesTurn==null)pagesTurn=1;
+			if(postNamesL==null||postNamesL=="")postNamesL="a";
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
 			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -190,6 +193,8 @@ public class PublicController {
 			
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			if(pagesTurn==null)pagesTurn=1;
+			if(postNamesL==null||postNamesL=="")postNamesL="a";
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
 			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型

@@ -211,6 +211,7 @@ public class CompanyMainCtroller {
 			model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			if(pagesTurn==null)pagesTurn=1; 
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
 			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListAll());// 将原list转为page类型
@@ -233,6 +234,7 @@ public class CompanyMainCtroller {
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+					if(pagesTurn==null)pagesTurn=1;
 					int page = pageMinx(pagesTurn);
 					PageHelper.startPage(page, 5); // 第几页，每页几条
 					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListArrage(postName));// 将原list转为page类型
@@ -255,6 +257,7 @@ public class CompanyMainCtroller {
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
 					if(pagesTurn == null)pagesTurn=1;
+					if(postNamesL==null||postNamesL=="")postNamesL="a";
 					int page = pageMinx(pagesTurn);
 					PageHelper.startPage(page, 5); // 第几页，每页几条
 					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -276,6 +279,7 @@ public class CompanyMainCtroller {
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
 					if(pagesTurn == null)pagesTurn=1;
+					if(postNamesL==null||postNamesL=="")postNamesL="a";
 					int page = pageMinx(pagesTurn);
 					PageHelper.startPage(page, 5); // 第几页，每页几条
 					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -299,6 +303,7 @@ public class CompanyMainCtroller {
 					if(pagesTurn == null)pagesTurn=1;
 					int page = pageMinx(pagesTurn);
 					PageHelper.startPage(page, 5); // 第几页，每页几条
+					if(postNamesL==null||postNamesL=="")postNamesL="a";
 					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
 					if (page >= psotSimpleList.getLastPage())
 						page = psotSimpleList.getLastPage();
