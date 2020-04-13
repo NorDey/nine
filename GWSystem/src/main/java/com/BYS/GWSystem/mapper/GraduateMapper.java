@@ -11,6 +11,10 @@ import com.BYS.GWSystem.model.StudentHistory;
 
 @Mapper
 public interface GraduateMapper {
+
+	// 新增简历时，将简历Id插入学生表
+	public int insertResumeId(@Param("StudentId")String StudentId,@Param("resumeId") long resumeId);
+
 	// 查询学生投递的所有简历
 	public List<StudentHistory> selectAllCV(String studentId);
 

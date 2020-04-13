@@ -411,6 +411,7 @@ public class GraduateController {
 			long resumeId = new Random().nextInt(100000000) % (100000000 - 1000000 + 1) + 1000000;
 			resumeDto.setResumeId(resumeId);
 			int i = iResumeService.insertResume(resumeDto);
+			int j = iGraduateService.insertResumeId(graduates.getStudentId(), resumeId);
 		}
 
 		// 显示简历信息
