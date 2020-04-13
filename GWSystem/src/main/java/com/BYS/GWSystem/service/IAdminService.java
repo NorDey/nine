@@ -10,4 +10,7 @@ public interface IAdminService  {
 	
 	//登录验证
 	public int selectAdmin(Admin admin);
+
+	//更改密码
+	public int  updateAdmin(Admin admin);
 }

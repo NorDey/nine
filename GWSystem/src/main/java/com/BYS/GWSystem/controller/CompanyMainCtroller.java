@@ -254,6 +254,7 @@ public class CompanyMainCtroller {
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+					if(pagesTurn == null)pagesTurn=1;
 					int page = pageMinx(pagesTurn);
 					PageHelper.startPage(page, 5); // 第几页，每页几条
 					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -274,6 +275,7 @@ public class CompanyMainCtroller {
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+					if(pagesTurn == null)pagesTurn=1;
 					int page = pageMinx(pagesTurn);
 					PageHelper.startPage(page, 5); // 第几页，每页几条
 					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -294,6 +296,7 @@ public class CompanyMainCtroller {
 					model.addAttribute("enterprises", enterpriseInfo);// Cheader头部的信息刷新
 					/*---------------------------------------------------------*/
 					// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+					if(pagesTurn == null)pagesTurn=1;
 					int page = pageMinx(pagesTurn);
 					PageHelper.startPage(page, 5); // 第几页，每页几条
 					PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型

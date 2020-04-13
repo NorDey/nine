@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.expr.NewArray;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.hibernate.validator.internal.constraintvalidators.bv.number.InfinityNumberComparatorHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -287,8 +285,7 @@ public class HomeController {
 
 	// 导出excel表
 	@GetMapping("/poiExport")
-	public ModelAndView exportExcel(HttpServletResponse response) throws Exception {
-		ModelAndView modelAndView = new ModelAndView();
+	public String  exportExcel(HttpServletResponse response) throws Exception {
 		// 定义表的标题
 		String title = "毕业生列表一览";
 		// 定义表的列名
@@ -313,7 +310,7 @@ public class HomeController {
 				objs[6] = "-";
 			}
 			objs[7] = per.getPost() == null ? "-" : per.getPost();
-			objs[8] = per.getCompany() == null ? "-" : per.getCause();
+			objs[8] = per.getCompany() == null ? "-" : per.getCompany();
 			dataList.add(objs);
 		}
 
@@ -333,8 +330,7 @@ public class HomeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		modelAndView.setViewName("redirect:/admin/home");
-		return modelAndView;// 返回主页
+		return "redirect:/admin/home";// 返回主页
 	}
 
 	@GetMapping("/poiImport")
@@ -540,6 +536,7 @@ public class HomeController {
 		return "admin/Post";
 	}
 
+	//热门修改
 	@GetMapping("/setUpPopular/{popular}/{postId}/{address}")
 	public ModelAndView setUpPopular(@PathVariable(name = "popular") int popular,
 			@PathVariable(name = "postId") String postId,
@@ -552,4 +549,40 @@ public class HomeController {
 		modelAndView.setViewName("redirect:/admin/"+address+"/1");
 		return modelAndView;
 	}
+	
+	//密码修改
+	@GetMapping("/changePassword")
+	public String changePassword() {
+		return "admin/ChangePassword";
+	}
+	
+	
+	//密码修改
+		@PostMapping("/changePassword")
+		public String changePassword(@RequestParam(value = "exampleInputPassword", required = false) String Password,
+				@RequestParam(value = "exampleInputPassword1", required = false) String Password1,
+				@RequestParam(value = "exampleInputPassword2", required = false) String Password2,
+			HttpSession session,Model model) {
+			
+			if(Password1 == null || Password1.length() <= 0) {
+				model.addAttribute("error", "密码为空,请输入密码");
+				return "admin/ChangePassword";
+			}
+			//获取当前登录用户
+			Admin admin=(Admin) session.getAttribute("adminUser");
+			if (Password1.equals(Password2)||Password1==Password2) {
+				if (admin.getPassword().equals(Password)||admin.getPassword()==(Password)) {
+					admin.setPassword(Password1);
+					iAdminService.updateAdmin(admin);
+					session.removeAttribute("adminUser");
+				}else {
+					model.addAttribute("error", "原密码错误");
+					return "admin/ChangePassword";
+				}
+			}else {
+				model.addAttribute("error", "两次输入密码不一");
+				return "admin/ChangePassword";
+			}		
+			return "redirect:/admin/switchLog";
+		}
 }

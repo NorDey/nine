@@ -28,4 +28,11 @@ public class AdminServiceImpl implements IAdminService {
 		return adminMapper.selectAdmin(admin);
 	}
 
+
+	@Override
+	public int updateAdmin(Admin admin) {
+		// TODO Auto-generated method stub
+		return adminMapper.updateAdmin(admin);
+	}
+
 }
