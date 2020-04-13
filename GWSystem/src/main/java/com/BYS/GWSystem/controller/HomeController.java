@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.javassist.expr.NewArray;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.hibernate.validator.internal.constraintvalidators.bv.number.InfinityNumberComparatorHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -287,8 +285,7 @@ public class HomeController {
 
 	// 导出excel表
 	@GetMapping("/poiExport")
-	public ModelAndView exportExcel(HttpServletResponse response) throws Exception {
-		ModelAndView modelAndView = new ModelAndView();
+	public String  exportExcel(HttpServletResponse response) throws Exception {
 		// 定义表的标题
 		String title = "毕业生列表一览";
 		// 定义表的列名
@@ -313,7 +310,7 @@ public class HomeController {
 				objs[6] = "-";
 			}
 			objs[7] = per.getPost() == null ? "-" : per.getPost();
-			objs[8] = per.getCompany() == null ? "-" : per.getCause();
+			objs[8] = per.getCompany() == null ? "-" : per.getCompany();
 			dataList.add(objs);
 		}
 
@@ -333,8 +330,7 @@ public class HomeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		modelAndView.setViewName("redirect:/admin/home");
-		return modelAndView;// 返回主页
+		return "redirect:/admin/home";// 返回主页
 	}
 
 	@GetMapping("/poiImport")
