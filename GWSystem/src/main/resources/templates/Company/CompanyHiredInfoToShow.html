@@ -44,6 +44,10 @@
 					<!--x-webkit-speech x-webkit-grammar语音输入支持-->
 					<input data-role="btn" name="search" id="search_button" type="submit" value="搜 索" class="btn-s" />
 				</form>
+				<div th:if="${enterprises}!=null" class="edit-eara fr">
+					<a th:href="@{'/CNH/'+${enterprises.registrationId}}" class="btn-post">发布招聘信息</a>
+					<a th:href="@{'/CM/'+${enterprises.registrationId}}+'/1'" class="btn-change">修改/删除&nbsp;招聘信息</a>
+				</div>
 			</div>
 	</div>
 		<!--search引用-->

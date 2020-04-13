@@ -486,6 +486,7 @@ public class CompanyMainCtroller {
 			@RequestParam(value = "pagesTurn") Integer pagesTurn, Model model) {
 		// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
 		int page = 1;
+		if(pagesTurn==null)pagesTurn=1;
 		if (pagesTurn >= 1 && pagesTurn != null)
 			page = pagesTurn;
 		System.out.println("=======================" + pagesTurn);
