@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.BYS.GWSystem.dto.CompanyHiredInfoDto;
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.dto.TypeWorkUJobs;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
@@ -39,6 +40,10 @@ public class PublicController {
 
 	@GetMapping("/GWsystem")
 	public String mainPage(Model model) {
+		PostDto postDto=new PostDto(); 
+		postDto.setPopular(2);
+		List<PostDto> pList=iPostService.selectPostListByMore(postDto);	
+		model.addAttribute("traversingList", pList);
 		return "Public/index";// 系统主页
 	}
 
