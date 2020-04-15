@@ -1,0 +1,12 @@
+.btn-ss {
+	width: 90px;
+	height: 28px;
+	font-size: 16px;
+	color: #fff;
+	letter-spacing: 0;
+	background: #994444;
+	cursor: pointer;
+	border: 3px solid #994444;
+	position: relative;
+	float: left;
+}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.BYS.GWSystem.dto.CompanyHiredInfoDto;
+import com.BYS.GWSystem.dto.PostDto;
 import com.BYS.GWSystem.dto.TypeWorkUJobs;
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.model.Enterprise;
@@ -39,6 +40,10 @@ public class PublicController {
 
 	@GetMapping("/GWsystem")
 	public String mainPage(Model model) {
+		PostDto postDto=new PostDto(); 
+		postDto.setPopular(2);
+		List<PostDto> pList=iPostService.selectPostListByMore(postDto);	
+		model.addAttribute("traversingList", pList);
 		return "Public/index";// 系统主页
 	}
 
@@ -153,6 +158,7 @@ public class PublicController {
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
 			if(pagesTurn == null)pagesTurn=1;
+			if(postNamesL==null||postNamesL=="")postNamesL="a";
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
 			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -172,6 +178,8 @@ public class PublicController {
 		public String CHISLikeSearchPageN(@PathVariable(name = "postNamesL") String postNamesL,@PathVariable(name = "page") Integer pagesTurn, Model model) {
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			if(pagesTurn==null)pagesTurn=1;
+			if(postNamesL==null||postNamesL=="")postNamesL="a";
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
 			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型
@@ -190,6 +198,8 @@ public class PublicController {
 			
 			/*---------------------------------------------------------*/
 			// @RequestParam(value="pagesTurn") value的值与form表单中的某个input的name值相同即可取其值()value
+			if(pagesTurn==null)pagesTurn=1;
+			if(postNamesL==null||postNamesL=="")postNamesL="a";
 			int page = pageMinx(pagesTurn);
 			PageHelper.startPage(page, 5); // 第几页，每页几条
 			PageInfo<Post> psotSimpleList = new PageInfo<>(iPostService.jobListLike(postNamesL));// 将原list转为page类型

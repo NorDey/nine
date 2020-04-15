@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<head>
-		<link rel="stylesheet" href="css/new_file.css" />
+		<link rel="stylesheet" href="/css/new_file.css" />
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/CM.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/CM.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/fix_bug.css"/>
 		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -22,64 +23,48 @@
 		<!--图标和搜索发帖按钮end-->
 		<div class="content">
 			<h1><span class="label label-default">简历收藏</span></h1>
+			<h4><span class="label label-default">已录用简历可以点击删除</span></h4>
+			<h4><span class="label label-warning">点击姓名查看简历详情</span></h4>
 			<table class="table table-striped CollectTab">
 				<thead>
 					<tr>
-						<th>简历ID（点击查看详情）</th>
-						<th>出生日期</th>
 						<th>姓名</th>
+						<th>出生日期</th>
 						<th>联系方式</th>
 						<th>邮箱</th>
-						<th>现居地</th>
 						<th>学历</th>
-						<th>毕业学校</th>
 						<th>求职意向</th>
 						<th>简历创建时间</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr>
-						<td><h5><a class="label label-default " herf="#">12345678901234567</a></h5></td>
-						<td >2019-10-27dddddd</td>
-						<td>姓asdasdsa名</td>
-						<td>12345678901234</td>
-						<td>asdaasdfsdzfgsdgdgfdgsdf</td>
-						<td>现sdfsfsdfde居地</td>
-						<td>学sdfgdsfgsdf历</td>
-						<td>毕业sdfgdfsgdfs学校</td>
-						<td>求职sdfgasdasdas意向</td>
-						<td>简sdfgsdfgdsfgsdg历创建时间</td>
-						<td><h3><a class="label label-danger cancel" herf="#">取消收藏</a></h3></td>
+				<tbody th:each="resumes :${resumeHird.list}">
+				
+					<tr th:if="${resumes.collection}==3"  class="default">
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td th:text="${resumes.birthday}"></td>
+						<td th:text="${resumes.phonenumber}">12345678901234</td>
+						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>
+						<td th:text="${resumes.education}">学sdfgdsfgsdf历</td>
+						<td th:text="${resumes.intention}">求职sdfgasdasdas意向</td>
+						<td th:text="${resumes.time}">简sdfgsdfgdsfgsdg历投递时间</td>
+						<td><h3><a class="label label-danger cancel" herf="#"></a></h3></td>
+						<td><a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/2'}"><input type="button" value="简历录用" class="btn-ss" /></a></td>
 					</tr>
-					<tr>
-						<td><h5><a class="label label-default " herf="#">简历ID点击查看详情</a></h5></td>
-						<td>出生日期</td>
-						<td>姓名</td>
-						<td>联系方式</td>
-						<td>邮箱</td>
-						<td>现居地</td>
-						<td>学历</td>
-						<td>毕业学校</td>
-						<td>求职意向</td>
-						<td>简历创建时间</td>
-						<td><h3><a class="label label-danger cancel" herf="#">取消收藏</a></h3></td>
-					</tr>
-					<tr>
-						<td><h5><a class="label label-default " herf="#">简历ID</a></h5></td>
-						<td>出生日期</td>
-						<td>姓名</td>
-						<td>联系方式</td>
-						<td>邮箱</td>
-						<td>现居地</td>
-						<td>学历</td>
-						<td>毕业学校</td>
-						<td>求职意向</td>
-						<td>简历创建时间</td>
-						<td><h3><a class="label label-danger cancel" herf="#">取消收藏</a></h3></td>
+					<tr th:if="${resumes.collection}==2" class="success">
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td th:text="${resumes.birthday}"></td>
+						<td th:text="${resumes.phonenumber}">12345678901234</td>
+						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>
+						<td th:text="${resumes.education}">学sdfgdsfgsdf历</td>
+						<td th:text="${resumes.intention}">求职sdfgasdasdas意向</td>
+						<td th:text="${resumes.time}">简sdfgsdfgdsfgsdg历投递时间</td>
+					<td><a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/1'}"><input type="button" value="简历已录用，点击删除" class="btn-ss" /></a></td>
 					</tr>
 				</tbody>
 			</table>
-			
+			<a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s fl" /></a>
+			<input type="button" disabled="disabled" th:value="'第'+${pages}+'页'" class="btn-s">
+			<a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${page+1}}"><input type="button" value="下一页" class="btn-s fr" /></a>
 		</div>
 	</body>
 </html>

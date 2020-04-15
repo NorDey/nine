@@ -81,6 +81,18 @@ public class ResumeHiredDto {
 	private String collection;
 	// 简历投递时间
 	private LocalDateTime time;
+	// 简历投递的岗位ID
+	private String postId;
+	
+	
+	
+	public String getPostId() {
+		return postId;
+	}
+
+	public void setPostId(String postId) {
+		this.postId = postId;
+	}
 
 	public Long getResumeId() {
 		return resumeId;
@@ -218,6 +230,8 @@ public class ResumeHiredDto {
 		this.time = time;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "ResumeHiredDto [resumeId=" + resumeId + ", birthday=" + birthday + ", nativePlace=" + nativePlace
@@ -225,13 +239,15 @@ public class ResumeHiredDto {
 				+ currentResidence + ", education=" + education + ", graduateSchool=" + graduateSchool + ", intention="
 				+ intention + ", speciality=" + speciality + ", experience=" + experience + ", selfEvaluation="
 				+ selfEvaluation + ", creationTime=" + creationTime + ", studentId=" + studentId + ", collection="
-				+ collection + ", time=" + time + "]";
+				+ collection + ", time=" + time + ", postId=" + postId + "]";
 	}
-
+	
+	
+	
 	public ResumeHiredDto(Long resumeId, LocalDateTime birthday, String nativePlace, String name, String phonenumber,
 			String mailbox, String currentResidence, String education, String graduateSchool, String intention,
 			String speciality, String experience, String selfEvaluation, LocalDateTime creationTime, String studentId,
-			String collection, LocalDateTime time) {
+			String collection, LocalDateTime time, String postId) {
 		super();
 		this.resumeId = resumeId;
 		this.birthday = birthday;
@@ -250,6 +266,7 @@ public class ResumeHiredDto {
 		this.studentId = studentId;
 		this.collection = collection;
 		this.time = time;
+		this.postId = postId;
 	}
 
 	public ResumeHiredDto() {

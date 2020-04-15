@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-		
+		<header th:insert="~{Public/navigation::header}"></header>
 		<!---------------------------------->
 		<div class="panel-group" id="accordion">
 			<div class="panel panel-default">
@@ -119,8 +119,9 @@
 				<div id="CompanylRegister" class="panel-collapse collapse register-Companys fl">
 					<div class="panel-body">
 						<!--企业注册-->
+						<h3><span class="label label-warning">注册完成后请静待审核，感谢您的合作</span></h3>
 						<nav id="CompanylRegister" class="  col-lg-12 col-4   bg-light navtable hidelog ">
-							<form class="clearfix" name="register" method="post" action onsubmit="return false">
+							<form class="clearfix" name="register" method="post" action="#" th:action="@{/CNCI}" th:object="${enterprise}">
 								<table class="table table-striped">
 									<tr>
 										<th>工商注册号：</th>
@@ -131,13 +132,13 @@
 									<tr>
 										<th>企业全名：</th>
 										<th><input type="text" name="enterpriseName" maxlength="20" id="enterpriseName" placeholder="请输入真实企业全名"
-												onblur="checkEnterpriseName()"  />
+												onblur="checkEnterpriseName()" />
 											<span id="enterpriseName_span" style="color: red"></span></th>
 									</tr>
 									<tr>
 										<th>联系电话：</th>
-										<th><input type="text" name="telephone" id="telephone" maxlength="20" placeholder="请输入本人电话"
-												required /></th>
+										<th><input type="text" name="telephone" id="telephone" maxlength="20"  placeholder="请输入企业联系方式（电话）"
+												required  /></th>
 									</tr>
 									<tr>
 										<th>密码：</th>
@@ -147,19 +148,19 @@
 									</tr>
 									<tr>
 										<th>企业人数：</th>
-										<th><input type="text" name="number" maxlength="20" id="number" placeholder="可直接填文字单位"/>
+										<th><input type="text" name="number" maxlength="20" id="number"  placeholder="可直接填文字单位"/>
 										</th>
 									</tr>
 									<tr>
 										<th style="padding-top:30px ;">公司简介：</th>
 										<th>
-											<textarea name="synopsis" id="synopsis" style="width: 400px;height: 50px;resize:none;" >请输入公司简介</textarea>
+											<textarea name="synopsis" id="synopsis" style="width: 400px;height: 50px;resize:none; ">请输入公司简介</textarea>
 										</th>
 									</tr>
 									<tr>
 										<th>企业地址：</th>
 										<th><input type="text" name="address" id="address" maxlength="20" placeholder="请输入企业地址" 
-											onblur="checkAddress()" /> 
+											onblur="checkAddress()"  /> 
 											<span id="address_span" style="color: red"></span></th>
 									</tr>
 									<tr>

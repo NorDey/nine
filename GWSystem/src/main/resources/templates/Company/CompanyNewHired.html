@@ -26,8 +26,9 @@
 				<hr />
 				<h3><span class="label label-default" th:text="${enterprises.enterpriseName}">此处显示公司名字</span></h3>
 				<h3><span class="label label-default" th:text="'工商注册号：'+${enterprises.registrationId}" >此处显示公司工商注册号</span></h3>
+				<h1><span class="label label-danger fr" th:text="${waringMSG}"></span></h1>
 				<h3><span class="label label-warning">*号为必填项，其余选填</span></h3>
-				<h3><span class="label label-danger" th:text="${waringMSG}"></span></h3>
+				
 				<br />
 				<form class="HirdMSG" name="MSG" method="post" action="#" th:action="@{'/CNHinsert/'+${enterprises.registrationId}}" th:object="${JobsInfo}" >
 					
@@ -66,8 +67,10 @@
 					
 					<input name="Infochange" id="Infochange" type="submit" value="完成并提交" class="btn-s Infochanges" />
 				</form>
+				
 			</div>
 		</div>
+		
 	</body>
 
 </html>

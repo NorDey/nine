@@ -12,6 +12,6 @@ public interface IJobsUTypeWorkUPsotService {
 	//统计数目
 	public String count();
 	//按名字搜索一次,一个公司只能一个同名岗位
-	public String seletOne(String registrationId,String postName);
+	public List<String> seletOne(String registrationId,String postName);
 	
 }

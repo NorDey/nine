@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="/css/new_file.css" />
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/CM.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/fix_bug.css"/>
 		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -22,6 +23,7 @@
 		<!--图标和搜索发帖按钮end-->
 		<div class="content">
 			<h1><span class="label label-default">已接收简历的投递</span></h1>
+			<h4><span class="label label-warning">点击姓名查看简历详情</span></h4>
 			<table class="table table-striped CollectTab">
 				<thead>
 					<tr>
@@ -38,7 +40,7 @@
 				<tbody th:each="resumes :${resumeHird.list}">
 				
 					<tr th:if="${resumes.collection}==1"  class="danger">
-						<td><a th:href="@{'/graduate/resume?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
 						<td th:text="${resumes.birthday}"></td>
 						<td th:text="${resumes.phonenumber}">12345678901234</td>
 						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>
@@ -46,23 +48,24 @@
 						<td th:text="${resumes.intention}">求职sdfgasdasdas意向</td>
 						<td th:text="${resumes.time}">简sdfgsdfgdsfgsdg历投递时间</td>
 						<td><h3><a class="label label-danger cancel" herf="#"></a></h3></td>
-						<td><h3><a class="label label-danger cancel" herf="#">取消撤回</a></h3></td>
+						<td><a th:href="@{'/CH/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/4'}"><input type="button" value="取消撤回" class="btn-ss" /></a></td>
 					</tr>
 					<tr th:if="${resumes.collection}==4" class="warning">
-						<td><a th:href="@{'/graduate/resume?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
+						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
 						<td th:text="${resumes.birthday}"></td>
 						<td th:text="${resumes.phonenumber}">12345678901234</td>
 						<td th:text="${resumes.mailbox}">asdaasdfsdzfgsdgdgfdgsdf</td>
 						<td th:text="${resumes.education}">学sdfgdsfgsdf历</td>
 						<td th:text="${resumes.intention}">求职sdfgasdasdas意向</td>
 						<td th:text="${resumes.time}">简sdfgsdfgdsfgsdg历投递时间</td>
-						<td><h3><a class="label label-danger cancel" herf="#">简历收录</a></h3></td>
-						<td><h3><a class="label label-danger cancel" herf="#">简历撤回</a></h3></td>
+						<td><a th:href="@{'/CH/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/3'}"><input type="button" value="简历收录" class="btn-ss" /></a></td>
+						<td><a th:href="@{'/CH/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/1'}"><input type="button" value="简历撤回" class="btn-ss" /></a></td>
 					</tr>
-					
 				</tbody>
 			</table>
-			
+			<a th:href="@{'/CH/'+${enterprises.registrationId}+'/'+${page-1}}"><input type="button" value="上一页" class="btn-s fl" /></a>
+			<input type="button" disabled="disabled" th:value="'第'+${pages}+'页'" class="btn-s">
+			<a th:href="@{'/CH/'+${enterprises.registrationId}+'/'+${page+1}}"><input type="button" value="下一页" class="btn-s fr" /></a>
 		</div>
 	</body>
 </html>
