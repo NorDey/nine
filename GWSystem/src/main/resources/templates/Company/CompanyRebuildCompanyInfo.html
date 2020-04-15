@@ -62,7 +62,27 @@
 				点击此处直接修改简介	
 				点击此处直接修改简介	
 			</textarea>
-				<input name="Infochange" id="Infochange" type="submit" value="修改完成并提交" class="btn-s Infochanges" />
+				<input name="Infochange" id="Infochange" type="button" value="修改完成并提交" class="btn-s Infochanges"  data-toggle="modal" data-target="#myModal"/>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-hidden="true">&times;</button>
+								<h4 class="modal-title  text-danger" id="myModalLabel">确认修改吗</h4>
+							</div>
+							<div class="modal-body text-danger"><span class="text-warning" ></span>确认修改请点击提交更改，更改后公司信息将进入审核，无法发布岗位，已经发布的岗位将会暂存</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">关闭</button>
+								 <button type="submit" class="btn btn-s">提交更改</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
 			</form>
 		</div>
 	</body>

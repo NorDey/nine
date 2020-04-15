@@ -155,18 +155,18 @@
 	</select>
 	<!-- 查询工作岗位简要信息(全查) -->
 	<select id="jobListAll" resultMap="PostResult">
-		select * from post
+		select * from post ORDER BY creationTime DESC
 	</select>
 	<!-- //条件查询岗位简要信息 -->
 	<select id="jobListArrage" parameterType="String"
 		resultMap="PostResult">
-		select * from post where postName = #{postNmae}
+		select * from post where postName = #{postNmae} ORDER BY creationTime DESC
 	</select>
 	<!-- 根据postName模糊查询 -->
 	<select id="jobListLike" parameterType="String"
 		resultMap="PostResult">
 		select * from post where postName like concat('%',
-		#{postNamesL}, '%')
+		#{postNamesL}, '%') ORDER BY creationTime DESC
 	</select>
 
 	<insert id="insertPost"

@@ -19,10 +19,10 @@
 									</a>
 										<ul class="dropdown-menu in">
 											<li><a th:href="@{'/CM/'+${enterprises.registrationId}+'/1'}">我的发布</a></li>
-											<li><a th:href="@{'/CC/'+${enterprises.registrationId}+'/1'}">已通过的简历<span class="badge alert-danger" th:text="${ResumePassCount}">10</span><!--数字徽章--></a>
+											<li th:if="${enterprises.examination}==2"><a th:href="@{'/CC/'+${enterprises.registrationId}+'/1'}">已通过的简历<span class="badge alert-danger" th:text="${ResumePassCount}">10</span><!--数字徽章--></a>
 											</li>
 											<li class="divider"></li>
-											<li><a th:href="@{'/CH/'+${enterprises.registrationId}+'/1'}">简历收取<span class="badge alert-danger" th:text="${ResumeCount}">10</span></a></li>
+											<li th:if="${enterprises.examination}==2"><a th:href="@{'/CH/'+${enterprises.registrationId}+'/1'}">简历收取<span class="badge alert-danger" th:text="${ResumeCount}">10</span></a></li>
 											<li class="divider"></li>
 											<li><a th:href="@{'/CRCI?registrationId='+${enterprises.registrationId}}">企业信息</a></li>
 										</ul></li>
@@ -85,8 +85,12 @@
 					</form>
 				</div>
 				<div class="edit-eara fr">
-					<a th:href="@{'/CNH/'+${enterprises.registrationId}}" class="btn-post">发布招聘信息</a>
-					<a th:href="@{'/CM/'+${enterprises.registrationId}}+'/1'" class="btn-change">修改/删除&nbsp;招聘信息</a>
+					<a th:if="${enterprises.examination}==1" class="btn-post">公司信息审核中</a>
+					<a th:if="${enterprises.examination}==3" class="btn-post">审核未通过 </a>
+					<h3 th:if="${enterprises.examination}==3"><span class="label label-danger">请修改公司信息再次等待审核</span></h3>
+					<h3 th:if="${enterprises.examination}==3"><span class="label label-danger">如工商账号有误请重新注册</span></h3>			
+					<a th:if="${enterprises.examination}==2" th:href="@{'/CNH/'+${enterprises.registrationId}}" class="btn-post">发布招聘信息</a>
+					<a th:if="${enterprises.examination}==2" th:href="@{'/CM/'+${enterprises.registrationId}}+'/1'" class="btn-change">修改/删除&nbsp;招聘信息</a>
 				</div>
 			</div>
 		</div>
