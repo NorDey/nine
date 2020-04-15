@@ -93,7 +93,7 @@
 					<!-- /.modal -->
 				</div>
 			<!-- <input th:if="${enterprises}==null" name="Infochange" id="Infochange" type="button" th:value="${posted==null}?'投递简历':${posted}" class="btn-s Infochanges" /> -->
-			<input th:if="${enterprises}!=null" name="Infochange" id="Infochange" type="button" value="返回" class="btn-s Infochanges" />
+			<input th:if="${enterprises}!=null" onClick="javascript :window.history.go(-1);" href="javascript :window.history.go(-1);" name="Infochange" id="Infochange" type="button" value="返回" class="btn-s Infochanges" />
 			</div>
 		</div>
 	</body>

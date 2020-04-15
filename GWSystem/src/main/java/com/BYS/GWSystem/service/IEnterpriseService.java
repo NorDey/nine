@@ -30,4 +30,6 @@ public interface IEnterpriseService {
 	//已发布招聘信息的公司查询加模糊查询
 	public List<Enterprise> selectPostEnterpriseListByMore(Enterprise enterprise);
 	public Page<Enterprise> PagePostEnterpriseListByMore(Enterprise enterprise);
+	//新的企业注册
+	public int insertNewCI(Enterprise enterprise);
 }

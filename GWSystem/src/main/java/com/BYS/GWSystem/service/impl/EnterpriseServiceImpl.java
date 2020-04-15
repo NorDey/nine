@@ -74,6 +74,12 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 	public Page<Enterprise> PagePostEnterpriseListByMore(Enterprise enterprise) {
 		return (Page<Enterprise>) enterpriseMapper.selectPostEnterpriseListByMore(enterprise);
 	}
+	//新的企业注册
+	@Override
+	public int insertNewCI(Enterprise enterprise) {
+		// TODO Auto-generated method stub
+		return enterpriseMapper.insertEnterprise(enterprise);
+	}
 
 	
 

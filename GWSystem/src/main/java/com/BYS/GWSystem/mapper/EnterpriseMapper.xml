@@ -88,9 +88,9 @@
 
 	<insert id="insertEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise">
         insert into enterprise(
-        <if test="registrationId != null and registrationId != 0">registration_id,</if>
+        <if test="registrationId != null and registrationId != ''">registration_id,</if>
         <if test="enterpriseName != null and enterpriseName != ''">enterpriseName,</if>
-        <if test="telephone != null and telephone != 0">telephone,</if>
+        <if test="telephone != null and telephone != ''">telephone,</if>
         <if test="password != null and password != ''">password,</if>
         <if test="number != null and number != ''">number,</if>
         <if test="avatarPath != null and avatarPath != ''">avatarPath,</if>
@@ -98,11 +98,11 @@
         <if test="address != null and address != ''">address,</if>
         <if test="registeredCapital != null and registeredCapital != ''">registeredCapital,</if>
         <if test="beListed != null and beListed != ''">beListed,</if>
-        <if test="examination != null and examination != ''">examination</if>
+       	examination
         )values(
-        <if test="registrationId != null and registrationId != 0">#{registrationId},</if>
+        <if test="registrationId != null and registrationId != ''">#{registrationId},</if>
         <if test="enterpriseName != null and enterpriseName != ''">#{enterpriseName},</if>
-        <if test="telephone != null and telephone != 0">#{telephone},</if>
+        <if test="telephone != null and telephone != ''">#{telephone},</if>
         <if test="password != null and password != ''">#{password},</if>
         <if test="number != null and number != ''">#{number},</if>
         <if test="avatarPath != null and avatarPath != ''">#{avatarPath},</if>
@@ -110,9 +110,10 @@
         <if test="address != null and address != ''">#{address},</if>
         <if test="registeredCapital != null and registeredCapital != ''">#{registeredCapital},</if>
         <if test="beListed != null and beListed != ''">#{beListed},</if>
-        <if test="examination != null and examination != ''">#{examination}</if>
+           1
         )
     </insert>
+    
     
     
     <update id="updateEnterprise" parameterType="com.BYS.GWSystem.model.Enterprise">
