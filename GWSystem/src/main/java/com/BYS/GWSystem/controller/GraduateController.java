@@ -102,10 +102,10 @@ public class GraduateController {
 				// 未上传头像时，给默认头像
 				if (graduates.getAvatarPath() != null) {
 					if (graduates.getAvatarPath().equals("")) {
-						graduates.setAvatarPath("cs.jpg");
+						graduates.setAvatarPath("cstx.jpg");
 					}
 				} else {
-					graduates.setAvatarPath("cs.jpg");
+					graduates.setAvatarPath("cstx.jpg");
 				}
 				session.setAttribute("graduateUser", graduates);
 				// 传graduate对象给前端显示数据
@@ -166,12 +166,16 @@ public class GraduateController {
 		String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\headportrait";
 		// 获得上传的图片名字
 		String name = file.getOriginalFilename();
-		String suffix = name.substring(name.lastIndexOf("."), name.length());// 文件后缀名
+		String suffix = null;
 		// 如果未选择文件，则赋值为初始头像
 		if (name.equals("")) {
-			name = "cs.jpg";
+			Graduate graduates = iGraduateService.queryStudentById(graduate.getStudentId());
+			graduates.setAvatarPath("cstx.jpg");
+			model.addAttribute("graduate", graduates);
+			return "graduate/GraduateHome";
 		} else {
 			long resumeId = new Random().nextInt(100000000) % (100000000 - 1000000 + 1) + 1000000;
+			suffix = name.substring(name.lastIndexOf("."), name.length());// 文件后缀名
 			name = resumeId + suffix;
 		}
 		// 添加新的头像的文件名
