@@ -79,7 +79,7 @@ public class HomeController {
 			session.setAttribute("adminUser", admin);
 			modelAndView.setViewName("redirect:/admin/home");
 		}
-		return modelAndView;// 返回列表
+		return modelAndView;//返回列表
 	}
 
 	@GetMapping("/Logout")
