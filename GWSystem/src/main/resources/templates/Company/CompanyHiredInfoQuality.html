@@ -26,7 +26,7 @@
 			<div class="newHired">
 				<h1><span class="label label-default">岗位信息详情</span></h1>
 				<hr />
-				<h3><span class="label label-default" th:text="${enterprisesInfo.enterpriseName}">此处显示公司名字</span> <span class="label label-default" th:text="${postMsg.creationTime}">更新时间</span></h3>
+				<h3><span th:if="${enterprisesInfo.beListed}==1" class="label label-success">上市公司</span> <span class="label label-default" th:text="${enterprisesInfo.enterpriseName}">此处显示公司名字</span> <span class="label label-default" th:text="${postMsg.creationTime}">更新时间</span></h3>
 				<h3><span class="label label-default" th:text="'联系电话:'+${enterprisesInfo.telephone}">此处显示岗位联系方式电话：</span> <span class="label label-default" th:text="'公司地址：'+${enterprisesInfo.address}">此处显示公司地址：</span></h3>
 				<br />
 				<div class="media">

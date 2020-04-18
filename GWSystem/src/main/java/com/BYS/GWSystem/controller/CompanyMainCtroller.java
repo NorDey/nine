@@ -51,12 +51,15 @@ public class CompanyMainCtroller {
 
 	@PostMapping("/CNCI") // 新的公司注册
 	public String NewCompanyInfo(@ModelAttribute Enterprise enterprise, Model model) {
-		
-		  System.out.println(enterprise.toString());
-		  int flag = iEnterpriseService.insertNewCI(enterprise); if (flag == 1) {
-		  System.out.println("注册成功"); } else { System.out.println("注册失败"); }
-		 
-		
+
+		System.out.println(enterprise.toString());
+		int flag = iEnterpriseService.insertNewCI(enterprise);
+		if (flag == 1) {
+			System.out.println("注册成功");
+		} else {
+			System.out.println("注册失败");
+		}
+
 		// 跳转到公司登录页面的OBJ
 		model.addAttribute("enterprise", new Enterprise());
 		// 跳转到毕业生登录页面的OBJ
@@ -571,6 +574,7 @@ public class CompanyMainCtroller {
 	@PostMapping("/CRCI")
 	public String CRCIgreetingSubmit(@ModelAttribute Enterprise greeting, Model model) {
 		// System.out.println(greeting.toString());
+		greeting.setExamination(1);
 		System.out.println(iEnterpriseService.updateCInfo(greeting));
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(greeting.getRegistrationId());
 		model.addAttribute("ResumeCount", iresume.ResumeCount(enterpriseInfo.getRegistrationId()));// Cheader头部的信息刷新
