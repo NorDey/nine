@@ -51,7 +51,7 @@
 		parameterType="com.BYS.GWSystem.dto.PostDto"
 		resultType="com.BYS.GWSystem.dto.PostDto">
 		SELECT
-		e.registration_id,e.enterpriseName,p.post_id,e.address,t.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
+		e.registration_id,e.enterpriseName,p.post_id,e.address,p.postName,t.profession,t.major,t.major,p.responsible,p.type_id,p.number,p.salary,p.demand,p.creationTime,p.popular
 		from enterprise e LEFT JOIN post p on
 		e.registration_id=p.registration_id LEFT JOIN type_work t on
 		t.post_id=p.post_id

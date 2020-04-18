@@ -20,8 +20,8 @@
 
 	<insert id="sendCV" parameterType="String">
 		INSERT INTO
-		student_history(student_id,post_id,collection)
-		VALUES(#{studentId},#{postId},'4');
+		student_history(student_id,post_id,collection,time)
+		VALUES(#{studentId},#{postId},'4',sysdate());
 	</insert>
 
 	<select id="selectCV" parameterType="String"
@@ -99,7 +99,7 @@
 		g.student_id=r.student_id INNER
 		JOIN (SELECT COUNT(e.registration_id)as
 		count, e.resume_id from
-		enterprise_history e WHERE e.collection=1 GROUP
+		enterprise_history e WHERE e.collection  IN (2,3) GROUP
 		BY e.resume_id order
 		by count desc limit 5)as st on r.resume_id =
 		st.resume_id

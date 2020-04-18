@@ -97,7 +97,7 @@
 	<select id="ConcernedAbout" resultType="Integer"
 		parameterType="int">
 		SELECT COUNT(bb.a) FROM (SELECT COUNT(*) a from enterprise_history
-		WHERE collection=1
+		WHERE collection IN (2,3)
 		GROUP BY resume_id
 		<if test="Small != null">HAVING a &gt; #{Small}</if>
 		<if test="large != null">and a &lt; #{large}</if>
@@ -106,7 +106,7 @@
 
 	<select id="selectFollowNumber" resultType="Integer">
 		SELECT COUNT(distinct
-		resume_id) FROM enterprise_history where collection=1
+		resume_id) FROM enterprise_history where collection IN (2,3)
 	</select>
 
 	<select id="selectResumeById"
