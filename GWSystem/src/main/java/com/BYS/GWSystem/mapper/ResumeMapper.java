@@ -53,5 +53,11 @@ public interface ResumeMapper {
 
 	// 计算通过的简历数量，collection=3
 	public Integer ResumePassCount(@Param(value = "registrationId") String registrationId);
+	//简历通过的话插入enterpriseHistory
+	public int insertENHistory(@Param(value = "registrationId") String registrationId, @Param(value = "resumeIds") String resumeIds,@Param(value = "updateCode") int updateCode);
+	//简历通过的话插入enterpriseHistory插入前判断是否已经插入
+	public String notexitresumeId(@Param(value = "registrationId") String registrationId ,@Param(value = "resumeIds") String resumeIds);
+	//简历通过的话插入enterpriseHistory判断是否已经插入过了如果已经插入，就只做修改
+	public int updateENHistory(@Param(value = "registrationId") String registrationId, @Param(value = "resumeIds") String resumeIds,@Param(value = "updateCode") int updateCode);
 
 }

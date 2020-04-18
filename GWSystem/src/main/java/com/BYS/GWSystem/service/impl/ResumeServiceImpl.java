@@ -121,6 +121,27 @@ public class ResumeServiceImpl implements IResumeService {
 		// TODO Auto-generated method stub
 		return resumeMapper.ResumePassCount(registrationId);
 	}
+	//简历通过的话插入enterpriseHistory
+	@Override
+	public int insertENHistory(String registrationId, String resumeIds,int updateCode) {
+		// TODO Auto-generated method stub
+		return resumeMapper.insertENHistory(registrationId,resumeIds,updateCode);
+	}
+	//简历通过的话插入enterpriseHistory插入前判断是否已经插入
+	@Override
+	public boolean notexitresumeId(String registrationId,String resumeIds) {
+		// TODO Auto-generated method stub
+		String results = resumeMapper.notexitresumeId(registrationId,resumeIds);
+		boolean flag = false;
+		if(results==""||results==null)flag=true;
+		return flag;
+	}
+	//简历通过的话插入enterpriseHistory判断是否已经插入过了如果已经插入，就只做修改
+	@Override
+	public int updateENHistory(String registrationId, String resumeIds, int updateCode) {
+		// TODO Auto-generated method stub
+		return resumeMapper.updateENHistory(registrationId,resumeIds,updateCode);
+	}
 
 	
 }

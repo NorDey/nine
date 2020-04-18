@@ -48,7 +48,7 @@
 						<td th:text="${resumes.intention}">求职sdfgasdasdas意向</td>
 						<td th:text="${resumes.time}">简sdfgsdfgdsfgsdg历投递时间</td>
 						<td><h3><a class="label label-danger cancel" herf="#"></a></h3></td>
-						<td><a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/2'}"><input type="button" value="简历录用" class="btn-ss" /></a></td>
+						<td><a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/2/'+${resumes.resumeId}}"><input type="button" value="简历录用" class="btn-ss" /></a></td>
 					</tr>
 					<tr th:if="${resumes.collection}==2" class="success">
 						<td><a th:href="@{'/CTVR/'+${enterprises.registrationId}+'?studentId='+${resumes.studentId}}" th:text="${resumes.name}"></a></td>
@@ -58,7 +58,7 @@
 						<td th:text="${resumes.education}">学sdfgdsfgsdf历</td>
 						<td th:text="${resumes.intention}">求职sdfgasdasdas意向</td>
 						<td th:text="${resumes.time}">简sdfgsdfgdsfgsdg历投递时间</td>
-					<td><a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/1'}"><input type="button" value="简历已录用，点击删除" class="btn-ss" /></a></td>
+					<td><a th:href="@{'/CC/'+${enterprises.registrationId}+'/'+${pages}+'/'+${resumes.studentId}+'/'+${resumes.postId}+'/1/'+${resumes.resumeId}}"><input type="button" value="简历已录用，点击删除" class="btn-ss" /></a></td>
 					</tr>
 				</tbody>
 			</table>

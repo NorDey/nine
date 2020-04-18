@@ -121,8 +121,27 @@
 	SELECT r.* ,s.post_id,s.time ,s.collection from resume r, (SELECT * from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 ) AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs where hs.collection = 4 or hs.collection = 1 )
 	</select> -->
 	<select id="selectResumeByErId" parameterType="String" resultMap="ResumeHiredDtoList">
-	SELECT r.* ,s.time ,s.post_id,s.collection from resume r, (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))  AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs )
+		SELECT r.* ,s.time ,s.post_id,s.collection from resume r, (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))  AS s where r.student_id=s.student_id and r.student_id in(SELECT student_id from (SELECT * FROM `student_history`  where  post_id in(SELECT post_id from post where registration_id= #{registrationId} ))AS hs )
 	</select>
+	<select id="notexitresumeId"  resultType="String">
+		select registration_id from enterprise_history where registration_id=#{registrationId} AND	resume_id=#{resumeIds}
+	</select>
+	<!-- //简历通过的话插入enterpriseHistory -->
+	<insert id="insertENHistory" parameterType="String">
+		insert into enterprise_history(
+		<if test="registrationId != null">registration_id,</if>
+		<if test="resumeIds != null and resumeIds!= ''">resume_id,</if>
+		<if test="updateCode!= 0">collection,</if>
+		time
+		)values(
+		<if test="registrationId != null">#{registrationId},</if>
+		<if test="resumeIds != null and resumeIds != ''">#{resumeIds},</if>
+		<if test="updateCode!= 0">#{updateCode},</if>
+		now()
+		)
+	</insert>
+	
+	
 	<!-- //公司收到的投递的简历查询 -->
 	<insert id="insertResume"
 		parameterType="com.BYS.GWSystem.dto.ResumeDto">
@@ -180,6 +199,14 @@
 			<if test="selfEvaluation != null and selfEvaluation != ''">selfEvaluation=#{selfEvaluation}</if>
 		</set>
 		where student_id = #{studentId}
+	</update>
+	<!-- //简历通过的话插入enterpriseHistory判断是否已经插入过了如果已经插入，就只做修改 -->
+	<update id="updateENHistory" >
+		update enterprise_history
+		<set>
+		<if test="updateCode!= 0">collection=#{updateCode}</if>
+		</set>
+		where registration_id=#{registrationId} and resume_id=#{resumeIds}
 	</update>
 	
 	<!-- 更新公司收取简历的状态 -->

@@ -88,10 +88,11 @@ public class CompanyMainCtroller {
 		return "Company/CompanyCollection";
 	}
 
-	@GetMapping("/CC/{registrationId}/{page}/{studentId}/{postId}/{updateCode}") // 公司收藏--公司的简历收录(修改录用状态)
+	@GetMapping("/CC/{registrationId}/{page}/{studentId}/{postId}/{updateCode}/{resumeId}") // 公司收藏--公司的简历收录(修改录用状态)
 	public String CCupdate(@PathVariable(name = "updateCode") int updateCode,
 			@PathVariable(name = "postId") String postId, @PathVariable(name = "studentId") String studentId,
 			@PathVariable(name = "page") int page, @PathVariable(name = "registrationId") String registrationId,
+			@PathVariable(name = "resumeId") String resumeIds,
 			Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
@@ -102,6 +103,11 @@ public class CompanyMainCtroller {
 		PageHelper.startPage(page, 5); // 第几页，每页几条
 		PageInfo<ResumeHiredDto> resumeHird = new PageInfo<>(iresume.selectResumeByErId(registrationId));// 将原list转为page类型
 		iresume.updateHiredCollectionMsg(studentId, postId, updateCode);// 通过前两个ID确认是哪个简历并更新该简历(1被打回去2录用3表示备选4投递)
+		if(iresume.notexitresumeId(registrationId,resumeIds)) {
+			iresume.insertENHistory(registrationId,resumeIds,updateCode);//插入到enterprise——history供管理员数据导出
+		}else{
+			iresume.updateENHistory(registrationId,resumeIds,updateCode);//插入到enterprise——history供管理员数据导出,已存在的数据仅作修改
+		}
 		if (page >= resumeHird.getLastPage())
 			page = resumeHird.getLastPage();
 		model.addAttribute("pages", page);
@@ -129,10 +135,11 @@ public class CompanyMainCtroller {
 		return "Company/CompanyHistory";
 	}
 
-	@GetMapping("/CH/{registrationId}/{page}/{studentId}/{postId}/{updateCode}") // 公司浏览简历的历史记录--改为简历投递的接收(修改录用状态)
+	@GetMapping("/CH/{registrationId}/{page}/{studentId}/{postId}/{updateCode}/{resumeId}") // 公司浏览简历的历史记录--改为简历投递的接收(修改录用状态)
 	public String CHupdate(@PathVariable(name = "updateCode") int updateCode,
 			@PathVariable(name = "postId") String postId, @PathVariable(name = "studentId") String studentId,
 			@PathVariable(name = "page") int page, @PathVariable(name = "registrationId") String registrationId,
+			@PathVariable(name = "resumeId") String resumeIds,
 			Model model) {
 		Enterprise enterpriseInfo = iEnterpriseService.selectEnterpriseOne(registrationId);
 		model.addAttribute("ResumeCount", iresume.ResumeCount(registrationId));// Cheader头部的信息刷新
@@ -143,6 +150,11 @@ public class CompanyMainCtroller {
 		PageHelper.startPage(page, 5); // 第几页，每页几条
 		PageInfo<ResumeHiredDto> resumeHird = new PageInfo<>(iresume.selectResumeByErId(registrationId));// 将原list转为page类型
 		iresume.updateHiredCollectionMsg(studentId, postId, updateCode);// 通过前两个ID确认是哪个简历并更新该简历(1被打回去2录用3表示备选4投递)
+		if(iresume.notexitresumeId(registrationId,resumeIds)) {
+			iresume.insertENHistory(registrationId,resumeIds,updateCode);//插入到enterprise——history供管理员数据导出
+		}else{
+			iresume.updateENHistory(registrationId,resumeIds,updateCode);//插入到enterprise——history供管理员数据导出已存在的数据仅作修改
+		}
 		if (page >= resumeHird.getLastPage())
 			page = resumeHird.getLastPage();
 		model.addAttribute("pages", page);

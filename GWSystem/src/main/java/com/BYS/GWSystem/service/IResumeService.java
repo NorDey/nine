@@ -44,4 +44,10 @@ public interface IResumeService {
 
 	// 计算通过的简历数量，collection=3
 	public Integer ResumePassCount(String registrationId);
+	//简历通过的话插入enterpriseHistory
+	public int insertENHistory(String registrationId, String resumeIds,int updateCode);
+	//简历通过的话插入enterpriseHistory判断是否已经插入过了
+	public boolean notexitresumeId(String registrationId,String resumeIds);
+	//简历通过的话插入enterpriseHistory判断是否已经插入过了如果已经插入，就只做修改
+	public int updateENHistory(String registrationId, String resumeIds, int updateCode);
 }
