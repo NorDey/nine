@@ -553,6 +553,16 @@ public class GraduateController {
 		model.addAttribute("enterprisesInfo", enterprisesInfo);// 传入公司信息
 		model.addAttribute("JobsInfo", JobsInfo);// 传入岗位信息
 		model.addAttribute("postMsg", postMsg);// 传入岗位简要信息
+		// 判断是否已经投过这个岗位
+		StudentHistory rest = iGraduateService.selectCV(graduate.getStudentId(), postId);
+		// 是否投递界面返回值
+		String posted = null;
+		if (rest != null) {
+			posted = "已投递";
+		} else {
+			posted = "投递简历";
+		}
+		model.addAttribute("posted", posted);
 		return "Company/CompanyHiredInfoQuality";
 	}
 

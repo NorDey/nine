@@ -20,8 +20,8 @@
 
 	<insert id="sendCV" parameterType="String">
 		INSERT INTO
-		student_history(student_id,post_id,collection)
-		VALUES(#{studentId},#{postId},'4');
+		student_history(student_id,post_id,collection,time)
+		VALUES(#{studentId},#{postId},'4',sysdate());
 	</insert>
 
 	<select id="selectCV" parameterType="String"
