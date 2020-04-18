@@ -19,8 +19,10 @@ public class GraduateLoginAdapter implements WebMvcConfigurer {
 		// 添加对用户是否登录的拦截器，并添加过滤项、排除项
 		registry.addInterceptor(graduateLoginInterceptor).addPathPatterns("/graduate/**")
 				.excludePathPatterns("/css/**", "/js/**", "/images/**")// 排除样式、脚本、图片等资源文件
-				.excludePathPatterns("/Public/SwitchLogin.html")// 排除登录页面
-				.excludePathPatterns("/graduate/login");// 排除登录链接
+				/*
+				 * .excludePathPatterns("/Public/SwitchLogin.html")// 排除登录页面
+				 */ .excludePathPatterns("/graduate/login")// 排除登录链接
+				.excludePathPatterns("/graduate/register");// 排除注册链接
 	}
 
 }
