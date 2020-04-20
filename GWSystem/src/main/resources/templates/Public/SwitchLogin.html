@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ch" xmlns:th="http://www.thymeleaf.org">
-  <title th:text="${title==null} ? 'notitle' : ${title}">用户登陆</title>
+  <title th:text="${title==null} ? 'notitle' : ${title}">用户登录</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,7 +12,7 @@
 		<script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<meta charset="UTF-8">
-		<title>用户登陆</title>
+		<title>用户登录</title>
 	</head>
 
 	<body>
@@ -25,14 +25,14 @@
 					<h4 class="panel-title">
 				<a data-toggle="collapse" data-parent="#accordion" 
 				   href="#Managerlogin" >
-					管理员登陆
+					管理员登录
 				</a>
 			</h4>
 				</div>
 
 				<div id="Managerlogin" class="panel-collapse collapse  log-Managers">
 					<div class="panel-body">
-						<!--管理员登陆-->
+						<!--管理员登录-->
 						<nav id="Managerlogin" class=" col-lg-12 col-4   bg-light navtable hidelog alpha">
 							<form class="clearfix" name="search" method="post"   action='#' th:action="@{/admin/adminLogin}" th:object="${admin}">
 								<input name="username" type="text" class="username" id="UN" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入管理员ID"  th:field=*{number}/>
@@ -60,7 +60,7 @@
 				</div>
 				<div id="Companylogin" class="panel-collapse collapse log-Companys fl">
 					<div class="panel-body">
-						<!--企业登陆-->
+						<!--企业登录-->
 						<nav id="Companylogin" class="  col-lg-12 col-4   bg-light navtable hidelog ">
 							<form class="clearfix" name="search" method="post" action="#" th:action="@{/CI}" th:object="${enterprise}">
 								<input name="username" type="text" class="username" id="UN" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入企业工商号"  th:field=*{registrationId}/>
@@ -69,7 +69,7 @@
 								<input name="PWD" type="password" class="PWD" id="PWD" value autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入密码"  th:field=*{password} />
 								<span th:if="${wrongCodePWD}!=null" class="help-block alert-danger" th:text="${wrongCodePWD}"></span>
 								<br /><br />
-								<input name="Companylog" id="Companylog" type="submit" value="登陆" class="btn-s" />
+								<input name="Companylog" id="Companylog" type="submit" value="登录" class="btn-s" />
 								<input name="Companyfog" id="Companyfog" type="button" value="忘记密码" class="btn-s" />
 							</form>
 						</nav>
@@ -82,13 +82,13 @@
 					<h4 class="panel-title">
 				<a data-toggle="collapse" data-parent="#accordion" 
 				   href="#Studentlogin">
-					学生登陆
+					学生登录
 				</a>
 			</h4>
 				</div>
 				<div id="Studentlogin" class="panel-collapse collapse log-Students ">
 					<div>
-						<!--学生登陆-->
+						<!--学生登录-->
 						<nav id="Studentlogin" class="  col-lg-12 col-4   bg-light navtable hidelog ">
 							<form class="clearfix" name="search" method="post" action="#" th:action="@{/graduate/login}" th:object="${graduate}">
 								<input name="username" type="text" class="username" id="UN"  autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入学号" th:field=*{studentId}/>
@@ -97,7 +97,7 @@
 								<input name="PWD" type="password" class="PWD" id="PWD"  autocomplete="off" x-webkit-speech x-webkit-grammar="builtin:translate" placeholder="输入密码" th:field=*{password}/>
 								<span th:if="${errorInfo}!=null" class="help-block alert-danger" th:text="${errorInfo}"></span>
 								<br /><br />
-								<input name="Studentlog" id="Studentlog" type="submit" value="登陆" class="btn-s" />
+								<input name="Studentlog" id="Studentlog" type="submit" value="登录" class="btn-s" />
 								<input name="Studentlog" id="Studentlog" type="submit" value="忘记密码" class="btn-s" />
 							</form>
 						</nav>
