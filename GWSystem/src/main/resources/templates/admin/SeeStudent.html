@@ -24,10 +24,9 @@
 	<!--head引用-->
 	<div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
 	<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
-	
-		<form class="navbar-form navbar-left" role="search" action='../seStudentsList/1' method='post' th:if="${traversingList.pages}>1">
-				<a href="/admin/home"><span type="button"
+	<a href="/admin/home"><span type="button"
 						class="glyphicon glyphicon-chevron-left"></span></a>
+		<form class="navbar-form navbar-left" role="search" action='../seStudentsList/1' method='post' th:if="${traversingList.pages}>1">	
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="按姓名或学号号查找" id="selectStudent" name="selectStudent"
 				th:value="${returnDisplay}">
