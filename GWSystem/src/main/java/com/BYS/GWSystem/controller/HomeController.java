@@ -69,17 +69,15 @@ public class HomeController {
 	PostDto post = new PostDto();
 
 	@PostMapping("/adminLogin")
-	public ModelAndView adminLogin(@ModelAttribute Admin admin, Model model, HttpSession session) {
-		ModelAndView modelAndView = new ModelAndView();
+	public String adminLogin(@ModelAttribute Admin admin, Model model, HttpSession session) {
 		int a = iAdminService.selectAdmin(admin);
 		if (a != 1) {
-			modelAndView.addObject("wrongCodePWD", "登录错误,账号或密码错误");
-			modelAndView.setViewName("redirect:/switchLog");
+			model.addAttribute("errorInfo", "登录错误,账号或密码错误");
+			return "redirect:/switchLog";//返回登录页面
 		} else {
-			session.setAttribute("adminUser", admin);
-			modelAndView.setViewName("redirect:/admin/home");
+			session.setAttribute("adminUser", admin);//登陆成功存user
+			return "redirect:/admin/home";//跳转到管理员主页
 		}
-		return modelAndView;//返回列表
 	}
 
 	@GetMapping("/Logout")
@@ -289,7 +287,7 @@ public class HomeController {
 		// 定义表的标题
 		String title = "毕业生列表一览";
 		// 定义表的列名
-		String[] rowsName = new String[] { "学号", "姓名", "性别", "电话", "家庭住址", "毕业去向", "就业情况", "工作岗位", "就业单位" };
+		String[] rowsName = new String[] {"序列号", "学号", "姓名", "性别", "电话", "家庭住址", "毕业去向", "就业情况", "工作岗位", "就业单位" };
 
 		// 定义表的内容
 		List<Object[]> dataList = new ArrayList<Object[]>();
@@ -298,19 +296,19 @@ public class HomeController {
 		for (int i = 0; i < listGraduate.size(); i++) {
 			GraduateDto per = listGraduate.get(i);
 			objs = new Object[rowsName.length];
-			objs[0] = per.getStudentId();
-			objs[1] = per.getStudentName();
-			objs[2] = per.getSex().equals("1") ? "男" : "女";
-			objs[3] = per.getPhonenumber() == null ? "-" : per.getPhonenumber();
-			objs[4] = per.getHomeAddress() == null ? "-" : per.getHomeAddress();
-			objs[5] = per.getWhereabouts() == null ? "-" : per.getWhereabouts();
+			objs[1] = per.getStudentId();
+			objs[2] = per.getStudentName();
+			objs[3] = per.getSex().equals("1") ? "男" : "女";
+			objs[4] = per.getPhonenumber() == null ? "-" : per.getPhonenumber();
+			objs[5] = per.getHomeAddress() == null ? "-" : per.getHomeAddress();
+			objs[6] = per.getWhereabouts() == null ? "-" : per.getWhereabouts();
 			if (per.getCause() != null) {
-				objs[6] = per.getCause().equals("1") ? "已就业" : "未就业";
+				objs[7] = per.getCause().equals("1") ? "已就业" : "未就业";
 			} else {
-				objs[6] = "-";
+				objs[7] = "-";
 			}
-			objs[7] = per.getPost() == null ? "-" : per.getPost();
-			objs[8] = per.getCompany() == null ? "-" : per.getCompany();
+			objs[8] = per.getPost() == null ? "-" : per.getPost();
+			objs[9] = per.getCompany() == null ? "-" : per.getCompany();
 			dataList.add(objs);
 		}
 
@@ -418,15 +416,13 @@ public class HomeController {
 
 	// 审核
 	@GetMapping("/enterpriseOperation/{id}/{operation}")
-	public ModelAndView EnterpriseOperation(@PathVariable(name = "id") String id,
+	public String EnterpriseOperation(@PathVariable(name = "id") String id,
 			@PathVariable(name = "operation") Integer operation) {
-		ModelAndView modelAndView = new ModelAndView();
 		Enterprise enterprise = new Enterprise();
 		enterprise.setRegistrationId(id);
 		enterprise.setExamination(operation);
 		int a = iEnterpriseService.updateCInfo(enterprise);
-		modelAndView.setViewName("redirect:/admin/companyApplicationList/1");
-		return modelAndView;// 返回列表
+		return "redirect:/admin/companyApplicationList/1";
 	}
 
 	// 待审核公司数
