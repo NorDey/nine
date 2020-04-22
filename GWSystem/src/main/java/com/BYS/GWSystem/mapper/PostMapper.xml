@@ -60,7 +60,7 @@
 			and e.registration_id = #{registrationId}
 		</if>
 		<if test="postName != null and postName != ''">
-			and (t.postName like concat('%', #{postName}, '%') or
+			and (p.postName like concat('%', #{postName}, '%') or
 			t.major like
 			concat('%', #{postName}, '%'))
 		</if>
