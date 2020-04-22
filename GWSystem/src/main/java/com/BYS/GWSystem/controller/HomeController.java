@@ -107,12 +107,12 @@ public class HomeController {
 
 	@GetMapping("/notFilled/{page}")
 	public String showNotFilled(Model model, @PathVariable(name = "page") int page) {
-		PageHelper.startPage(page, 10);
-		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.PageNotFilled());
+		PageHelper.startPage(page, 10);//设置分页规则
+		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.PageNotFilled());//转正分页对象
 		List<Integer> listPages = calculateOptionalPages(page, listGraduateDto.getPages());
-		model.addAttribute("listPages", listPages);
-		model.addAttribute("address", "notFilled");
-		model.addAttribute("traversingList", listGraduateDto);
+		model.addAttribute("listPages", listPages);//分页显示可选序列
+		model.addAttribute("address", "notFilled");//下一页跳转接口
+		model.addAttribute("traversingList", listGraduateDto);//数据对象
 		return "admin/SeeStudent";
 	}
 
@@ -147,7 +147,7 @@ public class HomeController {
 	@PostMapping("/seStudentsList/{page}")
 	public String showCheckingStudentsByMore(@PathVariable(name = "page") int page, Model model,
 			@RequestParam(value = "selectStudent", required = false) String look) {
-		lookup = look;
+		lookup =look.replaceAll(" ", "");
 		PageHelper.startPage(page, 10);
 		PageInfo<GraduateDto> listGraduateDto = new PageInfo<>(iGraduateService.selectGraduateListByMore(lookup));
 		List<Integer> listPages = calculateOptionalPages(page, listGraduateDto.getPages());
@@ -213,7 +213,7 @@ public class HomeController {
 			@RequestParam(value = "selectEnterprise", required = false) String look,
 			@PathVariable(name = "post", required = false) String post) {
 		Enterprise enterprise = new Enterprise();
-		lookup = look;
+		lookup = look.replaceAll(" ", "");
 		enterprise.setExamination(2);
 		PageHelper.startPage(page, 10);
 		PageInfo<Enterprise> enterprises = null;
@@ -479,10 +479,11 @@ public class HomeController {
 	public String CompanyRecruitmentPosition(Model model, @PathVariable(name = "page") int page,
 			@PathVariable(name = "registrationId", required = false) String registrationId,
 			@ModelAttribute PostDto postDto) {
-		post = postDto;
+		post.setEnterpriseName(postDto.getEnterpriseName().replaceAll(" ", ""));//去空格
+		post.setPostName(postDto.getPostName().replaceAll(" ", ""));
 		PageHelper.startPage(page, 8);
-		postDto.setRegistrationId(registrationId);
-		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.selectPostListByMore(postDto));// 将原list转为page类型
+		post.setRegistrationId(registrationId);
+		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.selectPostListByMore(post));// 将原list转为page类型
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
 		model.addAttribute("postDto", post);
 		model.addAttribute("listPages", listPages);
@@ -495,7 +496,7 @@ public class HomeController {
 	@PostMapping(value = { "/homepageSearchPost/{page}" })
 	public String HomepageSearchPost(Model model, @PathVariable(name = "page") int page,
 			@RequestParam(value = "search_keyword", required = false) String postName) {
-		post.setPostName(postName);
+		post.setPostName(postName.replaceAll(" ", ""));
 		PageHelper.startPage(page, 8);
 		PageInfo<PostDto> psotSimpleList = new PageInfo<>(iPostService.selectPostListByMore(post));// 将原list转为page类型
 		List<Integer> listPages = calculateOptionalPages(page, psotSimpleList.getPages());
