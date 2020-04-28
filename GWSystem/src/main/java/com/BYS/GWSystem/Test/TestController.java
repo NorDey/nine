@@ -14,12 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.BYS.GWSystem.model.Admin;
 import com.BYS.GWSystem.service.IAdminService;
+import com.BYS.GWSystem.service.IResumeService;
 import com.BYS.GWSystem.service.impl.AdminServiceImpl;
+
+import junit.framework.Test;
 
 @ResponseBody
 @Controller
 public class TestController {
 
+	@Autowired
+	private static IResumeService iResumeService;
 	@Autowired
 	private IAdminService adminService;
 
@@ -40,10 +45,12 @@ public class TestController {
 		}
 		return "账号:" + number + "     密码:" + password;
 	}
-
-	@RequestMapping("/test")
-	public String shou() {
-		return "admin/Home";
+	
+	@org.junit.Test
+	public void Test() {
+		System.err.println(iResumeService.BeConcernedAbout(5, 2));
 	}
+
+	
 
 }
